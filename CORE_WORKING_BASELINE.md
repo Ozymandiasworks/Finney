@@ -40,3 +40,11 @@ Alpha.20 adds automated guards around the proven baseline. In particular, the fo
 - `local_modules/bitcore-lib-xec/lib/transaction/transaction.js`
 
 Future intentional protocol changes may update those hashes, but they should never change silently during unrelated cleanup work.
+
+## Offline regression checks
+
+Run `yarn test` with Node 16 and the installed development dependencies. Windows setup also runs these checks.
+
+The suite checks the frozen core hashes, static send/persistence guards, canonical XEC transaction ID, encryption round trips, shared and stealth keys, stamp recovery from a restored recipient key, and local relay token configuration. It uses temporary random test keys and an isolated temporary token file; it does not access saved identities or broadcast transactions.
+
+The legacy Jest UI suite remains separate and requires its missing test dependencies. These offline checks do not replace live A-to-B delivery, restart testing, or a security audit.

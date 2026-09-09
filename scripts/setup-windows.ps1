@@ -73,6 +73,10 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & node scripts/test-sender-history.js
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+& node scripts/test-core-crypto.js
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+& node scripts/test-local-development-token.js
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host ""
 Write-Host "Setup completed, Quasar verified, and core-lock checks passed."

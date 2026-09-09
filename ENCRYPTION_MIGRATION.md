@@ -64,3 +64,7 @@ The full optional session suite passes on Node 24.19.0 and Electron 44.3.0 in No
 To repeat with Node 24, install `electron@44.3.0` and `@signalapp/libsignal-client@0.102.1` in an ignored experiment directory, then run `node scripts/test-ratchet-compatibility.mjs <candidate-package-directory>`. Electron tests run the same script with `ELECTRON_RUN_AS_NODE=1`, using its executable and the same candidate package path. The tests neither contact a relay nor broadcast a transaction.
 
 Next: assess the existing Finney application and native dependencies on the newer runtime in isolation. Successful protocol tests do not establish compatibility for the GUI, preload bridge, LevelDB, Tor configuration or installer. Confirm the licensing direction before production integration.
+
+## Storage runtime check
+
+The optional `scripts/test-runtime-storage.js` checks the existing LevelDB dependency using an isolated temporary database and non-secret fixture data. Batch write, close/reopen, value recovery and delete checks passed on Node 16.20.2, Node 24.19.0, and Electron 20.1.1 / 44.3.0 in Node-only mode. Test files are removed after closing the database. This verifies basic native storage compatibility, not crash durability, encryption at rest or the application adapters.

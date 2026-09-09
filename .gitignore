@@ -1,0 +1,203 @@
+.DS_Store
+.thumbs.db
+node_modules
+
+# Quasar core related directories
+.quasar
+/dist
+
+# Cordova related directories and files
+/src-cordova/node_modules
+/src-cordova/platforms
+/src-cordova/plugins
+/src-cordova/www
+
+# Capacitor related directories and files
+/src-capacitor/www
+/src-capacitor/node_modules
+
+# BEX related directories and files
+/src-bex/www
+/src-bex/js/core
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Test coverage
+/test/jest/coverage
+
+# The release keystore
+release.keystore.jks
+
+# Don't include deploy folder
+/deploy
+
+# Local Finney development log
+finney-run.log
+
+# Finney: dependencies and generated build output (keep local_modules source)
+node_modules/
+bower_components/
+.quasar/
+/dist/
+/build/
+/out/
+/release/
+/releases/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+*.asar
+*.exe
+*.msi
+*.appx
+*.dmg
+*.AppImage
+*.apk
+*.aab
+*.blockmap
+*.zip
+*.7z
+*.tar
+*.gz
+
+# Logs, diagnostics, temporary files and local reports
+*.log
+*.log.*
+*.dmp
+*.heapsnapshot
+*.cpuprofile
+*.tmp
+*.bak
+*.orig
+*.swp
+/tmp/
+/temp/
+/.security-review/
+
+# Environment files and credentials (including local examples until reviewed)
+.env
+.env.*
+*.env
+*.env.*
+.npmrc
+.yarnrc
+.netrc
+.pypirc
+credentials.json
+credentials.*.json
+secrets.json
+secrets.*
+tokens.json
+token.json
+service-account*.json
+*service-account-key*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+.ssh/
+.aws/
+.gnupg/
+
+# Wallet, seed and identity data; do not exclude wallet/key implementation source
+wallet.dat
+wallet.dat.*
+wallet.json
+wallets.json
+wallet-backup*
+wallet-backups/
+wallet-data/
+private-key*
+private_key*
+privateKeys.json
+mnemonic.txt
+mnemonic.json
+seed.txt
+seed.json
+recovery-phrase*
+keystore/
+secrets/
+tokens/
+credentials/
+identities/
+test-identities/
+Test-A/
+Test-B/
+Finney-Test-*/
+finney-Test-*/
+
+# Electron/Chromium profiles and databases
+/user-data/
+/userData/
+/electron-user-data/
+/profiles/
+/.finney/
+/local-services/data/
+/local-services/storage/
+/local-services/.data/
+Local Storage/
+Session Storage/
+IndexedDB/
+Cache/
+Code Cache/
+GPUCache/
+Crashpad/
+Partitions/
+Network/
+Cookies
+Cookies-journal
+Local State
+Preferences
+DevTools Extensions
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.ldb
+*.sst
+CURRENT
+LOCK
+LOG
+LOG.old*
+MANIFEST-*
+OPTIONS-*
+
+# Local editor / OS state
+Thumbs.db
+Desktop.ini
+
+# Mobile build caches and machine-specific configuration
+.gradle/
+.cache/
+.parcel-cache/
+build/
+DerivedData/
+Pods/
+local.properties
+*.xcuserstate
+xcuserdata/
+
+# Runtime identity/profile directories, wherever copied into the checkout
+userData/
+user-data/
+electron-user-data/
+profiles/
+relay-tokens/
+
+.relay-token

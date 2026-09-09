@@ -1,0 +1,4 @@
+# Preserve byte-for-byte alpha.19 core-lock inputs across Windows checkouts.
+src/cashweb/relay/crypto.ts -text
+src/cashweb/relay/constructors.ts -text
+local_modules/bitcore-lib-xec/lib/transaction/transaction.js -text

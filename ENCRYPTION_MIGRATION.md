@@ -54,3 +54,13 @@ Verified on Node 16.20.2: prekey initiation and consumption, bidirectional messa
 Initial session, ordering, replay, tamper, identity and stamp checks also passed on Electron 20.1.1 in Node-only mode. The additional malformed-handshake and fresh-process cases still need that runtime check.
 
 The unchanged secp256k1 stamp derivation produces matching sender/recipient child public keys for the experimental ciphertexts, including a restored stamp recipient. Serialization preserves the queued ciphertext digest. This does not yet test a versioned Finney envelope, the live paid-send path, crash-safe database transactions, prekey publication or downgrade resistance. The test stores are disposable in-memory fixtures, not a production storage design.
+
+## Unmodified package on a current runtime
+
+A second ignored experiment at `.security-review/modern-runtime` pins Electron 44.3.0 and libsignal 0.102.1. Packages were installed with scripts disabled; the official Electron installer then downloaded its runtime using the packaged checksums. No candidate source edits were made in this experiment.
+
+The full optional session suite passes on Node 24.19.0 and Electron 44.3.0 in Node-only mode (embedded Node 24.20.0), including malformed initial messages and fresh-process session restoration. This removes the loader adjustment for these runtimes. Finney production still uses Node 16/Electron 20.
+
+To repeat with Node 24, install `electron@44.3.0` and `@signalapp/libsignal-client@0.102.1` in an ignored experiment directory, then run `node scripts/test-ratchet-compatibility.mjs <candidate-package-directory>`. Electron tests run the same script with `ELECTRON_RUN_AS_NODE=1`, using its executable and the same candidate package path. The tests neither contact a relay nor broadcast a transaction.
+
+Next: assess the existing Finney application and native dependencies on the newer runtime in isolation. Successful protocol tests do not establish compatibility for the GUI, preload bridge, LevelDB, Tor configuration or installer. Confirm the licensing direction before production integration.

@@ -44,3 +44,13 @@ Tested the npm release `@signalapp/libsignal-client@0.102.1` in the ignored `.se
 - Electron 20.1.1 in Node-only mode (Node 16.15.0) also imported that adjusted copy and generated a disposable key. An explicit result file confirmed the runtime versions and public-key serialization length. No key values were logged or saved.
 
 This is a compatibility diagnostic, not an approved dependency patch. It does not verify renderer/preload loading, packaged installer behavior, sessions, prekeys, restart persistence or security properties. Before adopting this candidate, choose a maintained runtime upgrade or a reviewed compatibility strategy and resolve the licensing decision. The next experiment should exercise disposable sessions in the isolated copy; successful native loading alone is insufficient.
+
+## Disposable session experiment
+
+`scripts/test-ratchet-compatibility.mjs` is an optional experiment, not part of the production dependency tree. Supply the path to the isolated candidate package directory as its first argument. Version 0.102.1 on Node 16 requires the loader adjustment described above.
+
+Verified on Node 16.20.2: prekey initiation and consumption, bidirectional messages, reordered delivery, serialized state reconstruction, replay/tamper rejection without state mutation, rejection of changed recipient identities and invalid prekey signatures, and malformed initial-message rejection without consuming the valid prekey. A fresh child process can restore the serialized session, decrypt a pending message and reject its replay; disposable state is passed through stdin rather than written to disk.
+
+Initial session, ordering, replay, tamper, identity and stamp checks also passed on Electron 20.1.1 in Node-only mode. The additional malformed-handshake and fresh-process cases still need that runtime check.
+
+The unchanged secp256k1 stamp derivation produces matching sender/recipient child public keys for the experimental ciphertexts, including a restored stamp recipient. Serialization preserves the queued ciphertext digest. This does not yet test a versioned Finney envelope, the live paid-send path, crash-safe database transactions, prekey publication or downgrade resistance. The test stores are disposable in-memory fixtures, not a production storage design.

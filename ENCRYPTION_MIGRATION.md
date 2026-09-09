@@ -68,3 +68,9 @@ Next: assess the existing Finney application and native dependencies on the newe
 ## Storage runtime check
 
 The optional `scripts/test-runtime-storage.js` checks the existing LevelDB dependency using an isolated temporary database and non-secret fixture data. Batch write, close/reopen, value recovery and delete checks passed on Node 16.20.2, Node 24.19.0, and Electron 20.1.1 / 44.3.0 in Node-only mode. Test files are removed after closing the database. This verifies basic native storage compatibility, not crash durability, encryption at rest or the application adapters.
+
+## Hidden-window runtime check
+
+On 2026-09-09, an ignored harness opened a hidden BrowserWindow on Electron 20.1.1 and 44.3.0 with the application's current window preferences and actual built preload. Both exposed the expected badge and URL bridge functions on a synthetic local page. Both resolved an external example hostname to the configured SOCKS5 proxy and localhost to DIRECT. Web requests were blocked, disposable profile paths were used, and no application wallet or real identity was loaded.
+
+This checks native window creation, built preload loading, bridge exposure and proxy selection. It does not launch the complete application, exercise bridge actions, prove Tor fail-closed behavior, cover Node networking, or validate an installer. The next runtime step is an isolated full-application startup with disposable data and controlled network access.

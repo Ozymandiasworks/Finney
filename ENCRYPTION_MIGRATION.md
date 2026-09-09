@@ -32,3 +32,15 @@ The [Double Ratchet specification](https://signal.org/docs/specifications/double
 Evaluate an exact released library version in an isolated directory with disposable identities. Verify loading on the target Windows/Electron runtime, prekey initiation, bidirectional messages, reordered delivery, replay rejection, tamper rejection and persistence across restart. Do not change production dependencies or frozen files during this experiment. If runtime or licensing constraints make this candidate unsuitable, compare maintained alternatives before selecting one.
 
 Then add a versioned-envelope compatibility test proving that sender and restored recipient derive the same stamp output from the new ciphertext, and that retries reuse the same paid envelope. No live funds or external relay are needed for these tests.
+
+## Runtime loading experiment
+
+Tested the npm release `@signalapp/libsignal-client@0.102.1` in the ignored `.security-review/libsignal-compatibility` directory with install scripts disabled. The application manifest and lockfile were not changed.
+
+- Published integrity: `sha512-AU6qgmT+3SJg15tuXwXVIHcp1HKtQy/0VYw1CbZD/AzmnrKidDfrp9KaVyu3HeZDRzQi9pgKRSvX0b8LllTKOg==`.
+- Unmodified package import failed on Windows x64 / Node 16.20.2. Its loader resolves native binaries with `import.meta.dirname`, which is unavailable on this runtime.
+- Loading the packaged Windows native binding directly succeeded.
+- Replacing only the loader path resolution in the isolated package copy with `fileURLToPath(new URL("../", import.meta.url))` allowed package import and disposable key generation. The original loader copy is retained alongside it.
+- Electron 20.1.1 in Node-only mode (Node 16.15.0) also imported that adjusted copy and generated a disposable key. An explicit result file confirmed the runtime versions and public-key serialization length. No key values were logged or saved.
+
+This is a compatibility diagnostic, not an approved dependency patch. It does not verify renderer/preload loading, packaged installer behavior, sessions, prekeys, restart persistence or security properties. Before adopting this candidate, choose a maintained runtime upgrade or a reviewed compatibility strategy and resolve the licensing decision. The next experiment should exercise disposable sessions in the isolated copy; successful native loading alone is insufficient.

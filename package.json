@@ -13,7 +13,7 @@
     "dev": "quasar dev -m electron -- --no-sandbox --disable-setuid-sandbox",
     "dev:browser": "quasar dev -- --no-sandbox --disable-setuid-sandbox",
     "build": "quasar build -m electron -b builder",
-    "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
+    "test": "yarn test:core",
     "generate:protobuffers": "/bin/sh ./generate_protobufs.sh",
     "clean:protobuffers": "git clean -di && git pull",
     "dev-ios": "quasar dev -m capacitor -T ios",
@@ -35,7 +35,7 @@
     "test:xec-txid": "node scripts/test-xec-txid.js",
     "test:sender-history": "node scripts/test-sender-history.js",
     "test:core:static": "node scripts/static-audit.js && node scripts/test-core-lockdown.js && node scripts/test-xec-txid.js && node scripts/test-sender-history.js",
-    "test:core": "yarn test:core:static && jest test/jest/__tests__/crypto.test.js --runInBand"
+    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-local-development-token.js"
   },
   "dependencies": {
     "@capacitor/core": "2.5.0",

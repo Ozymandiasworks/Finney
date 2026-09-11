@@ -34,8 +34,9 @@
     "local-services": "node local-services/server.js",
     "test:xec-txid": "node scripts/test-xec-txid.js",
     "test:sender-history": "node scripts/test-sender-history.js",
+    "test:local-services-http": "node scripts/test-local-services-http.js",
     "test:core:static": "node scripts/static-audit.js && node scripts/test-core-lockdown.js && node scripts/test-xec-txid.js && node scripts/test-sender-history.js",
-    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-local-development-token.js"
+    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js"
   },
   "dependencies": {
     "@capacitor/core": "2.5.0",

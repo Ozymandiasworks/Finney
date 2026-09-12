@@ -31,6 +31,7 @@ Earlier manual testing established isolated A/B identities, encrypted messages o
 - `scripts/test-runtime-storage.js` verifies temporary LevelDB batch writes, close/reopen, recovery and deletion on Node 16/24 and Electron 20/44 in Node-only mode. This is not a durability or at-rest encryption assessment.
 - PR #4 updated direct runtime DOMPurify, Axios and ws dependencies in three isolated compatibility changes. Each passed `yarn test` and `yarn build` on the alpha.20 runtime.
 - `scripts/test-relay-envelope-compatibility.js` exercises legacy versioned-envelope round trips, rejects missing and unknown encryption schemes before legacy decryption, and checks that a retry preserves the exact serialized paid envelope. `extension.ts` now accepts only the legacy `EPHEMERALDH` scheme; future schemes fail closed until they have an explicit implementation.
+- `DURABLE_SESSION_PERSISTENCE.md` defines the pre-integration storage boundary, crash recovery states and required tests for future encrypted-session persistence. It does not select or integrate a production encryption library.
 - Frozen files remain unchanged: `src/cashweb/relay/crypto.ts`, `src/cashweb/relay/constructors.ts`, `local_modules/bitcore-lib-xec/lib/transaction/transaction.js`.
 
 ## Encryption experiment and decisions
@@ -47,7 +48,7 @@ Required integration properties: explicit wire version and downgrade rejection; 
 
 1. Continue dependency remediation in small compatibility groups. PR #4 remediated direct DOMPurify, Axios and ws findings. Dependabot PR #3 (`ea2f868`) remains unsuitable for merge: it upgrades Electron 20.1.1 to 39.8.10, Quasar 2.15.1 to 2.22.0, and related tooling together. Its normal install rejects Node 16.20.2 because `node-releases@2.0.55` requires Node >=18. With engine checks bypassed, `yarn test` passed but `yarn build` failed in the upgraded Quasar loader and Sass pipeline. Preserve the Node 16/Electron 20 baseline while remediating direct runtime dependencies separately.
 2. Resolve the licensing direction before selecting the production encryption library.
-3. Design and review durable session persistence before integrating modern encryption. The versioned-envelope and immutable paid-retry compatibility coverage is now in place.
+3. Review the durable-session and paid-outbox design in `DURABLE_SESSION_PERSISTENCE.md`, then implement it only after the encryption-library, protected-local-storage, messaging-identity and relay-idempotency decisions are complete. The versioned-envelope and immutable paid-retry compatibility coverage is in place.
 4. Continue the roadmap: modern encryption; separate messaging/wallet identity; opaque relay addressing; encrypted local storage and key/log/notification/CSP hardening; production onion infrastructure with verified fail-closed routing. Larger discovery/payment/attachment work and visual changes follow later.
 
 ## Known limitations and resumption

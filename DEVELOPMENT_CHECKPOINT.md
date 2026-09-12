@@ -1,6 +1,6 @@
 # Development checkpoint
 
-Updated: 2026-09-09. Production remains alpha.20 with legacy message encryption. Modern encryption is an isolated experiment, not an integrated feature.
+Updated: 2026-09-11. Production remains alpha.20 with legacy message encryption. Modern encryption is an isolated experiment, not an integrated feature.
 
 ## Repository and baseline
 
@@ -43,7 +43,7 @@ Required integration properties: explicit wire version and downgrade rejection; 
 
 ## Current task and next steps
 
-1. Assess application/runtime compatibility in isolation: built entry point, preload bridge, GUI startup/shutdown, native dependencies, proxy configuration and packaging. Keep experiments separate from production dependencies and real user data. Do not send messages, spend funds or use real identities in compatibility tests.
+1. Review dependency remediation in small compatibility groups. Dependabot PR #3 (`ea2f868`) was assessed in an isolated worktree and must not be merged: it upgrades Electron 20.1.1 to 39.8.10, Quasar 2.15.1 to 2.22.0, and related tooling together. Its normal install rejects Node 16.20.2 because `node-releases@2.0.55` requires Node >=18. With engine checks bypassed, `yarn test` passed but `yarn build` failed in the upgraded Quasar loader and Sass pipeline. Preserve the Node 16/Electron 20 baseline while remediating direct runtime dependencies separately.
 2. Resolve the licensing direction before selecting the production encryption library.
 3. Add versioned-envelope and immutable paid-retry compatibility coverage, then design and review durable session persistence before integration.
 4. Continue the roadmap: modern encryption; separate messaging/wallet identity; opaque relay addressing; encrypted local storage and key/log/notification/CSP hardening; production onion infrastructure with verified fail-closed routing. Larger discovery/payment/attachment work and visual changes follow later.
@@ -57,5 +57,7 @@ Security review found no unapproved secrets in the committed baseline; retained 
 Read this file, `CORE_WORKING_BASELINE.md`, `ENCRYPTION_MIGRATION.md`, and current Git status/log before resuming. Update this checkpoint after meaningful changes, including test scope and unresolved decisions.
 
 ### Latest verification
+
+On 2026-09-11, DOMPurify was updated from resolved version 2.3.3 to 3.4.15 without changing its existing Markdown sanitizer configuration. `yarn test` and `yarn build` both passed on Node 16.20.2, Quasar 2.15.1 and Electron 20.1.1. The generated installer remains ignored and unpublished.
 
 The complete offline regression suite passed again on 2026-09-09. A disposable hidden-window harness also passed on Electron 20.1.1 and 44.3.0 using the actual built preload: bridge function exposure and external SOCKS5/local DIRECT proxy selection matched expectations. Network requests were blocked. Full application startup, bridge actions, actual Tor fail-closed behavior and packaging remain unverified on the candidate runtime. See the latest section of `ENCRYPTION_MIGRATION.md`.

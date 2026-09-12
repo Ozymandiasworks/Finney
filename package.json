@@ -34,8 +34,9 @@
     "local-services": "node local-services/server.js",
     "test:xec-txid": "node scripts/test-xec-txid.js",
     "test:sender-history": "node scripts/test-sender-history.js",
+    "test:local-services-http": "node scripts/test-local-services-http.js",
     "test:core:static": "node scripts/static-audit.js && node scripts/test-core-lockdown.js && node scripts/test-xec-txid.js && node scripts/test-sender-history.js",
-    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-local-development-token.js"
+    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js"
   },
   "dependencies": {
     "@capacitor/core": "2.5.0",
@@ -43,7 +44,7 @@
     "@quasar/extras": "^1.15.11",
     "@vue/compiler-sfc": "^3.2.23",
     "atob": "^2.1.2",
-    "axios": "^0.24.0",
+    "axios": "^1.20.0",
     "bip39": "^3.0.2",
     "bitcore-lib-xec": "file:./local_modules/bitcore-lib-xec",
     "bluebird": "^3.7.2",
@@ -51,7 +52,7 @@
     "btoa": "^1.2.1",
     "chronik-client": "4.3.0",
     "core-js": "^3.24.1",
-    "dompurify": "^2.3.1",
+    "dompurify": "^3.4.13",
     "electron-windows-badge": "^1.1.0",
     "google-protobuf": "^3.19.1",
     "isomorphic-ws": "^4.0.1",
@@ -71,7 +72,7 @@
     "webpack": ">=5.76.0",
     "workbox-webpack-plugin": "^6.5.4",
     "worker-loader": "^3.0.8",
-    "ws": "^8.3.0"
+    "ws": "^8.21.3"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

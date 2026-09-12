@@ -7,7 +7,7 @@ Updated: 2026-09-12. Production remains alpha.20 with legacy message encryption.
 - Working repository: `F:\Finney\Builds\Core Locked down Finney-v0.1-alpha.20-source\alpha20work`.
 - Origin: `https://github.com/Ozymandiasworks/Finney.git`.
 - Published baseline: `bef6a06ae335de9fb9697e0d65b17f9543ba3f98`, tagged `v0.1-core-working`. Preserve this commit and tag; do not overwrite remote history.
-- Active branch: `development/core-regression-tests`. Latest pushed commit: `a4910ca`.
+- Active branch: `development/core-regression-tests`. It holds the current reviewed work.
 - The commits after the baseline cover repeatable regression checks, encryption migration assessment, disposable ratchet sessions, runtime/storage compatibility, CSP hardening, cloud handoff, and direct runtime security updates. Changes are reviewed and tested before pushing.
 - Preserve existing style and frozen core files. Avoid broad rewrites, dependency upgrades, and reformatting.
 

@@ -102,6 +102,25 @@ assert(
 )
 console.log('PASS: preflight-before-broadcast and one-paid-stamp retry invariants locked')
 
+const retryStart = relay.indexOf('  async pushMessagesWithRetry(')
+const retryEnd = relay.indexOf('\n  async sendMessageImpl', retryStart)
+assert(
+  retryStart >= 0 && retryEnd > retryStart,
+  'Unable to isolate pushMessagesWithRetry',
+)
+const retry = relay.slice(retryStart, retryEnd)
+assert(
+  retry.includes('await this.pushMessages(address, messageSet)'),
+  'relay retry does not reuse the supplied message set',
+)
+assert(
+  !retry.includes('new MessageSet') &&
+    !retry.includes('constructMessage(') &&
+    !retry.includes('broadcastTxs('),
+  'relay retry can rebuild a message or create another paid stamp',
+)
+console.log('PASS: relay retry reuses one immutable paid envelope')
+
 const chats = read('src/stores/chats.ts')
 assert(
   chats.includes('this.chats[displayAddress] = chat') &&

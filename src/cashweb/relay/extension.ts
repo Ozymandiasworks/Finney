@@ -3,13 +3,16 @@ import { PayloadConstructor } from './crypto'
 import { crypto, PrivateKey, PublicKey } from 'bitcore-lib-xec'
 import assert from 'assert'
 
+type EncryptionScheme =
+  Message.EncryptionSchemeMap[keyof Message.EncryptionSchemeMap]
+
 export class ParsedMessage {
   sourcePublicKey: PublicKey
   destinationPublicKey: PublicKey
   receivedTime: number
   salt: Uint8Array
   stamp: Stamp
-  scheme: Message.EncryptionSchemeMap
+  scheme: EncryptionScheme
   payloadDigest: Uint8Array
   payloadHmac: Uint8Array
   payloadSize: number
@@ -22,7 +25,7 @@ export class ParsedMessage {
     receivedTime: number,
     salt: Uint8Array,
     stamp: Stamp,
-    scheme: Message.EncryptionSchemeMap,
+    scheme: EncryptionScheme,
     payloadDigest: Uint8Array,
     payloadHmac: Uint8Array,
     payloadSize: number,
@@ -69,7 +72,9 @@ export class ParsedMessage {
   }
 
   decrypt(sharedKey: Buffer) {
-    // TODO: Check scheme
+    if (this.scheme !== Message.EncryptionScheme.EPHEMERALDH) {
+      throw new Error(`Unsupported message encryption scheme: ${this.scheme}`)
+    }
     return this.payloadConstructor.decrypt(sharedKey, this.payload)
   }
 
@@ -159,8 +164,7 @@ export function messageMixin(
       assert(typeof salt !== 'string', `Salt is string? ${salt}`)
       const stamp = message.getStamp()
       assert(stamp, 'Message missing stamp?')
-      const encryptionScheme: Message.EncryptionSchemeMap =
-        message.getScheme() as unknown as Message.EncryptionSchemeMap
+      const encryptionScheme = message.getScheme()
 
       return new ParsedMessage(
         sourcePublicKey,

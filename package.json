@@ -36,7 +36,7 @@
     "test:sender-history": "node scripts/test-sender-history.js",
     "test:local-services-http": "node scripts/test-local-services-http.js",
     "test:core:static": "node scripts/static-audit.js && node scripts/test-core-lockdown.js && node scripts/test-xec-txid.js && node scripts/test-sender-history.js",
-    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js && node scripts/test-xec-signing.js && node scripts/test-wallet-mnemonic.js"
+    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js && node scripts/test-xec-signing.js && node scripts/test-wallet-mnemonic.js && node scripts/test-i18n.js"
   },
   "dependencies": {
     "@capacitor/core": "2.5.0",
@@ -67,7 +67,7 @@
     "ramda": "^0.27.0",
     "vcf": "^2.1.0",
     "vue": "^3.0.0",
-    "vue-i18n": "^9.1.9",
+    "vue-i18n": "^9.14.5",
     "vue-router": "^4.0.0",
     "webpack": ">=5.76.0",
     "workbox-webpack-plugin": "^6.5.4",

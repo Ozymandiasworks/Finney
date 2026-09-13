@@ -73,4 +73,10 @@ The optional `scripts/test-runtime-storage.js` checks the existing LevelDB depen
 
 On 2026-09-09, an ignored harness opened a hidden BrowserWindow on Electron 20.1.1 and 44.3.0 with the application's current window preferences and actual built preload. Both exposed the expected badge and URL bridge functions on a synthetic local page. Both resolved an external example hostname to the configured SOCKS5 proxy and localhost to DIRECT. Web requests were blocked, disposable profile paths were used, and no application wallet or real identity was loaded.
 
-This checks native window creation, built preload loading, bridge exposure and proxy selection. It does not launch the complete application, exercise bridge actions, prove Tor fail-closed behavior, cover Node networking, or validate an installer. The next runtime step is an isolated full-application startup with disposable data and controlled network access.
+This checks native window creation, built preload loading, bridge exposure and proxy selection. It does not exercise bridge actions, prove Tor fail-closed behavior, cover Node networking, or validate an installer.
+
+## Full startup runtime check
+
+On 2026-09-12, the existing built Finney renderer loaded under Electron 44.3.0 through an ignored harness. It used an isolated Electron user-data and session-data root, hid the application window, and cancelled HTTP(S) and WebSocket requests before the renderer was created. The application reached `#q-app`; the built preload exposed the expected badge and URL bridge functions. No existing wallet or identity profile was loaded.
+
+This validates startup of the existing packaged renderer and preload on the modern runtime with a disposable profile. It does not validate a Finney build produced with Electron 44, installer behavior, bridge actions, Tor fail-closed behavior for Node networking, or real wallet and relay workflows. The remaining platform task is an isolated rebuild on the modern dependency tree followed by the same startup check.

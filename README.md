@@ -57,7 +57,7 @@ The project retains the original Quasar/Electron build layout.
 
 Requirements:
 
-- **Node.js 16.20.2** (baseline build runtime; do not use Node 22 for this legacy dependency tree)
+- **Node.js 24.19.0** (validated Electron 44 build runtime)
 - **Yarn 1.22.x**
 - A local Tor SOCKS5 service for Electron network access
 
@@ -70,9 +70,9 @@ yarn dev
 
 ### Windows development setup
 
-For a normal Windows development machine, install Node 16.20.2 and then double-click `SETUP_FINNEY_WINDOWS.cmd`. The helper bootstraps Yarn 1.22.22 through `npx`, installs the source dependencies, verifies Chronik 4.3.x, and runs the cross-platform static migration audit. Alpha.9 intentionally refreshes the inherited Chronik dependency rather than freezing the old Stamp lock entry. After setup, start `START_FINNEY_LOCAL_SERVICES_WINDOWS.cmd` and leave that window open. Then start Tor Browser and run `RUN_FINNEY_TOR_BROWSER_WINDOWS.cmd`, which selects Tor Browser's local SOCKS port 9150.
+For a normal Windows development machine, install Node 24.19.0 and then double-click `SETUP_FINNEY_WINDOWS.cmd`. The helper bootstraps Yarn 1.22.22 through `npx`, installs the source dependencies, verifies Chronik 4.3.x, and runs the cross-platform static migration audit. Alpha.9 intentionally refreshes the inherited Chronik dependency rather than freezing the old Stamp lock entry. After setup, start `START_FINNEY_LOCAL_SERVICES_WINDOWS.cmd` and leave that window open. Then start Tor Browser and run `RUN_FINNEY_TOR_BROWSER_WINDOWS.cmd`, which selects Tor Browser's local SOCKS port 9150.
 
-The Node 16 pin is intentionally conservative for this first resurrection milestone. It is a **development compatibility baseline**, not a claim that the old Electron/Quasar stack is suitable for a production security release. Upgrading the framework/runtime is a later isolated milestone after the original application launches reproducibly.
+Finney uses Node 24 because Electron 44 requires Node 22.12 or later. The existing Quasar 2.15 build toolchain, core regression suite, production package build and isolated renderer startup were validated with Node 24.19.0 and Electron 44.3.0. Continue to treat framework upgrades as separate compatibility work.
 
 Production Electron build:
 

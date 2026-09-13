@@ -4,16 +4,16 @@ $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
 Write-Host "Finney v0.1-alpha.20 development setup"
-Write-Host "Expected runtime: Node 16.20.2"
+Write-Host "Expected runtime: Node 24.19.0"
 
 $nodeVersion = (& node --version 2>$null)
 if (-not $nodeVersion) {
-    throw "Node.js was not found. Install Node 16.20.2 (64-bit), then rerun SETUP_FINNEY_WINDOWS.cmd."
+    throw "Node.js was not found. Install Node 24.19.0 (64-bit), then rerun SETUP_FINNEY_WINDOWS.cmd."
 }
 
 $nodeMajor = [int](($nodeVersion.TrimStart('v') -split '\.')[0])
-if ($nodeMajor -ne 16) {
-    throw "Finney's baseline dependency tree expects Node 16.x. Detected $nodeVersion. Install/use Node 16.20.2 first."
+if ($nodeMajor -ne 24) {
+    throw "Finney's Electron 44 dependency tree expects Node 24.x. Detected $nodeVersion. Install/use Node 24.19.0 first."
 }
 
 Write-Host "Node: $nodeVersion"

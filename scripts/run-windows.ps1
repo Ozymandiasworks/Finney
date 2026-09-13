@@ -35,7 +35,7 @@ try {
 
 & node scripts\check-runtime.js 2>&1 | Tee-Object -FilePath $log -Append
 if ($LASTEXITCODE -ne 0) {
-  Write-Both "ERROR: Finney requires Node 16.20.2 for this baseline build."
+  Write-Both "ERROR: Finney requires Node 24.19.0 for the Electron 44 build."
   Read-Host 'Press Enter to close'
   exit 1
 }

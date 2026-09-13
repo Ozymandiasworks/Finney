@@ -60,6 +60,8 @@ Security review found no unapproved secrets in the committed baseline; retained 
 
 Read this file, `CORE_WORKING_BASELINE.md`, `ENCRYPTION_MIGRATION.md`, and current Git status/log before resuming. Update this checkpoint after meaningful changes, including test scope and unresolved decisions.
 
+A pending isolated Electron 44 candidate pins Electron to 44.3.0 and Finney's development runtime to Node 24.19.0. Its clean Node 24 install, complete core suite, production package build, NSIS installer and blocked-network startup check passed. It is not merged yet; live Tor, wallet and two-client validation remain required before release.
+
 ### Latest verification
 
 On 2026-09-12, the versioned-envelope and immutable-retry coverage was added. `yarn test` and `yarn build` both passed on Node 16.20.2, Quasar 2.15.1 and Electron 20.1.1. The generated installer remains ignored and unpublished.

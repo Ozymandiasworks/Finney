@@ -98,7 +98,7 @@
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^10.0.0",
     "devtron": "^1.4.0",
-    "electron": "^20.1.1",
+    "electron": "44.3.0",
     "electron-builder": "^23.3.3",
     "electron-debug": "^3.2.0",
     "electron-devtools-installer": "^3.2.0",
@@ -119,13 +119,13 @@
     "typescript": "^4.7.4"
   },
   "engines": {
-    "node": "16.x",
+    "node": "24.x",
     "npm": ">=8.0.0",
     "yarn": "1.22.x"
   },
   "packageManager": "yarn@1.22.22",
   "volta": {
-    "node": "16.20.2",
+    "node": "24.19.0",
     "yarn": "1.22.22"
   }
 }

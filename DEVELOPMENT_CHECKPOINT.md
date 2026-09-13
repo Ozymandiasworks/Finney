@@ -1,14 +1,14 @@
 # Development checkpoint
 
-Updated: 2026-09-11. Production remains alpha.20 with legacy message encryption. Modern encryption is an isolated experiment, not an integrated feature.
+Updated: 2026-09-12. Production remains alpha.20 with legacy message encryption. Modern encryption is an isolated experiment, not an integrated feature.
 
 ## Repository and baseline
 
 - Working repository: `F:\Finney\Builds\Core Locked down Finney-v0.1-alpha.20-source\alpha20work`.
 - Origin: `https://github.com/Ozymandiasworks/Finney.git`.
 - Published baseline: `bef6a06ae335de9fb9697e0d65b17f9543ba3f98`, tagged `v0.1-core-working`. Preserve this commit and tag; do not overwrite remote history.
-- Active branch: `development/core-regression-tests`. Latest implementation commit: `da16285`.
-- Six local commits after the baseline cover repeatable regression checks, encryption migration assessment, disposable ratchet sessions, and runtime/storage compatibility. These have not been pushed. Further pushes require approval.
+- Active branch: `development/core-regression-tests`. It holds the current reviewed work.
+- The commits after the baseline cover repeatable regression checks, encryption migration assessment, disposable ratchet sessions, runtime/storage compatibility, CSP hardening, cloud handoff, and direct runtime security updates. Changes are reviewed and tested before pushing.
 - Preserve existing style and frozen core files. Avoid broad rewrites, dependency upgrades, and reformatting.
 
 ## Architecture and working features
@@ -29,6 +29,10 @@ Earlier manual testing established isolated A/B identities, encrypted messages o
 - `package.json` and `scripts/setup-windows.ps1` expose repeatable offline checks. `scripts/test-core-crypto.js` exercises actual frozen crypto and restored stamp derivation; `scripts/test-local-development-token.js` tests isolated token lifecycle. `yarn test` runs these plus existing static/core-lockdown/transaction-id/history checks. These passed; static checks are not end-to-end send tests.
 - `scripts/test-ratchet-compatibility.mjs` tests an explicitly supplied isolated libsignal package: disposable prekey handshake, bidirectional/reordered messages, serialized restoration, fresh-process restoration, replay/tamper/identity/signature rejection, and ciphertext-based stamp derivation. It does not test production paid retries or crash-safe persistence.
 - `scripts/test-runtime-storage.js` verifies temporary LevelDB batch writes, close/reopen, recovery and deletion on Node 16/24 and Electron 20/44 in Node-only mode. This is not a durability or at-rest encryption assessment.
+- PR #4 updated direct runtime DOMPurify, Axios and ws dependencies in three isolated compatibility changes. Each passed `yarn test` and `yarn build` on the alpha.20 runtime.
+- `codex/vendor-lockfile-cleanup` removes the nested `local_modules/bitcore-lib-xec/package-lock.json`, which Finney does not read. A clean `yarn install --frozen-lockfile --force`, `yarn test` and `yarn build` passed in an isolated worktree. The branch is published for a focused review; the active Capacitor lockfile remains because mobile builds use it.
+- `scripts/test-relay-envelope-compatibility.js` exercises legacy versioned-envelope round trips, rejects missing and unknown encryption schemes before legacy decryption, and checks that a retry preserves the exact serialized paid envelope. `extension.ts` now accepts only the legacy `EPHEMERALDH` scheme; future schemes fail closed until they have an explicit implementation.
+- `DURABLE_SESSION_PERSISTENCE.md` defines the pre-integration storage boundary, crash recovery states and required tests for future encrypted-session persistence. It does not select or integrate a production encryption library.
 - Frozen files remain unchanged: `src/cashweb/relay/crypto.ts`, `src/cashweb/relay/constructors.ts`, `local_modules/bitcore-lib-xec/lib/transaction/transaction.js`.
 
 ## Encryption experiment and decisions
@@ -43,21 +47,21 @@ Required integration properties: explicit wire version and downgrade rejection; 
 
 ## Current task and next steps
 
-1. Review dependency remediation in small compatibility groups. Dependabot PR #3 (`ea2f868`) was assessed in an isolated worktree and must not be merged: it upgrades Electron 20.1.1 to 39.8.10, Quasar 2.15.1 to 2.22.0, and related tooling together. Its normal install rejects Node 16.20.2 because `node-releases@2.0.55` requires Node >=18. With engine checks bypassed, `yarn test` passed but `yarn build` failed in the upgraded Quasar loader and Sass pipeline. Preserve the Node 16/Electron 20 baseline while remediating direct runtime dependencies separately.
+1. Continue dependency remediation in small compatibility groups. PR #4 remediated direct DOMPurify, Axios and ws findings. Dependabot PR #3 (`ea2f868`) remains unsuitable for merge: it upgrades Electron 20.1.1 to 39.8.10, Quasar 2.15.1 to 2.22.0, and related tooling together. Its normal install rejects Node 16.20.2 because `node-releases@2.0.55` requires Node >=18. With engine checks bypassed, `yarn test` passed but `yarn build` failed in the upgraded Quasar loader and Sass pipeline. Preserve the Node 16/Electron 20 baseline while remediating direct runtime dependencies separately.
 2. Resolve the licensing direction before selecting the production encryption library.
-3. Add versioned-envelope and immutable paid-retry compatibility coverage, then design and review durable session persistence before integration.
+3. Review the durable-session and paid-outbox design in `DURABLE_SESSION_PERSISTENCE.md`, then implement it only after the encryption-library, protected-local-storage, messaging-identity and relay-idempotency decisions are complete. The versioned-envelope and immutable paid-retry compatibility coverage is in place.
 4. Continue the roadmap: modern encryption; separate messaging/wallet identity; opaque relay addressing; encrypted local storage and key/log/notification/CSP hardening; production onion infrastructure with verified fail-closed routing. Larger discovery/payment/attachment work and visual changes follow later.
 
 ## Known limitations and resumption
 
 No newly reproduced core regression is open. Runtime upgrade compatibility and encryption integration remain unfinished. Legacy dependency/Browserslist warnings persist; avoid unrelated upgrades. The latest extra malformed-handshake/fresh-process cases have not been repeated on Electron 20, although the full suite passes on the modern runtime.
 
-Security review found no unapproved secrets in the committed baseline; retained vendored test fixtures were approved. Review staged changes again before committing, without printing secret values. Local review snapshots, candidate dependencies and tokens remain ignored. Do not publish builds or push without approval.
+Security review found no unapproved secrets in the committed baseline; retained vendored test fixtures were approved. Review staged changes again before committing, without printing secret values. Local review snapshots, candidate dependencies and tokens remain ignored. Do not publish builds.
 
 Read this file, `CORE_WORKING_BASELINE.md`, `ENCRYPTION_MIGRATION.md`, and current Git status/log before resuming. Update this checkpoint after meaningful changes, including test scope and unresolved decisions.
 
 ### Latest verification
 
-On 2026-09-11, DOMPurify was updated from resolved version 2.3.3 to 3.4.15 without changing its existing Markdown sanitizer configuration. `yarn test` and `yarn build` both passed on Node 16.20.2, Quasar 2.15.1 and Electron 20.1.1. The generated installer remains ignored and unpublished.
+On 2026-09-12, the versioned-envelope and immutable-retry coverage was added. `yarn test` and `yarn build` both passed on Node 16.20.2, Quasar 2.15.1 and Electron 20.1.1. The generated installer remains ignored and unpublished.
 
-The complete offline regression suite passed again on 2026-09-09. A disposable hidden-window harness also passed on Electron 20.1.1 and 44.3.0 using the actual built preload: bridge function exposure and external SOCKS5/local DIRECT proxy selection matched expectations. Network requests were blocked. Full application startup, bridge actions, actual Tor fail-closed behavior and packaging remain unverified on the candidate runtime. See the latest section of `ENCRYPTION_MIGRATION.md`.
+The complete offline regression suite passed again on 2026-09-09. A disposable hidden-window harness also passed on Electron 20.1.1 and 44.3.0 using the actual built preload: bridge function exposure and external SOCKS5/local DIRECT proxy selection matched expectations. Network requests were blocked. An ignored, disposable full-startup check passed on Electron 44.3.0: the prebuilt Finney renderer reached `#q-app`, its preload bridge was present, and renderer HTTP/WebSocket traffic was cancelled before application load. A modern-tree rebuild, installer check, bridge-action testing and actual Tor fail-closed verification remain unverified. See the latest section of `ENCRYPTION_MIGRATION.md`.

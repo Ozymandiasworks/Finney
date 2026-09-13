@@ -13,6 +13,7 @@ import {
 import path from 'path'
 import fs from 'fs'
 import Badge from 'electron-windows-badge'
+import { verifySignalRuntime } from './signal-runtime'
 
 // Development test instances may use separate Electron user-data roots so two
 // independent Finney identities can run on the same Windows account without
@@ -179,6 +180,11 @@ app.on('second-instance', (event, commandLine, workingDirectory) => {
 
 app.whenReady().then(async () => {
   try {
+    if (process.env.FINNEY_SIGNAL_RUNTIME_SMOKE === '1') {
+      await verifySignalRuntime()
+      app.quit()
+      return
+    }
     await configurePrivacyTransport()
     createWindow()
   } catch (err) {

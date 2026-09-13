@@ -230,6 +230,7 @@ module.exports = configure(function (ctx) {
         // https://www.electron.build/configuration/configuration
 
         appId: 'org.cashweb.finney',
+        asarUnpack: ['node_modules/@signalapp/libsignal-client/prebuilds/**'],
         extraFiles: [{ from: 'src-electron/icons', to: 'resources/icons' }],
         publish: [],
 
@@ -242,7 +243,18 @@ module.exports = configure(function (ctx) {
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
 
-      extendWebpackMain(cfg) {},
+      extendWebpackMain(cfg) {
+        const externals = Array.isArray(cfg.externals)
+          ? cfg.externals
+          : cfg.externals
+          ? [cfg.externals]
+          : []
+        externals.push({
+          '@signalapp/libsignal-client':
+            'commonjs @signalapp/libsignal-client',
+        })
+        cfg.externals = externals
+      },
 
       extendWebpackPreload(cfg) {},
     },

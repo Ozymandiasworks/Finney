@@ -1,7 +1,9 @@
 import { rm } from 'fs/promises'
 import privateState from './private-state'
+import signalStore from './signal-store'
 
 const { createPrivateStateStore } = privateState
+const { createStagedSignalStore, identityKey } = signalStore
 
 export async function verifySignalRuntime() {
   const { PrivateKey } = await import('@signalapp/libsignal-client')
@@ -32,6 +34,21 @@ export async function verifyPrivateStateRuntime({ location, safeStorage }) {
     if (!identity || identity.protected !== true) {
       throw new Error('Private-state runtime smoke test failed')
     }
+    const { PrivateKey } = await import('@signalapp/libsignal-client')
+    const messagingKey = PrivateKey.generate()
+    await store.put(identityKey('smoke'), {
+      privateKey: Buffer.from(messagingKey.serialize()).toString('base64'),
+      registrationId: 1,
+    })
+    const staged = await createStagedSignalStore({
+      signal: await import('@signalapp/libsignal-client'),
+      privateState: store,
+      identityId: 'smoke',
+    })
+    if (!(await staged.store.getIdentityKey()).equals(messagingKey)) {
+      throw new Error('Staged Signal store runtime smoke test failed')
+    }
+    staged.discard()
   } finally {
     await store.close()
     await rm(location, { recursive: true, force: true })

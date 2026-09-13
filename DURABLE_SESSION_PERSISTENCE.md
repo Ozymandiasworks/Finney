@@ -1,6 +1,6 @@
 # Durable session and paid outbox design
 
-Status: the Electron main-process private-state foundation is implemented, but no production protocol, message format, relay or wallet code changes are included here.
+Status: the Electron main-process private-state foundation and staged Signal store adapter are implemented, but no production protocol, message format, relay or wallet code changes are included here.
 
 ## Scope and prerequisites
 
@@ -34,7 +34,7 @@ The private database needs encrypted values and unambiguous, versioned key names
 
 An outbox record contains the protocol version, recipient identity binding, payload digest, serialized `MessageSet`, serialized transaction hex, expected transaction identifiers, session revision, timestamps, retry count and state. It contains no regenerated payload or instruction to create a replacement stamp. The envelope ID is derived from immutable serialized envelope bytes, not from a mutable UI message.
 
-The private-state foundation encrypts individual JSON records with Electron `safeStorage` and stores only the encrypted representation in LevelDB. It fails closed when OS protection is unavailable and rejects Linux plaintext or unknown keyring backends. The interface exposes `get`, `getMany`, `put`, `del` and one atomic `batch` operation; callers must not get direct plaintext LevelDB access. It has no renderer IPC or production protocol caller until the staged store adapter is complete.
+The private-state foundation encrypts individual JSON records with Electron `safeStorage` and stores only the encrypted representation in LevelDB. It fails closed when OS protection is unavailable and rejects Linux plaintext or unknown keyring backends. The interface exposes `get`, `getMany`, `put`, `del` and one atomic `batch` operation; callers must not get direct plaintext LevelDB access. The staged adapter serializes libsignal identity, session and prekey mutations in memory, then writes them through one batch with future outbox or receipt records. It has no renderer IPC or production protocol caller.
 
 ## Outgoing state machine
 

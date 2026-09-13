@@ -36,7 +36,7 @@
     "test:sender-history": "node scripts/test-sender-history.js",
     "test:local-services-http": "node scripts/test-local-services-http.js",
     "test:core:static": "node scripts/static-audit.js && node scripts/test-core-lockdown.js && node scripts/test-xec-txid.js && node scripts/test-sender-history.js",
-    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js && node scripts/test-xec-signing.js && node scripts/test-wallet-mnemonic.js && node scripts/test-i18n.js"
+    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js && node scripts/test-xec-signing.js && node scripts/test-wallet-mnemonic.js && node scripts/test-i18n.js && node scripts/test-bn-js-security.js"
   },
   "dependencies": {
     "@capacitor/core": "2.5.0",
@@ -48,7 +48,7 @@
     "bip39": "^3.0.2",
     "bitcore-lib-xec": "file:./local_modules/bitcore-lib-xec",
     "bluebird": "^3.7.2",
-    "bn.js": "file:./local_modules/bn.js",
+    "bn.js": "4.12.3",
     "btoa": "^1.2.1",
     "chronik-client": "4.3.0",
     "core-js": "^3.24.1",
@@ -120,6 +120,15 @@
   },
   "resolutions": {
     "**/cipher-base": "1.0.5",
+    "bitcore-lib-xec/@abcpros/bitcore-lib/bn.js": "4.12.3",
+    "elliptic/bn.js": "4.12.3",
+    "node-polyfill-webpack-plugin/crypto-browserify/browserify-sign/bn.js": "5.2.3",
+    "node-polyfill-webpack-plugin/crypto-browserify/create-ecdh/bn.js": "4.12.3",
+    "node-polyfill-webpack-plugin/crypto-browserify/diffie-hellman/bn.js": "4.12.3",
+    "node-polyfill-webpack-plugin/crypto-browserify/diffie-hellman/miller-rabin/bn.js": "4.12.3",
+    "node-polyfill-webpack-plugin/crypto-browserify/public-encrypt/bn.js": "4.12.3",
+    "**/browserify-rsa/bn.js": "5.2.3",
+    "node-polyfill-webpack-plugin/crypto-browserify/public-encrypt/parse-asn1/asn1.js/bn.js": "4.12.3",
     "**/elliptic": "6.6.1",
     "**/pbkdf2": "3.1.3",
     "**/sha.js": "2.4.12"

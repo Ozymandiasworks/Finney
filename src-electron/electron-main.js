@@ -8,12 +8,13 @@ import {
   Menu,
   shell,
   nativeImage,
+  safeStorage,
   session,
 } from 'electron'
 import path from 'path'
 import fs from 'fs'
 import Badge from 'electron-windows-badge'
-import { verifySignalRuntime } from './signal-runtime'
+import { verifyPrivateStateRuntime, verifySignalRuntime } from './signal-runtime'
 
 // Development test instances may use separate Electron user-data roots so two
 // independent Finney identities can run on the same Windows account without
@@ -182,6 +183,10 @@ app.whenReady().then(async () => {
   try {
     if (process.env.FINNEY_SIGNAL_RUNTIME_SMOKE === '1') {
       await verifySignalRuntime()
+      await verifyPrivateStateRuntime({
+        location: path.join(app.getPath('temp'), 'finney-private-state-smoke'),
+        safeStorage,
+      })
       app.quit()
       return
     }

@@ -68,8 +68,8 @@ Prekey consumption, identity changes, skipped-message state and duplicate receip
 ## Required implementation sequence
 
 1. Complete the main-process integration spike with a pinned libsignal release and Electron packaging support for its native .node binary. The Windows packaged no-window smoke test must load the native module and complete a seal/open operation before any IPC is introduced.
-2. Add a narrow preload IPC contract for profile-bundle publication, session setup, encrypt and decrypt. Do not expose store objects or key serialization.
-3. Add encrypted private-state storage and the staged store adapter before enabling any v2 message path.
+2. Add encrypted private-state storage and the staged store adapter before enabling any v2 message path. The implemented main-process foundation has no renderer IPC or protocol caller; the adapter remains required.
+3. Add a narrow preload IPC contract for profile-bundle publication, session setup, encrypt and decrypt. Do not expose store objects or key serialization.
 4. Extend the profile and relay schemas for messaging-identity bindings and prekey bundles.
 5. Extend the message schema with the explicit v2 scheme and header-binding data, retaining the legacy reader.
 6. Implement outgoing prepared-outbox and incoming receipt transactions through the staged adapter.

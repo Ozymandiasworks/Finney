@@ -36,7 +36,7 @@
     "test:sender-history": "node scripts/test-sender-history.js",
     "test:local-services-http": "node scripts/test-local-services-http.js",
     "test:core:static": "node scripts/static-audit.js && node scripts/test-core-lockdown.js && node scripts/test-xec-txid.js && node scripts/test-sender-history.js",
-    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js"
+    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js && node scripts/test-xec-signing.js"
   },
   "dependencies": {
     "@capacitor/core": "2.5.0",
@@ -117,6 +117,9 @@
     "protoc": "^1.0.4",
     "ts-protoc-gen": "^0.15.0",
     "typescript": "^4.7.4"
+  },
+  "resolutions": {
+    "**/elliptic": "6.6.1"
   },
   "engines": {
     "node": "24.x",

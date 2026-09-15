@@ -4,6 +4,9 @@
  */
 
 import { contextBridge, ipcRenderer, shell } from 'electron'
+import signalIpc from './signal-ipc'
+
+const { channels } = signalIpc
 
 contextBridge.exposeInMainWorld('badge', {
   updateBadge: unread => {
@@ -31,4 +34,12 @@ contextBridge.exposeInMainWorld('url', {
       console.warn('Blocked invalid external URL')
     }
   },
+})
+
+contextBridge.exposeInMainWorld('signal', {
+  capabilities: () => ipcRenderer.invoke(channels.capabilities),
+  publishProfile: profile => ipcRenderer.invoke(channels.publishProfile, profile),
+  setupSession: bundle => ipcRenderer.invoke(channels.setupSession, bundle),
+  encrypt: request => ipcRenderer.invoke(channels.encrypt, request),
+  decrypt: envelope => ipcRenderer.invoke(channels.decrypt, envelope),
 })

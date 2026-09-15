@@ -8,6 +8,7 @@ import {
   Menu,
   shell,
   nativeImage,
+  ipcMain,
   safeStorage,
   session,
 } from 'electron'
@@ -15,6 +16,9 @@ import path from 'path'
 import fs from 'fs'
 import Badge from 'electron-windows-badge'
 import { verifyPrivateStateRuntime, verifySignalRuntime } from './signal-runtime'
+import signalIpc from './signal-ipc'
+
+const { registerSignalIpc } = signalIpc
 
 // Development test instances may use separate Electron user-data roots so two
 // independent Finney identities can run on the same Windows account without
@@ -177,6 +181,11 @@ app.on('second-instance', (event, commandLine, workingDirectory) => {
     mainWindow.show()
     mainWindow.focus()
   }
+})
+
+registerSignalIpc({
+  ipcMain,
+  getWebContents: () => mainWindow && mainWindow.webContents,
 })
 
 app.whenReady().then(async () => {

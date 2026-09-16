@@ -19,7 +19,9 @@ Updated: 2026-09-16. Production remains alpha.20 with legacy message encryption.
 
 ## Immediate next task
 
-Define a signed signal-v2 public profile entry containing only public messaging-bundle material, explicit protocol/version fields, and strict parsing. Preserve legacy profile readers and do not enable a production message path until the bundle is authenticated through the profile verifier and the durable session/outbox invariants are wired to paid relay delivery.
+Integrate the already validated signal-v2 public-bundle serializer with main-owned identity provisioning and signed profile publication. Preserve legacy profile readers and do not enable a production message path until the bundle is authenticated through the profile verifier and the durable session/outbox invariants are wired to paid relay delivery.
+- An inactive signal-v2 public-bundle serializer/parser now supports one registered device, a separate Signal identity public key, one-time pre-key, signed pre-key, and Kyber pre-key. It applies exact key/signature lengths, strict canonical base64 decoding, bounded encoding, version rejection, and embedded Signal-signature verification before reconstructing a libsignal PreKeyBundle. It is not yet stored, published in a profile, exposed over IPC, or accepted by a message path.
+- scripts/test-signal-profile-bundle.mjs validates round-trip reconstruction into libsignal, future-version rejection, malformed fields, and altered embedded signatures. The full core suite, Windows Electron package build, NSIS installer, and hidden packaged smoke test passed after this addition.
 ## Architecture and working features
 
 Vue 3 / Quasar 2 renderer in Electron 44.3.0, TypeScript 4.7.4, Node 24.19.0 build tooling. Messaging lives in `src/cashweb/relay`: `constructors.ts` encrypts and constructs stamps; `crypto.ts` contains legacy secp256k1/AES-CBC/HMAC and HD stamp derivation; `extension.ts` parses and decrypts; `index.ts` coordinates paid broadcast, relay retries, history and stamp recovery. The protobuf envelope exposes sender and recipient public keys.

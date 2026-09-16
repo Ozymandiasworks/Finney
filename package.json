@@ -36,7 +36,7 @@
     "test:sender-history": "node scripts/test-sender-history.js",
     "test:local-services-http": "node scripts/test-local-services-http.js",
     "test:core:static": "node scripts/static-audit.js && node scripts/test-core-lockdown.js && node scripts/test-xec-txid.js && node scripts/test-sender-history.js",
-    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js && node scripts/test-xec-signing.js && node scripts/test-wallet-mnemonic.js && node scripts/test-i18n.js && node scripts/test-bn-js-security.js && node scripts/test-base-x-security.js && node scripts/test-signal-runtime.js && node scripts/test-private-state-store.js && node scripts/test-staged-signal-store.mjs && node scripts/test-signal-ipc.js && node scripts/test-profile-validation.js"
+    "test:core": "yarn test:core:static && node scripts/test-core-crypto.js && node scripts/test-relay-envelope-compatibility.js && node scripts/test-local-development-token.js && node scripts/test-local-services-http.js && node scripts/test-xec-signing.js && node scripts/test-wallet-mnemonic.js && node scripts/test-i18n.js && node scripts/test-bn-js-security.js && node scripts/test-base-x-security.js && node scripts/test-signal-runtime.js && node scripts/test-private-state-store.js && node scripts/test-staged-signal-store.mjs && node scripts/test-signal-ipc.js && node scripts/test-profile-validation.js && node scripts/test-signal-profile-bundle.mjs"
   },
   "dependencies": {
     "@capacitor/core": "2.5.0",

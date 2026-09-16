@@ -48,6 +48,7 @@ declare module 'bitcore-lib-xec' {
     }
 
     class Signature {
+      static fromCompact(sig: Buffer): Signature
       static fromDER(sig: Buffer): Signature
       static fromString(data: string): Signature
       SIGHASH_ALL: number

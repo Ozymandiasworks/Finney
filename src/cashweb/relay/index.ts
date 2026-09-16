@@ -52,6 +52,7 @@ import type {
 } from '../types/messages'
 import { encodeEntry } from './encode-entry'
 import { decodeEntry } from './decode-entry'
+import { verifyProfileMetadata } from './profile-validation'
 
 type HttpResponseLike = {
   status?: number
@@ -111,11 +112,13 @@ export class ReadOnlyRelayClient {
     })
     const metadata = SignedPayload.deserializeBinary(response.data)
 
-    // Get PubKey
+    const { rawPayload } = verifyProfileMetadata(
+      metadata,
+      addressLegacy,
+      this.networkName,
+    )
     const pubKey = metadata.getPublicKey()
-    assert(typeof pubKey !== 'string', 'invalid type for pubKey')
-    const rawPayload = metadata.getPayload()
-    assert(typeof rawPayload !== 'string', 'invalid type for pubKey')
+    assert(typeof pubKey !== 'string', 'invalid profile public key')
 
     const payload = Profile.deserializeBinary(rawPayload)
 

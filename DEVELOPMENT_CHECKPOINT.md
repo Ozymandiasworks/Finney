@@ -1,6 +1,6 @@
 # Development checkpoint
 
-Updated: 2026-09-12. Production remains alpha.20 with legacy message encryption. Modern encryption is an isolated experiment, not an integrated feature.
+Updated: 2026-09-16. Production remains alpha.20 with legacy message encryption. Modern encryption is an isolated experiment, not an integrated feature.
 
 ## Repository and baseline
 
@@ -11,6 +11,15 @@ Updated: 2026-09-12. Production remains alpha.20 with legacy message encryption.
 - The commits after the baseline cover repeatable regression checks, encryption migration assessment, disposable ratchet sessions, runtime/storage compatibility, CSP hardening, cloud handoff, and direct runtime security updates. Changes are reviewed and tested before pushing.
 - Preserve existing style and frozen core files. Avoid broad rewrites, dependency upgrades, and reformatting.
 
+## Latest completed work
+
+- Downloaded profiles now fail closed unless their SignedPayload uses the supported ECDSA scheme, has a well-formed 64-byte compact signature, verifies over the exact serialized profile payload, and contains a public key that derives to the requested XEC address. This prevents relay substitution of an unsigned, altered, or misbound profile before any v2 messaging bundle can be accepted.
+- scripts/test-profile-validation.js covers a valid profile, payload tampering, signature tampering, XEC address/key mismatch, and unsupported scheme rejection. The local XEC declaration now includes its existing runtime Signature.fromCompact API.
+- Validation after this change: yarn test, yarn build, NSIS installer generation, and the hidden packaged Electron runtime smoke all passed on Node 24.19.0 and Electron 44.3.0. The build retained only the known Browserslist, Yarn resolution, Vue I18n maintenance, and Electron remote peer-dependency warnings.
+
+## Immediate next task
+
+Define a signed signal-v2 public profile entry containing only public messaging-bundle material, explicit protocol/version fields, and strict parsing. Preserve legacy profile readers and do not enable a production message path until the bundle is authenticated through the profile verifier and the durable session/outbox invariants are wired to paid relay delivery.
 ## Architecture and working features
 
 Vue 3 / Quasar 2 renderer in Electron 44.3.0, TypeScript 4.7.4, Node 24.19.0 build tooling. Messaging lives in `src/cashweb/relay`: `constructors.ts` encrypts and constructs stamps; `crypto.ts` contains legacy secp256k1/AES-CBC/HMAC and HD stamp derivation; `extension.ts` parses and decrypts; `index.ts` coordinates paid broadcast, relay retries, history and stamp recovery. The protobuf envelope exposes sender and recipient public keys.

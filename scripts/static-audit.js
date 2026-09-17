@@ -83,8 +83,8 @@ checkAbsent(
 )
 
 checkAbsent(
-  'active source does not log wallet private keys or relay authorization tokens',
-  /console\.(log|debug|info)\([^\n]*(xPrivKey|relayToken|mnemonic|seed|privateKey)/,
+  'active source does not log wallet private keys, transactions or relay authorization tokens',
+  /console\.(log|debug|info)\(\s*(utxo|transaction)\s*\)|console\.(log|debug|info)\([^\n]*(xPrivKey|relayToken|mnemonic|seed|privateKey)/,
   ['src', 'src-electron'],
 )
 

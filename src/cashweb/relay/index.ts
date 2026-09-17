@@ -892,10 +892,7 @@ export class RelayClient extends ReadOnlyRelayClient {
       }
 
       const result = await chronikClient.broadcastTxs(
-        transactions.map(tx => {
-          console.log('Broadcasting a transaction', tx.txid, tx.toString())
-          return tx.toString()
-        }),
+        transactions.map(tx => tx.toString()),
       )
       stampBroadcasted = true
 

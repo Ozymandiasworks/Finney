@@ -511,7 +511,6 @@ export class Wallet {
     // Sign transaction
     transaction = transaction.sign(signingKeys)
 
-    console.log('Broadcasting forwarding txn', transaction)
     const txHex = transaction.toString()
     try {
       const chronikClient = this.chronikClient
@@ -685,7 +684,6 @@ export class Wallet {
       (transaction.inputAmount - transaction.outputAmount) /
         this._estimateSize(transaction),
     )
-    console.log(transaction)
     // Return output location
     return newIndex
   }
@@ -933,8 +931,6 @@ export class Wallet {
         break
       }
       usedUtxos.push(utxo)
-      console.log(utxo)
-
       const address = utxo.address
       utxo.script = Script.buildPublicKeyHashOut(address).toHex()
       // Grab private key
@@ -973,7 +969,6 @@ export class Wallet {
       (transaction.inputAmount - transaction.outputAmount) /
         transaction._estimateSize(),
     )
-    console.log(transaction)
     return { transaction, usedUtxos }
   }
 

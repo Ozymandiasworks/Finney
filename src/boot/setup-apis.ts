@@ -137,7 +137,6 @@ export default boot(async ({ app }) => {
   console.log('profile.name', profile.name)
   status.setup = !!xPrivKey && !!profile.name
   if (xPrivKey && profile.name) {
-    console.log('Loaded previous private key')
     wallet.setXPrivKey(xPrivKey)
     status.setup = true
   }

@@ -330,6 +330,36 @@ export class RelayClient extends ReadOnlyRelayClient {
     }
   }
 
+  private async validateReceivedOutput(
+    output: Utxo,
+  ): Promise<{ utxo: Utxo; confirmed: boolean } | null> {
+    const wallet = this.wallet
+    assert(wallet, 'Wallet not available while validating received outputs')
+    const chronikClient = wallet.chronikClient
+    assert(chronikClient, 'Chronik is unavailable while validating outputs')
+
+    const response = await chronikClient.address(output.address).utxos()
+    const outputId = calcUtxoId(output)
+    const live = response.utxos.find(
+      utxo =>
+        `${utxo.outpoint.txid}_${utxo.outpoint.outIdx}` === outputId &&
+        Number(utxo.sats) === output.satoshis,
+    )
+    if (!live) {
+      return null
+    }
+
+    return {
+      utxo: {
+        ...output,
+        txId: live.outpoint.txid,
+        outputIndex: live.outpoint.outIdx,
+        satoshis: Number(live.sats),
+      },
+      confirmed: live.blockHeight >= 0,
+    }
+  }
+
   /**
    * Reconstruct recipient-spendable stamp keys from persisted received
    * messages and resolve each one against Chronik before inserting it into the
@@ -1147,6 +1177,14 @@ export class RelayClient extends ReadOnlyRelayClient {
     assert(myAddress, 'Address or wallet not set')
     const outbound = senderAddress === myAddress
     const serverTime = preParsedMessage.receivedTime
+    const destinationAddress = preParsedMessage.destinationPublicKey
+      .toAddress(this.displayNetwork)
+      .toCashAddress()
+    if (!outbound && destinationAddress !== myAddress) {
+      return null
+    }
+    const identityPrivateKey = wallet.identityPrivKey
+    assert(identityPrivateKey, 'No identity privkey set')
 
     // if this client sent the message, we already have the data and don't need to process it or get the payload again
     if (preParsedMessage.payloadDigest.length !== 0) {
@@ -1207,17 +1245,27 @@ export class RelayClient extends ReadOnlyRelayClient {
       return null
     }
 
-    const destinationAddress = parsedMessage.destinationPublicKey
-      .toAddress(this.displayNetwork)
-      .toCashAddress()
+    let rawPayload: Uint8Array
+    try {
+      rawPayload = outbound
+        ? parsedMessage.openSelf(identityPrivateKey)
+        : parsedMessage.open(identityPrivateKey)
+    } catch {
+      console.error('Unable to authenticate received message payload')
+      return null
+    }
+    const payload = Payload.deserializeBinary(rawPayload)
+    if (outbound && myAddress === destinationAddress) {
+      this.receiveSelfSend({ payload })
+      return null
+    }
 
     // Add UTXO
     const stampOutpoints = parsedMessage.stamp.getStampOutpointsList()
     const outpoints = []
 
-    let stampValue = 0
-    const identityPrivateKey = wallet.identityPrivKey
-    assert(identityPrivateKey, 'No identity privkey set')
+    const walletUtxos: Utxo[] = []
+    const spentUtxoIds: string[] = []
 
     const stampRootHDPrivKey = this.payloadConstructor
       .constructStampHDPrivateKey(payloadDigest, identityPrivateKey)
@@ -1232,19 +1280,28 @@ export class RelayClient extends ReadOnlyRelayClient {
       const stampTxHDPrivKey = stampRootHDPrivKey.deriveChild(i)
       if (outbound) {
         for (const input of stampTx.inputs) {
-          // In order to update UTXO state more quickly, go ahead and remove the inputs from our set immediately
-          const utxoId = calcUtxoId({
-            txId: input.prevTxId.toString('hex'),
-            outputIndex: input.outputIndex,
-          })
-          await wallet.deleteUtxo(utxoId)
+          spentUtxoIds.push(
+            calcUtxoId({
+              txId: input.prevTxId.toString('hex'),
+              outputIndex: input.outputIndex,
+            }),
+          )
         }
       }
       for (const [j, outputIndex] of vouts.entries()) {
+        if (
+          !Number.isInteger(outputIndex) ||
+          outputIndex < 0 ||
+          outputIndex >= stampTx.outputs.length
+        ) {
+          return null
+        }
         const output = stampTx.outputs[outputIndex]
         const satoshis = output.satoshis
+        if (!Number.isSafeInteger(satoshis) || satoshis <= 0) {
+          return null
+        }
         const address = output.script.toAddress(this.networkName)
-        stampValue += satoshis
 
         // Also note, we should use an HD key here.
         const outputPrivKey = stampTxHDPrivKey.deriveChild(j).privateKey
@@ -1259,10 +1316,8 @@ export class RelayClient extends ReadOnlyRelayClient {
           !outbound &&
           !address.toBuffer().equals(computedAddress.toBuffer())
         ) {
-          // Assume outbound addresses were valid.  Otherwise we need to calclate a different
-          // derivation then based on our identity address.
-          console.error('invalid stamp address, ignoring')
-          continue
+          console.error('Invalid stamp address')
+          return null
         }
 
         const stampOutput = {
@@ -1273,41 +1328,18 @@ export class RelayClient extends ReadOnlyRelayClient {
           outputIndex,
         } as Utxo
         outpoints.push(stampOutput)
-        if (outbound) {
-          // In order to update UTXO state more quickly, go ahead and remove the inputs from our set immediately
-          continue
+        if (!outbound) {
+          walletUtxos.push({
+            ...stampOutput,
+            privKey: Object.freeze(outputPrivKey),
+          })
         }
-        wallet.putUtxo({
-          ...stampOutput,
-          privKey: Object.freeze(outputPrivKey),
-        })
       }
-    }
-
-    // Ignore messages below acceptance price
-    const stealthValue = 0
-
-    const rawPayload = outbound
-      ? parsedMessage.openSelf(identityPrivateKey)
-      : parsedMessage.open(identityPrivateKey)
-    const payload = Payload.deserializeBinary(rawPayload)
-    if (outbound && myAddress === destinationAddress) {
-      this.receiveSelfSend({ payload })
-      return null
     }
 
     // Decode entries
     const entriesList = payload.getEntriesList()
-    const newMsg: ReceivedMessage = {
-      outbound,
-      status: 'confirmed',
-      items: [] as MessageItem[],
-      serverTime,
-      receivedTime,
-      outpoints,
-      senderAddress,
-      destinationAddress,
-    }
+    const items: MessageItem[] = []
     for (const entry of entriesList) {
       const entryData = await decodeEntry(entry, outbound, {
         constructHDStealthPrivateKey: (publicKey: PublicKey) =>
@@ -1316,14 +1348,63 @@ export class RelayClient extends ReadOnlyRelayClient {
             identityPrivateKey,
           ),
         networkName: this.networkName,
-        wallet: wallet,
       })
       if (entryData == null) {
-        continue
+        return null
       }
-      const [messageItem, entryOutpoints] = entryData
-      newMsg.items.push(messageItem)
+      const [messageItem, entryOutpoints, entryWalletUtxos] = entryData
+      items.push(messageItem)
       outpoints.push(...entryOutpoints)
+      walletUtxos.push(...entryWalletUtxos)
+    }
+
+    const validatedUtxos: { utxo: Utxo; confirmed: boolean }[] = []
+    const outputIds = new Set<string>()
+    if (!outbound) {
+      for (const walletUtxo of walletUtxos) {
+        const outputId = calcUtxoId(walletUtxo)
+        if (outputIds.has(outputId)) {
+          return null
+        }
+        outputIds.add(outputId)
+        const validated = await this.validateReceivedOutput(walletUtxo)
+        if (!validated) {
+          return null
+        }
+        validatedUtxos.push(validated)
+      }
+    }
+
+    for (const { utxo } of validatedUtxos) {
+      wallet.putUtxo(utxo)
+    }
+    for (const utxoId of spentUtxoIds) {
+      await wallet.deleteUtxo(utxoId)
+    }
+
+    const valuedUtxos = outbound
+      ? outpoints
+      : validatedUtxos.map(({ utxo }) => utxo)
+    const stampValue = valuedUtxos
+      .filter(utxo => utxo.type === 'stamp')
+      .reduce((total, utxo) => total + utxo.satoshis, 0)
+    const stealthValue = valuedUtxos
+      .filter(utxo => utxo.type === 'stealth')
+      .reduce((total, utxo) => total + utxo.satoshis, 0)
+    const newMsg: ReceivedMessage = {
+      outbound,
+      status:
+        outbound ||
+        (validatedUtxos.length > 0 &&
+          validatedUtxos.every(({ confirmed }) => confirmed))
+          ? 'confirmed'
+          : 'pending',
+      items,
+      serverTime,
+      receivedTime,
+      outpoints,
+      senderAddress,
+      destinationAddress,
     }
 
     const copartyPubKey = outbound

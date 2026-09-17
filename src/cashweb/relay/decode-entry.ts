@@ -5,8 +5,6 @@ import { entryToImage } from './images'
 import stealth from './stealth_pb'
 import { TextItem, MessageItem } from '../types/messages'
 import { PublicKey, crypto, Transaction, HDPrivateKey } from 'bitcore-lib-xec'
-import { Wallet } from '../wallet'
-import { calcUtxoId } from '../wallet/helpers'
 import { Utxo } from '../types/utxo'
 
 export async function decodeEntry(
@@ -14,14 +12,12 @@ export async function decodeEntry(
   outbound: boolean,
   {
     networkName,
-    wallet,
     constructHDStealthPrivateKey,
   }: {
     networkName: string
-    wallet: Wallet
     constructHDStealthPrivateKey: (pubKey: PublicKey) => HDPrivateKey
   },
-): Promise<[MessageItem, Utxo[]] | null> {
+): Promise<[MessageItem, Utxo[], Utxo[]] | null> {
   // If address data doesn't exist then add it
   const kind = entry.getKind()
   const outpoints: Utxo[] = []
@@ -35,6 +31,7 @@ export async function decodeEntry(
         payloadDigest,
       } as ReplyItem,
       outpoints,
+      [],
     ]
   }
 
@@ -47,6 +44,7 @@ export async function decodeEntry(
           text: entryData,
         } as TextItem,
         outpoints,
+        [],
       ]
     }
     assert(
@@ -60,10 +58,12 @@ export async function decodeEntry(
         text,
       } as TextItem,
       outpoints,
+      [],
     ]
   }
 
   if (kind === 'stealth-payment') {
+    const walletUtxos: Utxo[] = []
     const entryData = entry.getBody()
     assert(
       typeof entryData !== 'string',
@@ -87,20 +87,19 @@ export async function decodeEntry(
       const txId = stealthTx.txid
       const vouts = outpoint.getVoutsList()
 
-      if (outbound) {
-        for (const input of stealthTx.inputs) {
-          // Don't add these outputs to our wallet. They're the other persons
-          const utxoId = calcUtxoId({
-            txId: input.prevTxId.toString('hex'),
-            outputIndex: input.outputIndex,
-          })
-          await wallet.deleteUtxo(utxoId)
-        }
-      }
-
       for (const [j, outputIndex] of vouts.entries()) {
+        if (
+          !Number.isInteger(outputIndex) ||
+          outputIndex < 0 ||
+          outputIndex >= stealthTx.outputs.length
+        ) {
+          return null
+        }
         const output = stealthTx.outputs[outputIndex]
         const satoshis = output.satoshis
+        if (!Number.isSafeInteger(satoshis) || satoshis <= 0) {
+          return null
+        }
 
         const outpointPrivKey = stealthHDPrivKey
           .deriveChild(44)
@@ -133,10 +132,9 @@ export async function decodeEntry(
         } as Utxo
         outpoints.push(stampOutput)
         if (outbound) {
-          // Don't add these outputs to our wallet. They're the other persons
           continue
         }
-        wallet.putUtxo({
+        walletUtxos.push({
           ...stampOutput,
           privKey: Object.freeze(outpointPrivKey),
         })
@@ -148,6 +146,7 @@ export async function decodeEntry(
         amount: stealthValue,
       } as StealthItem,
       outpoints,
+      walletUtxos,
     ]
   }
 
@@ -159,6 +158,7 @@ export async function decodeEntry(
         image,
       } as ImageItem,
       outpoints,
+      [],
     ]
   }
 

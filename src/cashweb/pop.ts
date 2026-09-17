@@ -1,12 +1,13 @@
 import assert from 'assert'
 import axios, { Method } from 'axios'
-import { Transaction } from 'bitcore-lib-xec'
 
-import paymentrequest, {
-  Payment,
-  PaymentDetails,
-} from './bip70/paymentrequest_pb'
-import { Wallet } from './wallet'
+import paymentrequest from './bip70/paymentrequest_pb'
+import type { Payment, PaymentDetails } from './bip70/paymentrequest_pb'
+import type { Utxo } from './types/utxo'
+import type { Wallet } from './wallet'
+
+export const legacyPaymentDisabledMessage =
+  'Legacy HTTP 402 payments are disabled for this release'
 
 export default {
   async getPaymentRequest(url: string, method: Method, data?: Uint8Array) {
@@ -58,34 +59,13 @@ export default {
   async constructPaymentTransaction(
     wallet: Wallet,
     paymentDetails: PaymentDetails,
-  ) {
-    // Get Outputs
-    const requestOutputs = paymentDetails.getOutputsList()
-    const outputs = requestOutputs.map(reqOutput => {
-      const script = Buffer.from(reqOutput.getScript())
-      const satoshis = reqOutput.getAmount()
-      const output = new Transaction.Output({
-        script,
-        satoshis,
-      })
-      return output
-    })
-
-    // Construct tx
-    const { transaction, usedUtxos } = await wallet.constructTransaction({
-      outputs,
-    })
-    const rawTransaction = transaction.toBuffer()
-
-    // Send payment and receive token
-    const payment = new paymentrequest.Payment()
-    payment.addTransactions(rawTransaction)
-    payment.setMerchantData(paymentDetails.getMerchantData())
-    const paymentUrl = paymentDetails.getPaymentUrl()
-    assert(
-      typeof paymentUrl === 'string',
-      'Payment url undefined when it should not be',
-    )
-    return { payment, paymentUrl, usedUtxos }
+  ): Promise<{
+    payment: Payment
+    paymentUrl: string
+    usedUtxos: Utxo[]
+  }> {
+    void wallet
+    void paymentDetails
+    throw new Error(legacyPaymentDisabledMessage)
   },
 }

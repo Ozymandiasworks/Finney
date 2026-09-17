@@ -10,7 +10,7 @@ import {
 import p2pkh from './p2pkh_pb'
 
 import { SignedPayload } from '../signed_payload/payload_pb'
-import pop from '../pop'
+import pop, { legacyPaymentDisabledMessage } from '../pop'
 // TODO: Relay code should not depend on Stamp base code. Fix this import
 import VCard from 'vcf'
 import EventEmitter from 'events'
@@ -21,7 +21,7 @@ import { PayloadConstructor } from './crypto'
 import { messageMixin } from './extension'
 import { calcUtxoId } from '../wallet/helpers'
 import assert from 'assert'
-import paymentrequest, { Payment } from '../bip70/paymentrequest_pb'
+import { Payment } from '../bip70/paymentrequest_pb'
 
 import WebSocket from 'isomorphic-ws'
 import {
@@ -683,40 +683,7 @@ export class RelayClient extends ReadOnlyRelayClient {
         throw err
       }
 
-      // TODO: We need to ensure this payment is reasonable to the user, otherwise the relay server
-      // could request amounts of money that are ridiculous.
-      let responseData: Uint8Array | undefined
-      if (response.data instanceof Uint8Array) {
-        responseData = response.data
-      } else if (response.data instanceof ArrayBuffer) {
-        responseData = new Uint8Array(response.data)
-      }
-      assert(
-        responseData,
-        'Relay 402 response did not include a payment request',
-      )
-
-      const paymentRequest =
-        paymentrequest.PaymentRequest.deserializeBinary(responseData)
-      const serializedPaymentDetails =
-        paymentRequest.getSerializedPaymentDetails()
-      assert(
-        typeof serializedPaymentDetails !== 'string',
-        'serializedPaymentDetails is a string?',
-      )
-      const paymentDetails = paymentrequest.PaymentDetails.deserializeBinary(
-        serializedPaymentDetails,
-      )
-      assert(this.wallet, 'Wallet not properly setup?')
-      const { paymentUrl, payment } = await pop.constructPaymentTransaction(
-        this.wallet,
-        paymentDetails,
-      )
-      const paymentUrlFull = new URL(paymentUrl, this.url)
-      console.log('Sending payment to', paymentUrlFull.href)
-      const { token } = await pop.sendPayment(paymentUrlFull.href, payment)
-      this.setToken(token)
-      return this.getMessages(address, startTime, endTime, retries - 1)
+      throw new Error(legacyPaymentDisabledMessage)
     }
   }
 

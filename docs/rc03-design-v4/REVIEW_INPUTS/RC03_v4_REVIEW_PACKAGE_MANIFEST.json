@@ -1,0 +1,152 @@
+{
+  "packageVersion": "4.0.0-draft",
+  "productionBaseline": "b61c888bbbdae632541c41c7f829a9ed13ad77b2",
+  "reviewedDesignCommit": "08673ef0c7c190132802dad88970e89ccc96c59a",
+  "deliveryCommit": "Containing Git commit, reported separately to avoid a self-referential digest",
+  "applicationRepository": "F:/Finney/libsignal-spike-20260913",
+  "applicationProvenanceBranch": "gate1/remediation",
+  "controlRoot": "C:/Users/Dustin Dreifuerst/Documents/ChatGPT/Finney/FINNEY_CONTROL",
+  "gitPackageRoot": "docs/rc03-design-v4",
+  "gate": "Gate 1 BLOCKED; PRE-001 unsatisfied",
+  "status": "documentation only; implementation unauthorized; owner decisions pending",
+  "hashAlgorithm": "SHA-256 of exact UTF-8 file bytes; manifest hash reported separately",
+  "files": [
+    {
+      "role": "contract",
+      "relativePath": "REPORTS/RC03_IMPLEMENTATION_CONTRACT-v4.md",
+      "neutral": false,
+      "controlPath": "FINNEY_CONTROL/REPORTS/RC03_IMPLEMENTATION_CONTRACT-v4.md",
+      "gitPath": "docs/rc03-design-v4/REPORTS/RC03_IMPLEMENTATION_CONTRACT-v4.md",
+      "version": "4.0.0-draft",
+      "sha256": "90CE8107E89D57121D596DA942288E0E8191FF5B97B5A3A80BB432D2E05CDA51"
+    },
+    {
+      "role": "crosswalk",
+      "relativePath": "REPORTS/RC03_CONTRACT_CROSSWALK-v4.json",
+      "neutral": false,
+      "controlPath": "FINNEY_CONTROL/REPORTS/RC03_CONTRACT_CROSSWALK-v4.json",
+      "gitPath": "docs/rc03-design-v4/REPORTS/RC03_CONTRACT_CROSSWALK-v4.json",
+      "version": "4.0.0-draft",
+      "sha256": "64B1BFE12C68D6E2C9585AE34E2E10C0B3247F14095DDBA5F4D7D883E88AA04B"
+    },
+    {
+      "role": "owner-decisions",
+      "relativePath": "REPORTS/RC03_OWNER_DECISIONS-v4.md",
+      "neutral": false,
+      "controlPath": "FINNEY_CONTROL/REPORTS/RC03_OWNER_DECISIONS-v4.md",
+      "gitPath": "docs/rc03-design-v4/REPORTS/RC03_OWNER_DECISIONS-v4.md",
+      "version": "4.0.0-draft",
+      "sha256": "F321B3A19EFF078582AE2130BB588D99B9FA094E9A938A20476E4AA58B13DB67"
+    },
+    {
+      "role": "acceptance-matrix",
+      "relativePath": "REPORTS/RC03_ACCEPTANCE_MATRIX-v4.md",
+      "neutral": false,
+      "controlPath": "FINNEY_CONTROL/REPORTS/RC03_ACCEPTANCE_MATRIX-v4.md",
+      "gitPath": "docs/rc03-design-v4/REPORTS/RC03_ACCEPTANCE_MATRIX-v4.md",
+      "version": "4.0.0-draft",
+      "sha256": "61FF3B1867BE550FEF7B22D70F5F5FEB5810260EDBD13B80156E086CFD3BE7BB"
+    },
+    {
+      "role": "neutral-specification",
+      "relativePath": "REVIEW_INPUTS/RC03_TECHNICAL_SPEC_v4.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_TECHNICAL_SPEC_v4.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_TECHNICAL_SPEC_v4.md",
+      "version": "4.0.0-draft",
+      "sha256": "98741F3DB8ADCA6299A6292457E522D1EB8B4C8C2DE5DD922B78FFA1D6E994E9"
+    },
+    {
+      "role": "annex-a",
+      "relativePath": "REVIEW_INPUTS/RC03_v4_ANNEXES/A_IPC_SCHEMAS_AND_LIMITS.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_v4_ANNEXES/A_IPC_SCHEMAS_AND_LIMITS.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_v4_ANNEXES/A_IPC_SCHEMAS_AND_LIMITS.md",
+      "version": "4.0.0-draft",
+      "sha256": "EC0BE626FB9CCD9B6648343F963C3C5F6FFF4FE3815F81BFEAFDB8CD88BC59A0"
+    },
+    {
+      "role": "annex-b",
+      "relativePath": "REVIEW_INPUTS/RC03_v4_ANNEXES/B_LIFECYCLE_REVISIONS_AND_COMMITS.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_v4_ANNEXES/B_LIFECYCLE_REVISIONS_AND_COMMITS.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_v4_ANNEXES/B_LIFECYCLE_REVISIONS_AND_COMMITS.md",
+      "version": "4.0.0-draft",
+      "sha256": "46623EE703F9204DC339A2F7000C16619F28532AB4550A33AF52363258E08DEB"
+    },
+    {
+      "role": "annex-c",
+      "relativePath": "REVIEW_INPUTS/RC03_v4_ANNEXES/C_OPERATION_AND_EFFECT_TABLES.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_v4_ANNEXES/C_OPERATION_AND_EFFECT_TABLES.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_v4_ANNEXES/C_OPERATION_AND_EFFECT_TABLES.md",
+      "version": "4.0.0-draft",
+      "sha256": "13F53E86B3E17B67E2FED2E177B3173AF805A357D3BB221F12D90AB7A0A3049E"
+    },
+    {
+      "role": "annex-d",
+      "relativePath": "REVIEW_INPUTS/RC03_v4_ANNEXES/D_MIGRATION_AND_DESTRUCTION_RESTART_TABLES.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_v4_ANNEXES/D_MIGRATION_AND_DESTRUCTION_RESTART_TABLES.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_v4_ANNEXES/D_MIGRATION_AND_DESTRUCTION_RESTART_TABLES.md",
+      "version": "4.0.0-draft",
+      "sha256": "22C795B2C170F19CB405123530C52DA70785E5A6814087F1C23640F6E22FFD4A"
+    },
+    {
+      "role": "annex-e",
+      "relativePath": "REVIEW_INPUTS/RC03_v4_ANNEXES/E_DESCRIPTORS_AND_COMPATIBILITY.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_v4_ANNEXES/E_DESCRIPTORS_AND_COMPATIBILITY.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_v4_ANNEXES/E_DESCRIPTORS_AND_COMPATIBILITY.md",
+      "version": "4.0.0-draft",
+      "sha256": "F65551881CB63F9F8540C49497F22709D2157D9FD9A2A6069829AE0C71D82F12"
+    },
+    {
+      "role": "annex-f",
+      "relativePath": "REVIEW_INPUTS/RC03_v4_ANNEXES/F_PROPOSED_CRYPTOGRAPHIC_FORMAT_AND_COMMITMENTS.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_v4_ANNEXES/F_PROPOSED_CRYPTOGRAPHIC_FORMAT_AND_COMMITMENTS.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_v4_ANNEXES/F_PROPOSED_CRYPTOGRAPHIC_FORMAT_AND_COMMITMENTS.md",
+      "version": "4.0.0-draft",
+      "sha256": "15829A87D41C151B53E35EAE8C70F643313DB4910D2E0E661E0AFE656F69F330"
+    },
+    {
+      "role": "annex-g",
+      "relativePath": "REVIEW_INPUTS/RC03_v4_ANNEXES/G_DEPLOYMENT_TOOLCHAIN_AND_CRYPTOGRAPHY.md",
+      "neutral": true,
+      "controlPath": "FINNEY_CONTROL/REVIEW_INPUTS/RC03_v4_ANNEXES/G_DEPLOYMENT_TOOLCHAIN_AND_CRYPTOGRAPHY.md",
+      "gitPath": "docs/rc03-design-v4/REVIEW_INPUTS/RC03_v4_ANNEXES/G_DEPLOYMENT_TOOLCHAIN_AND_CRYPTOGRAPHY.md",
+      "version": "4.0.0-draft",
+      "sha256": "8179F06528619A76319A4BA5DA93D37330C117D0FCE5EEF2B7B426EDA51E6570"
+    }
+  ],
+  "cleanRoomScope": {
+    "neutralDocuments": [
+      "REVIEW_INPUTS/RC03_TECHNICAL_SPEC_v4.md",
+      "REVIEW_INPUTS/RC03_v4_ANNEXES/A_IPC_SCHEMAS_AND_LIMITS.md",
+      "REVIEW_INPUTS/RC03_v4_ANNEXES/B_LIFECYCLE_REVISIONS_AND_COMMITS.md",
+      "REVIEW_INPUTS/RC03_v4_ANNEXES/C_OPERATION_AND_EFFECT_TABLES.md",
+      "REVIEW_INPUTS/RC03_v4_ANNEXES/D_MIGRATION_AND_DESTRUCTION_RESTART_TABLES.md",
+      "REVIEW_INPUTS/RC03_v4_ANNEXES/E_DESCRIPTORS_AND_COMPATIBILITY.md",
+      "REVIEW_INPUTS/RC03_v4_ANNEXES/F_PROPOSED_CRYPTOGRAPHIC_FORMAT_AND_COMMITMENTS.md",
+      "REVIEW_INPUTS/RC03_v4_ANNEXES/G_DEPLOYMENT_TOOLCHAIN_AND_CRYPTOGRAPHY.md"
+    ],
+    "exclude": [
+      "governance contract",
+      "crosswalk",
+      "owner-decision record/rationale",
+      "adjudication",
+      "historical findings/reports",
+      "governance acceptance matrix",
+      "this provenance manifest"
+    ],
+    "technicalCoverage": "All technical requirements, alternatives, blocked transitions and planned tests restated in the eight neutral documents; any omission blocks adoption.",
+    "requiredReviews": "C: Architecture and Security; D: dedicated Cryptography; external human cryptography integration separately required before adoption/sensitive reliance"
+  },
+  "model": {
+    "requested": "gpt-6-astra",
+    "reasoningRequested": "xhigh",
+    "actualSettingVerified": false
+  },
+  "validationScope": "Document/schema/reference/hash consistency only. Behavioral, build, provider, storage-crash and packaged checks are planned and unexecuted."
+}

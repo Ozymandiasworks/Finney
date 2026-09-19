@@ -1,0 +1,1208 @@
+{
+  "contractVersion": "3.0.0-draft",
+  "sourceBaseline": "b61c888bbbdae632541c41c7f829a9ed13ad77b2",
+  "gate": "Gate 1 blocked",
+  "implementationAuthorized": false,
+  "preservedV2Rows": [
+    {
+      "id": "RC03-01",
+      "group": "RC-03",
+      "location": "§§2-4, §8; Matrix D2-C,D3-A,D10-B,C",
+      "disposition": "open; proposed repair",
+      "dependencies": "D1,D2,D3,D10",
+      "verification": "protected inventory, packaged marker scans",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-01"
+    },
+    {
+      "id": "RC03-02",
+      "group": "RC-14",
+      "location": "§1; Matrix D1-A,C",
+      "disposition": "open; proposed repair",
+      "dependencies": "D1",
+      "verification": "classified EIO/permission/provider failures without write",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-02"
+    },
+    {
+      "id": "RC03-03",
+      "group": "RC-14",
+      "location": "§1; Matrix D1-C",
+      "disposition": "open; proposed repair",
+      "dependencies": "D1",
+      "verification": "rejected restore settles deterministically",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-03"
+    },
+    {
+      "id": "RC03-04",
+      "group": "RC-04",
+      "location": "§3, §8; Matrix D3-D,E,D4-A,B",
+      "disposition": "open; proposed repair",
+      "dependencies": "D3,D4",
+      "verification": "actual backend commit/barrier/reopen failure matrix",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-04"
+    },
+    {
+      "id": "RC03-05",
+      "group": "RC-03",
+      "location": "§3; Matrix D3-A,B",
+      "disposition": "open; proposed repair",
+      "dependencies": "D3",
+      "verification": "cross-record/stale/unknown-version rejection",
+      "ownerDecision": "OD-06",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-05"
+    },
+    {
+      "id": "RC03-06",
+      "group": "RC-09",
+      "location": "§4, §7; Matrix D7-A,D10-A,B",
+      "disposition": "open; proposed repair",
+      "dependencies": "D10,D7",
+      "verification": "packaged renderer/IPC capability and authorization tests",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-06"
+    },
+    {
+      "id": "RC03-07",
+      "group": "RC-08",
+      "location": "§2, §9; Matrix D2-C,E,D8-A,B,C",
+      "disposition": "open; proposed repair",
+      "dependencies": "D2,D8",
+      "verification": "offline special-output restoration",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-07"
+    },
+    {
+      "id": "RC03-08",
+      "group": "RC-03",
+      "location": "§2, §8; Matrix D2-B,C,D4-A,B",
+      "disposition": "open; proposed repair",
+      "dependencies": "D2,D4",
+      "verification": "raw inventory under quiescence and restart",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-08"
+    },
+    {
+      "id": "RC03-09",
+      "group": "RC-14",
+      "location": "§6; Matrix D6-A,B",
+      "disposition": "open; proposed repair",
+      "dependencies": "D1,D3,D6,D10",
+      "verification": "candidate activation failure schedule and packaged UI",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-09"
+    },
+    {
+      "id": "RC03-10",
+      "group": "RC-17",
+      "location": "§11; Matrix all rows",
+      "disposition": "open; proposed evidence",
+      "dependencies": "all D1-D10",
+      "verification": "exact-source packaged/backend/fault/independent evidence",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-10"
+    },
+    {
+      "id": "RC03-SEC-01",
+      "group": "RC-03",
+      "location": "§§2-4, §8; Matrix D2-C,D10-B,C",
+      "disposition": "merged with RC03-01; remains open",
+      "dependencies": "D2,D3,D10",
+      "verification": "packaged secret scans and independent verification",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-SEC-01"
+    },
+    {
+      "id": "RC03-SEC-02",
+      "group": "RC-14",
+      "location": "§1; Matrix D1-A,C",
+      "disposition": "merged with RC03-02/03; remains open",
+      "dependencies": "D1",
+      "verification": "metadata/error/startup settlement",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-SEC-02"
+    },
+    {
+      "id": "RC03-SEC-03",
+      "group": "RC-09",
+      "location": "§4, §7; Matrix D7-A,D10-A,B",
+      "disposition": "merged with RC03-06; remains open",
+      "dependencies": "D7,D10",
+      "verification": "packaged renderer isolation and narrow bridge",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-SEC-03"
+    },
+    {
+      "id": "RC03-SEC-04",
+      "group": "RC-04",
+      "location": "§3, §8; Matrix D3-D,E,D4-B",
+      "disposition": "merged with RC03-04; remains open",
+      "dependencies": "D3,D4",
+      "verification": "acknowledged writes and interruption recovery",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-SEC-04"
+    },
+    {
+      "id": "RC03-SEC-05",
+      "group": "RC-03",
+      "location": "§2, §9; Matrix D2-C,E,D8-B",
+      "disposition": "merged with RC03-08/07; remains open",
+      "dependencies": "D2,D8",
+      "verification": "frozen/output-only recovery coverage",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-SEC-05"
+    },
+    {
+      "id": "RC03-SEC-06",
+      "group": "RC-03",
+      "location": "§§1-3; Matrix D1-A,D3-A,B",
+      "disposition": "open compatibility requirement",
+      "dependencies": "D1,D3",
+      "verification": "unsupported schema refusal and supported explicit import",
+      "ownerDecision": "OD-05",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-SEC-06"
+    },
+    {
+      "id": "RC03-SEC-07",
+      "group": "RC-08",
+      "location": "§2, §9; Matrix D2-E,D8-B",
+      "disposition": "merged with RC03-07; remains open",
+      "dependencies": "D2,D8",
+      "verification": "offline restore without OS key or relay",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-SEC-07"
+    },
+    {
+      "id": "RC03-FUT-01",
+      "group": "RC-03",
+      "location": "§3; Matrix D3-A,D",
+      "disposition": "open binding/stale-state requirement",
+      "dependencies": "D3",
+      "verification": "relocation/replay/conflict rejection",
+      "ownerDecision": "OD-06",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-FUT-01"
+    },
+    {
+      "id": "RC03-FUT-02",
+      "group": "RC-03",
+      "location": "§4; Matrix D10-D",
+      "disposition": "conditional Windows-only deferral retained",
+      "dependencies": "D10",
+      "verification": "unsupported provider/platform refusal",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-FUT-02"
+    },
+    {
+      "id": "RC03-F01",
+      "group": "RC-15",
+      "location": "§10; Matrix D9-B",
+      "disposition": "logical-only deletion; forensic erasure deferred",
+      "dependencies": "D9",
+      "verification": "classified destruction and claim boundary",
+      "ownerDecision": "OD-06",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-F01"
+    },
+    {
+      "id": "RC03-F02",
+      "group": "RC-03",
+      "location": "§3; Matrix D3-A,D",
+      "disposition": "full-store freshness remains research",
+      "dependencies": "D3",
+      "verification": "documented conflict/rollback limitation",
+      "ownerDecision": "OD-06",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-F02"
+    },
+    {
+      "id": "RC03-F03",
+      "group": "RC-08",
+      "location": "§9; Matrix D8-A,B,C",
+      "disposition": "merged recovery prerequisite; remains open",
+      "dependencies": "D8",
+      "verification": "complete current portable artifact and restore",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-F03"
+    },
+    {
+      "id": "RC03-F04",
+      "group": "RC-11",
+      "location": "§6, §7; Matrix D6-B,D7-B",
+      "disposition": "generation/derivation preservation now; rotation deferred",
+      "dependencies": "D6,D7",
+      "verification": "generation catalogue and compatibility vectors",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-F04"
+    },
+    {
+      "id": "RC03-F05",
+      "group": "RC-03",
+      "location": "§4; Matrix D10-D",
+      "disposition": "Windows-first boundary retained",
+      "dependencies": "D10",
+      "verification": "unavailable provider fail-closed behavior",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-F05"
+    },
+    {
+      "id": "RC03-F06",
+      "group": "RC-01",
+      "location": "§4, §5; Matrix D5-A,B,REG-01",
+      "disposition": "no unattended allowance; remains policy dependency",
+      "dependencies": "D5,D10",
+      "verification": "trusted approval and preserved RC-01 regression",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-F06"
+    },
+    {
+      "id": "RC03-F07",
+      "group": "RC-08",
+      "location": "§2, §9; Matrix D2-C,D,D8-B",
+      "disposition": "merged inventory/recovery prerequisite; remains open",
+      "dependencies": "D2,D8",
+      "verification": "indexer omission and special-output recovery tests",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-RC03-F07"
+    },
+    {
+      "id": "ARCH-001",
+      "group": "RC-14/09",
+      "location": "§1; Matrix D1-A-D",
+      "disposition": "accepted design revision",
+      "dependencies": "D1,D10",
+      "verification": "exhaustive classifier and admission matrix",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-001"
+    },
+    {
+      "id": "ARCH-002",
+      "group": "RC-03/08/14",
+      "location": "§2; Matrix D2-A-E",
+      "disposition": "accepted design revision",
+      "dependencies": "D2",
+      "verification": "packaged mapping, quiescence, raw inventory",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-002"
+    },
+    {
+      "id": "ARCH-003",
+      "group": "RC-03/04",
+      "location": "§3; Matrix D3-A-E",
+      "disposition": "accepted design revision",
+      "dependencies": "D3",
+      "verification": "commit/revision/binding/vector evidence",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-003"
+    },
+    {
+      "id": "ARCH-004",
+      "group": "RC-03/04/14",
+      "location": "§8; Matrix D4-A-C",
+      "disposition": "accepted design revision",
+      "dependencies": "D3,D4",
+      "verification": "all partial migration states and restart",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-004"
+    },
+    {
+      "id": "ARCH-005",
+      "group": "RC-04/01",
+      "location": "§5; Matrix D5-A-C",
+      "disposition": "accepted design revision",
+      "dependencies": "D3,D5,D10",
+      "verification": "immutable artifacts and uncertain outcome recovery",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-005"
+    },
+    {
+      "id": "ARCH-006",
+      "group": "RC-14/04/08",
+      "location": "§6; Matrix D6-A,B",
+      "disposition": "accepted design revision",
+      "dependencies": "D1,D3,D6,D8",
+      "verification": "candidate/catalogue/scope settlement",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-006"
+    },
+    {
+      "id": "ARCH-007",
+      "group": "RC-03/09",
+      "location": "§7; Matrix D7-A,B",
+      "disposition": "accepted design revision",
+      "dependencies": "D7,D10",
+      "verification": "complete typed identity API",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-007"
+    },
+    {
+      "id": "ARCH-008",
+      "group": "RC-08/03",
+      "location": "§9; Matrix D8-A-C",
+      "disposition": "accepted design revision",
+      "dependencies": "D8",
+      "verification": "per-wallet backup coverage and restore",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-008"
+    },
+    {
+      "id": "ARCH-009",
+      "group": "RC-15/08/14",
+      "location": "§10; Matrix D9-A,B",
+      "disposition": "accepted design revision",
+      "dependencies": "D9",
+      "verification": "tombstone/destruction state machine",
+      "ownerDecision": "OD-03",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "ARCH-V1-009"
+    },
+    {
+      "id": "SEC-001",
+      "group": "RC-03/09",
+      "location": "§4; Matrix D10-A-C",
+      "disposition": "merged custody/renderer requirement",
+      "dependencies": "D10",
+      "verification": "packaged isolation and secret scans",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-001"
+    },
+    {
+      "id": "SEC-002",
+      "group": "RC-14",
+      "location": "§1, §6; Matrix D1-A,C,D6-A",
+      "disposition": "merged startup/replacement requirement",
+      "dependencies": "D1,D6",
+      "verification": "no error-to-empty and candidate boundaries",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-002"
+    },
+    {
+      "id": "SEC-003",
+      "group": "RC-03/04",
+      "location": "§3; Matrix D3-A,D",
+      "disposition": "merged binding/commit requirement",
+      "dependencies": "D3",
+      "verification": "substitution and normal mutation restart",
+      "ownerDecision": "OD-06",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-003"
+    },
+    {
+      "id": "SEC-004",
+      "group": "RC-03/04",
+      "location": "§§1-3; Matrix D1-A,D3-A,B",
+      "disposition": "merged schema/compatibility requirement",
+      "dependencies": "D1,D3",
+      "verification": "unknown-version refusal and bounded schemas",
+      "ownerDecision": "OD-05",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-004"
+    },
+    {
+      "id": "SEC-005",
+      "group": "RC-03/08",
+      "location": "§2, §9; Matrix D2-C,D,D8-B",
+      "disposition": "merged inventory/backup requirement",
+      "dependencies": "D2,D8",
+      "verification": "empty-successful-indexer and offline restoration",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-005"
+    },
+    {
+      "id": "SEC-006",
+      "group": "RC-03/09",
+      "location": "§4; Matrix D10-A-C",
+      "disposition": "accepted trusted-authorization requirement",
+      "dependencies": "D10",
+      "verification": "forged approval/secret entry/display tests",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-006"
+    },
+    {
+      "id": "SEC-007",
+      "group": "RC-04/01",
+      "location": "§5; Matrix D5-A-C",
+      "disposition": "merged durable-operation requirement",
+      "dependencies": "D5",
+      "verification": "artifact/replay/reservation recovery",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-007"
+    },
+    {
+      "id": "SEC-008",
+      "group": "RC-08/03",
+      "location": "§9; Matrix D8-A-C",
+      "disposition": "merged backup-gate requirement",
+      "dependencies": "D8",
+      "verification": "durable current artifact before retirement",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-008"
+    },
+    {
+      "id": "SEC-ACCEPT-IPC",
+      "group": "RC-09",
+      "location": "§§1,2,4; Matrix D1-B,D1-D,D10-A,B",
+      "disposition": "acceptance family",
+      "dependencies": "D1,D7,D10",
+      "verification": "lifecycle/frame/origin/purpose admission",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-ACCEPT-IPC"
+    },
+    {
+      "id": "SEC-ACCEPT-BOUNDS",
+      "group": "RC-03/04",
+      "location": "§3; Matrix D3-B,C",
+      "disposition": "acceptance family",
+      "dependencies": "D3",
+      "verification": "bounded parser/commitment/queue behavior",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-ACCEPT-BOUNDS"
+    },
+    {
+      "id": "SEC-ACCEPT-MIGRATION",
+      "group": "RC-03/04/14",
+      "location": "§8; Matrix D4-A-C",
+      "disposition": "acceptance family",
+      "dependencies": "D4",
+      "verification": "interrupted journal/deletion matrix",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-ACCEPT-MIGRATION"
+    },
+    {
+      "id": "SEC-ACCEPT-BACKEND",
+      "group": "RC-03/04",
+      "location": "§§2,3; Matrix D2-A,D3-E",
+      "disposition": "acceptance family",
+      "dependencies": "D2,D3",
+      "verification": "actual backend/profile/acknowledgement evidence",
+      "ownerDecision": "OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-ACCEPT-BACKEND"
+    },
+    {
+      "id": "SEC-ACCEPT-BACKUP-DELETE",
+      "group": "RC-08/15",
+      "location": "§§9,10; Matrix D8-A-C,D9-A,B",
+      "disposition": "acceptance family",
+      "dependencies": "D8,D9",
+      "verification": "restore and deletion race behavior",
+      "ownerDecision": "OD-02/OD-03",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-ACCEPT-BACKUP-DELETE"
+    },
+    {
+      "id": "SEC-ACCEPT-RUNTIME-SECRETS",
+      "group": "RC-03/09",
+      "location": "§4; Matrix D10-B,C,D",
+      "disposition": "acceptance family",
+      "dependencies": "D10",
+      "verification": "packaged secret/diagnostic/provider behavior",
+      "ownerDecision": "OD-01/OD-04",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-ACCEPT-RUNTIME-SECRETS"
+    },
+    {
+      "id": "SEC-ACCEPT-SIGNING-RECEIPT",
+      "group": "RC-01/03/09",
+      "location": "§§4,5,7; Matrix D5-A-C,D7-A,D10-A",
+      "disposition": "acceptance family",
+      "dependencies": "D5,D7,D10",
+      "verification": "exact intent/fee/change/identity constraints",
+      "ownerDecision": "OD-01",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "SEC-V1-ACCEPT-SIGNING-RECEIPT"
+    },
+    {
+      "id": "CRYPTO-PORTABLE-RECOVERY",
+      "group": "RC-08",
+      "location": "§9; Matrix D8-A-C",
+      "disposition": "specialist review required",
+      "dependencies": "D8",
+      "verification": "format/KDF/header/nonce/salt/version assessment",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-CRYPTO-PORTABLE-RECOVERY"
+    },
+    {
+      "id": "CRYPTO-COMMITMENTS",
+      "group": "RC-03/04",
+      "location": "§3; Matrix D3-C",
+      "disposition": "specialist review required",
+      "dependencies": "D3",
+      "verification": "domain separation and canonical encoding assessment",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-CRYPTO-COMMITMENTS"
+    },
+    {
+      "id": "CRYPTO-DERIVATION-COMPATIBILITY",
+      "group": "RC-03/08/09",
+      "location": "§§2,7,9; Matrix D2-E,D7-B,D8-B",
+      "disposition": "specialist review required",
+      "dependencies": "D2,D7,D8",
+      "verification": "ordinary/Stamp/stealth vectors and scalar exposure assessment",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-CRYPTO-DERIVATION-COMPATIBILITY"
+    },
+    {
+      "id": "OMC-TRANSPORT-OWNERSHIP",
+      "group": "transport/privacy",
+      "location": "§4; Matrix D10-A,B",
+      "disposition": "OM candidate; no network relocation approval",
+      "dependencies": "D10",
+      "verification": "adapter/session/Tor path runtime evidence",
+      "ownerDecision": null,
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-OMC-TRANSPORT-OWNERSHIP"
+    },
+    {
+      "id": "OMC-RECOVERY-CRYPTOGRAPHY",
+      "group": "RC-08",
+      "location": "§§3,9; Matrix D3-C,D8-A-C",
+      "disposition": "OM candidate; specialist prerequisite",
+      "dependencies": "D3,D8",
+      "verification": "cryptography specialist conclusions",
+      "ownerDecision": "OD-02",
+      "reviewCycle": "v1-design-reports preserved by v2 crosswalk",
+      "qualifiedId": "RC03-HISTORICAL-OMC-RECOVERY-CRYPTOGRAPHY"
+    }
+  ],
+  "v2ReviewRows": [
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-001",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-001",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R1",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-002",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-002",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R2",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-003",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-003",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R3",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-004",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-004",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R4",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-005",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-005",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R5",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-006",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-006",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R6",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-007",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-007",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R7",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-008",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-008",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R8",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-009",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-009",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R9",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-010",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-010",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R10",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-011",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-011",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R11",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "ARCH-V2-FE11163D-012",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "ARCH-012",
+      "reportedSeverity": "Medium",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R12",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-001",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-001",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R8",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-002",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-002",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R1",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-003",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-003",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R3",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-004",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-004",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R7/R10",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-005",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-005",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R4/R5",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-006",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-006",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R8",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-007",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-007",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R3/R4/R6",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-008",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-008",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R1/R2",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-009",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-009",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R9",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-010",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-010",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R1/R10",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-011",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-011",
+      "reportedSeverity": "High conditional",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R2/R11",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "SEC-V2-CB5DF089-012",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "SEC-012",
+      "reportedSeverity": "Medium/High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R5/R8",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "CRYPTO-V2-C346F0AE-001",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "CRYPTO-001",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R7/R8/R9",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "CRYPTO-V2-C346F0AE-002",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "CRYPTO-002",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R7",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "CRYPTO-V2-C346F0AE-003",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "CRYPTO-003",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R9",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "CRYPTO-V2-C346F0AE-004",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "CRYPTO-004",
+      "reportedSeverity": "High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R8/R9",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    },
+    {
+      "qualifiedId": "CRYPTO-V2-C346F0AE-005",
+      "report": "2026-09-19 RC-03 v2 owner-supplied review cycle",
+      "localId": "CRYPTO-005",
+      "reportedSeverity": "Medium/High",
+      "disposition": "accepted or merged for proposed design revision; not closed",
+      "workPackage": "R3",
+      "requirementLocation": "RC03_IMPLEMENTATION_CONTRACT-v3.md and v3 annexes as referenced by package",
+      "dependencies": "Package dependencies and pending owner decision record",
+      "verification": "RC03_ACCEPTANCE_MATRIX-v3.md package rows",
+      "pendingOwnerDecision": "see RC03_OWNER_DECISIONS-v3.md"
+    }
+  ],
+  "workPackages": [
+    {
+      "id": "R1",
+      "sources": [
+        "ARCH-V2-FE11163D-001",
+        "SEC-V2-CB5DF089-002",
+        "SEC-V2-CB5DF089-008",
+        "SEC-V2-CB5DF089-010"
+      ],
+      "result": "complete observation, admission, recovery, and explicit bootstrap machine",
+      "constraints": "read-only probes; no error-to-empty; finite deadlines; no implicit create",
+      "components": "boot/store restore, profile inspector, startup UI, IPC admission",
+      "documentation": "Contract §4; Spec §3; Annex B",
+      "tests": "R1-01..03",
+      "independentReview": "Architecture and Security"
+    },
+    {
+      "id": "R2",
+      "sources": [
+        "ARCH-V2-FE11163D-002",
+        "SEC-V2-CB5DF089-008",
+        "SEC-V2-CB5DF089-011"
+      ],
+      "result": "actual mapping, freeze, deletion accounting, and restart actions",
+      "constraints": "no renderer-selected path; final drain before frozen inventory; source preserved",
+      "components": "acquisition adapter, fence, journal, protected/projection/cleanup stores",
+      "documentation": "Contract §10; Spec §4/6; Annex D,G",
+      "tests": "R2-01..03",
+      "independentReview": "Architecture and Security"
+    },
+    {
+      "id": "R3",
+      "sources": [
+        "ARCH-V2-FE11163D-003",
+        "SEC-V2-CB5DF089-003",
+        "SEC-V2-CB5DF089-007",
+        "CRYPTO-V2-C346F0AE-005"
+      ],
+      "result": "distinct revisions, commit-ID semantics, and authenticated commitments",
+      "constraints": "self-progress cannot invalidate itself; unknown ACK blocks disclosure; no custom crypto",
+      "components": "repository, manifests, member records, normal journals",
+      "documentation": "Contract §5; Spec §3; Annex B,F",
+      "tests": "R3-01..04",
+      "independentReview": "Architecture, Security, Cryptography"
+    },
+    {
+      "id": "R4",
+      "sources": [
+        "ARCH-V2-FE11163D-004",
+        "SEC-V2-CB5DF089-005",
+        "SEC-V2-CB5DF089-007"
+      ],
+      "result": "approval/sign/final-artifact boundary",
+      "constraints": "unsigned distinct from signed; final bytes durable before disclosure; no allowance",
+      "components": "approval, signer, outbox, reservations",
+      "documentation": "Contract §8; Spec §5; Annex C",
+      "tests": "R4-01..02",
+      "independentReview": "Architecture, Security, Cryptography"
+    },
+    {
+      "id": "R5",
+      "sources": [
+        "ARCH-V2-FE11163D-005",
+        "SEC-V2-CB5DF089-005",
+        "SEC-V2-CB5DF089-007",
+        "SEC-V2-CB5DF089-012"
+      ],
+      "result": "complete effect inventory and exact uncertain-effect recovery",
+      "constraints": "no replacement payment/release on unknown; all spendable artifact routes included",
+      "components": "relay, registry/profile/forum callers, adapters, status/replay ledger",
+      "documentation": "Contract §8; Spec §5; Annex C",
+      "tests": "R5-01..02",
+      "independentReview": "Architecture and Security; Cryptography if signed-byte identity changes"
+    },
+    {
+      "id": "R6",
+      "sources": [
+        "ARCH-V2-FE11163D-006",
+        "SEC-V2-CB5DF089-007",
+        "SEC-V2-CB5DF089-009"
+      ],
+      "result": "retained access and wallet-wide canonical outpoint ownership",
+      "constraints": "one owner per canonical outpoint; retained work scoped; no duplicate root authority",
+      "components": "catalogue, activation, reservations, subscriptions, recovery UI",
+      "documentation": "Contract §9; Spec §3/5; Annex B,C",
+      "tests": "R6-01..02",
+      "independentReview": "Architecture, Security, Cryptography compatibility"
+    },
+    {
+      "id": "R7",
+      "sources": [
+        "ARCH-V2-FE11163D-007",
+        "SEC-V2-CB5DF089-004",
+        "CRYPTO-V2-C346F0AE-001",
+        "CRYPTO-V2-C346F0AE-002"
+      ],
+      "result": "complete descriptors, scalar custody, and compatibility boundaries",
+      "constraints": "preserve semantic ordinals/path/BIP39; quarantine incomplete evidence; scalar exposure treated conservatively",
+      "components": "inventory, constructors/decoders, recovery repository, exports",
+      "documentation": "Contract §6; Spec §4; Annex E",
+      "tests": "R7-01..02",
+      "independentReview": "Architecture, Security, Cryptography plus external expertise before sensitive reliance"
+    },
+    {
+      "id": "R8",
+      "sources": [
+        "ARCH-V2-FE11163D-008",
+        "SEC-V2-CB5DF089-001",
+        "SEC-V2-CB5DF089-006",
+        "SEC-V2-CB5DF089-012",
+        "CRYPTO-V2-C346F0AE-001",
+        "CRYPTO-V2-C346F0AE-004"
+      ],
+      "result": "concrete bounded IPC and trusted ceremony",
+      "constraints": "main-derived caller facts; no raw secrets/generic escape; pending policy blocks ceremony",
+      "components": "main/preload, trusted UI, identity API, parsers, queues",
+      "documentation": "Contract §7; Spec §1/2; Annex A",
+      "tests": "R8-01..03",
+      "independentReview": "Architecture, Security, Cryptography for credentials/key use"
+    },
+    {
+      "id": "R9",
+      "sources": [
+        "ARCH-V2-FE11163D-009",
+        "SEC-V2-CB5DF089-009",
+        "CRYPTO-V2-C346F0AE-003",
+        "CRYPTO-V2-C346F0AE-004",
+        "CRYPTO-V2-C346F0AE-005"
+      ],
+      "result": "artifact-specific portable backup, bounded KDF/container, and inactive restore",
+      "constraints": "candidate only; no silent KDF downgrade; actual bytes/coverage proof; no fresh restored approval",
+      "components": "export/import, backup catalogue, crypto integration, retirement fence",
+      "documentation": "Contract §11; Spec §6; Annex F",
+      "tests": "R9-01..03",
+      "independentReview": "Architecture, Security, Cryptography and external specialist before sensitive reliance"
+    },
+    {
+      "id": "R10",
+      "sources": [
+        "ARCH-V2-FE11163D-010",
+        "SEC-V2-CB5DF089-004",
+        "SEC-V2-CB5DF089-010"
+      ],
+      "result": "ordered tombstone retention and destruction scope/restart",
+      "constraints": "content deletion cannot spend; terminal not absence; logical deletion only",
+      "components": "message deletion, replay/recovery, destruction journal, startup",
+      "documentation": "Contract §12; Spec §6; Annex D",
+      "tests": "R10-01..02",
+      "independentReview": "Architecture and Security"
+    },
+    {
+      "id": "R11",
+      "sources": [
+        "ARCH-V2-FE11163D-011",
+        "SEC-V2-CB5DF089-011"
+      ],
+      "result": "selected deployment/durability/transport contract",
+      "constraints": "no assumed provider/session/exclusivity; unknown commit blocks dependent transitions",
+      "components": "packaging, adapters, locks, transports",
+      "documentation": "Contract §13; Spec §7; Annex G",
+      "tests": "R11-01..02",
+      "independentReview": "Architecture, Security, platform/privacy expertise, Cryptography provider assumptions"
+    },
+    {
+      "id": "R12",
+      "sources": [
+        "ARCH-V2-FE11163D-012",
+        "OMC-TOOLCHAIN-V2"
+      ],
+      "result": "canonical Node/Yarn policy and future selector alignment",
+      "constraints": "plan only; no selector edits now",
+      "components": "selectors, package/README, CI, manifests",
+      "documentation": "Contract §14; Spec §7; Annex G",
+      "tests": "R12-01",
+      "independentReview": "targeted Architecture verification"
+    }
+  ],
+  "supplementalRequirements": [
+    {
+      "qualifiedId": "SEC-ACCEPT-V1-IPC",
+      "disposition": "preserved acceptance family",
+      "location": "Annex A",
+      "verification": "R8-01..03"
+    },
+    {
+      "qualifiedId": "SEC-ACCEPT-V1-BOUNDS",
+      "disposition": "preserved acceptance family",
+      "location": "Annex A,F",
+      "verification": "R3-03,R8-03,R9-02"
+    },
+    {
+      "qualifiedId": "SEC-ACCEPT-V1-MIGRATION",
+      "disposition": "preserved acceptance family",
+      "location": "Annex D",
+      "verification": "R2-03"
+    },
+    {
+      "qualifiedId": "SEC-ACCEPT-V1-BACKEND",
+      "disposition": "preserved acceptance family",
+      "location": "Annex B,D,G",
+      "verification": "R3-04,R11-01"
+    },
+    {
+      "qualifiedId": "SEC-ACCEPT-V1-BACKUP-DELETE",
+      "disposition": "preserved acceptance family",
+      "location": "Annex D,F",
+      "verification": "R9-01..03,R10-01..02"
+    },
+    {
+      "qualifiedId": "SEC-ACCEPT-V1-RUNTIME-SECRETS",
+      "disposition": "preserved acceptance family",
+      "location": "Annex A",
+      "verification": "R8-01..03"
+    },
+    {
+      "qualifiedId": "SEC-ACCEPT-V1-SIGNING-RECEIPT",
+      "disposition": "preserved acceptance family",
+      "location": "Annex C",
+      "verification": "R4-01..02,R5-01..02"
+    },
+    {
+      "qualifiedId": "OMC-TRANSPORT-OWNERSHIP-V1",
+      "disposition": "preserved OM candidate",
+      "location": "Annex C,G",
+      "verification": "R11-02"
+    },
+    {
+      "qualifiedId": "OMC-RECOVERY-CRYPTOGRAPHY-V1",
+      "disposition": "preserved specialist item",
+      "location": "Annex E,F",
+      "verification": "R7-01..02,R9-01..03"
+    },
+    {
+      "qualifiedId": "OMC-TOOLCHAIN-V2",
+      "disposition": "accepted R12 policy requirement",
+      "location": "Annex G",
+      "verification": "R12-01"
+    }
+  ],
+  "limitations": [
+    "No finding is closed by document coverage.",
+    "All 55 v2-crosswalk meanings are retained with cycle-qualified identifiers.",
+    "V2 report-local identifiers are qualified by report hash prefix to avoid collision with preserved v1 report-local identifiers.",
+    "Pending owner decisions visibly block dependent transitions."
+  ]
+}

@@ -6,6 +6,9 @@
   "author": "shammah@cryptonumismatics.org",
   "private": true,
   "scripts": {
+    "test:a1": "node experimental/a1/test/guards.test.js",
+    "build:a1:testnet": "node experimental/a1/build.js xec-testnet",
+    "build:a1:regtest": "node experimental/a1/build.js xec-regtest",
     "lint": "eslint 'src/**/*.{ts,js,vue}' && prettier --check .",
     "check:runtime": "node scripts/check-runtime.js",
     "audit:static": "node scripts/static-audit.js",

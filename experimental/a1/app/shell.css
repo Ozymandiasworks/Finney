@@ -1,0 +1,7 @@
+:root { color-scheme: dark; font: 16px system-ui, sans-serif; color: #dce9e4; background: #0c1512; }
+body { margin: 0; }
+main { max-width: 42rem; margin: 12vh auto; padding: 2rem; border: 1px solid #315848; }
+.brand { color: #62db9d; font-family: monospace; letter-spacing: .1em; }
+h1 { font-size: 1.8rem; line-height: 1.3; }
+p { line-height: 1.6; }
+.status { margin-top: 2rem; color: #9cb8ac; }

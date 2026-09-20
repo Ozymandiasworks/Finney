@@ -1,0 +1,7 @@
+{
+  "name": "finney-a1-offline",
+  "version": "0.1.0-a1",
+  "description": "Finney offline experimental guard shell",
+  "private": true,
+  "main": "main.js"
+}

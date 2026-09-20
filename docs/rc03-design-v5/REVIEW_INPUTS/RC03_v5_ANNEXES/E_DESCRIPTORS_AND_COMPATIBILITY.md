@@ -1,0 +1,65 @@
+# Annex E — Bound recovery inventory and unchanged derivation
+
+Version `5.0.0-draft`; proposed only. [B3](B_LIFECYCLE_REVISIONS_AND_COMMITS.md#b3--authoritative-schemas-and-revision-domains) and [F](F_PROPOSED_CRYPTOGRAPHIC_FORMAT_AND_COMMITMENTS.md) define authenticated membership and portable encoding.
+
+## E1 — Complete output and fallback grammar
+
+`Output={schema:2,id:ID,profile:ID,wallet:ID,generation:U32,network:Network,outpoint:{txid:H,vout:U32},aliases:[{txid:H,vout:U32,evidence:Ref}],script:bytes<=512,value:Sat,publicKey:bytes33|bytes65,keyEncoding:'compressed'|'uncompressed',originClass:'ordinary'|'change'|'stamp'|'stealth'|'unknown',state:OutputState,derivation:Descriptor|null,scalar:Ref|null,bindingEvidence:BindingEvidence,reservation:ID|null,source:SourceIdentity}`. OutputState: `unspent,frozen,pending,spent-retained,orphaned,recovery-only,descriptor-incomplete`. originClass is independent and mandatory even when derivation=null. Descriptor variant, when present, must agree; authenticated acquisition evidence establishes origin for scalar-only frozen records. Unknown origin preserves raw/scalar recovery but blocks complete qualification; no class inference from spend state or array order. Alias max16, unique sorted canonical outpoint; source identity contains adapter/mapping digest, namespace bytes, raw key bytes<=1024, raw record digest and frozen inventory member, exactly B7 SourceIdentity. Persistent enumeration includes every class, not merely currently spendable cached records. Receipt/indexer absence changes observations only.
+
+`BindingEvidence=oneof({kind:'verified-transaction',rawTransaction:bytes<=1048576,canonicalTxid:H,vout:U32},{kind:'authenticated-legacy-inventory',migration:ID,inventoryDigest:H,sourceKey:bytes<=1024,sourceRecordDigest:H})`. First form recomputes txid/script/value at vout. Second asserts authenticated acquisition provenance, **not independent on-chain existence**. Restore preserves that distinction and cannot silently upgrade it. Alias history is not a second output; conflicting network/outpoint/script/value claims quarantine and block signing until reconciled. Script match alone cannot prove a txid exists.
+
+`Scalar={schema:1,id:ID,profile:ID,wallet:ID,generation:U32,network:Network,purpose:'output-recovery',output:ID,bindingDigest:H,scalar:bytes32,keyEncoding:'compressed'|'uncompressed',reason:'legacy-import'|'descriptor-incomplete'|'alias-unresolved',exposure:'identity-equivalent-potential'}`. bindingDigest=F1 digest of the entire output binding tuple `[profile,wallet,generation,network,id,outpoint,sortedAliases,script,value,publicKey,keyEncoding,originClass,bindingEvidence]`, excluding the scalar Ref to avoid a cycle. Output scalar Ref binds this exact Scalar; uniqueness index `(profile,generation,output,purpose)` permits one canonical fallback, identical duplicates merge by evidence, inconsistent duplicates conflict. Imported `validated:true` is not part of grammar.
+
+On admission and restore: check context/version/unique membership; scalar length and range; derive public key explicitly with specified compression; regenerate exact supported locking script/address; compare script/publicKey/value/outpoint evidence; validate alias relations; recompute bindingDigest. Scalar may repeat mathematically across different outputs but its record binding may not be substituted; root-alias conflicts are explicit. Complete validated fallback can preserve recovery even if derivation descriptor is incomplete. It remains secret after spending.
+
+Quarantine record: `{schema:1,id,profile,generation,source:SourceIdentity,raw:bytes<=1048576,reason:'missing-context'|'invalid-scalar'|'script-mismatch'|'alias-conflict'|'unsupported-derivation'|'exceptional-divergence',expectedBinding:bytes}`. Protected, inventoried and exported as evidence. Missing both valid descriptor and scalar blocks complete recovery/cleanup/retirement; no normalization, omission or fabricated path. If raw record exceeds limit preserve original source and return LIMIT rather than truncate. Quarantine presence makes complete qualification false even if the artifact faithfully copies it.
+
+## E2 — Descriptor alternatives
+
+All Descriptor values carry `{version:1,variant,sourceLibrary:'bitcore-lib-xec-8.25.31-finney-b61c888',requestedPath:U32[],effectivePath:U32[],publicKeyEncoding}`. Actual source blob identities and installed dependency versions must be recorded with vectors. SourceLibrary names this preserved local implementation, not an upstream compatibility claim.
+
+| variant | Required additional fields; exact existing semantics |
+|---|---|
+| ordinary/change | `{account:0,branch:0|1,index:U31,discoveryUpper:U31}`; requested `m/44'/899'/0'/0/i` or `m/44'/899'/0'/1/i`; identity remains ordinary branch0/index0; do not change coin type |
+| stamp | `{payloadDigest:bytes32,transactionGroup:H,transactionEncounterOrdinal:U31,listedOutputEncounterOrdinal:U31}`; preserve message digest and nonhardened `44/145/i/j` relative to original Stamp HD root; ordinals are original encounter positions |
+| stealth | `{ephemeralPublicKey:compressed bytes33,transactionGroup:H,transactionEncounterOrdinal:U31,listedOutputEncounterOrdinal:U31,role:'recipient'|'sender',senderEphemeralSecret:Ref|null}`; recipient needs protected identity; sender recovery requires original sender ephemeral private context or validated fallback. Validate point and shared-point derivation using existing helper, never infer sender secret from public E |
+
+Requested and effective path arrays have equal length and max8 elements; each actual child step and retry is recorded. Derive root/chain-code per unchanged source. Representation sorting does not renumber encounter ordinals, substitute vout, filter earlier spent rows or collapse original transaction grouping. Root BIP39 behavior remains validated mnemonic NFKD with empty additional passphrase. Portable credential never enters seed derivation. Preserve discovery upper bounds/known indices; no arbitrary gap-discovery guarantee. Complete known-output recovery is independent of relay/history; new unknown future outputs require explicit observation policy.
+
+All current ordinary/change/identity/Stamp/stealth outputs use **compressed public-key serialization** when reconstructing known current scripts. Legacy uncompressed output may be accepted only with explicit encoding and independently matched existing script/evidence; do not choose constructor default. Public point validity and network-prefix validation are separate from scalar validity. Unknown script template returns unsupported/quarantine, no address reinterpretation.
+
+## E3 — Scalar widths, exception compatibility and exposure
+
+Canonical scalar is big-endian exactly32 bytes with `1 <= k < n`, `n=fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141`. **Scalar1 encoded as 31 zero bytes followed by01 is valid.** Other valid fixed-width values beginning with zero bytes are valid. Reject zero, n, greater values,31/33-byte encodings; never strip/pad an arbitrary malformed portable scalar to make it valid. Legacy variable-width input may be converted only by explicitly identified source adapter with positive original-library/script evidence and original bytes retained; portable representation remains exactly32.
+
+Compatibility profile is pinned behavior, not a replacement implementation of cryptographic primitives. Planned independent tests must distinguish agreement from deliberate historical divergence:
+
+| Forced input | Preserved source behavior / recovery rule |
+|---|---|
+| BIP32 HMAC IL=0 | Private/public child use requested index if resulting child valid; preserve resulting chain code |
+| IL=n or n+1 | Vendored private/public derive at requested index, with group/scalar arithmetic; **do not silently introduce standards-based skip**. Record requested/effective equal where source does |
+| Child private zero / public infinity | Source retries next index. Record actual effective index at each step; never relabel original ordinal |
+| Retry across maximum nonhardened index | Source private path can cross into hardened range while public path refuses; reproduction against pinned source required. No public/private equivalence assumed. Preserve valid authenticated scalar fallback/script if available, otherwise quarantine; no invented wrap or truncate |
+| Stamp digest 0,n,n+1 | Public helper rejects through scalar constructor; private helper can produce valid scalar modulo n. Synthetic injected condition, not feasible-preimage claim. Do not normalize public algorithm; retain valid existing fallback with explicit exceptional status, otherwise quarantine |
+| Stamp digest n-identityScalar | Zero/infinity outcome rejects; cannot derive a valid output; preserve evidence |
+| Wrong digest length/invalid point | Reject before derivation; no implicit hex/length conversion |
+
+If source retry would run indefinitely or beyond bound, recovery adapter allows <=1024 retry steps/derivation and returns unsupported-derivation with evidence intact; it does not claim equivalent behavior for that exceptional record. Scalar fallback may still qualify if independently bound and script-valid. Any proposed library replacement or derivation repair is a different reviewed migration, not this contract.
+
+Related-key threat assumption: disclosed Stamp child scalar with public identity/digest/path context can reveal recipient identity scalar under existing additive/nonhardened relations; sender-known stealth context has analogous implications. Account-private consequences additionally require account xpub context. This is not a master-seed recovery claim, a universal outsider stealth result or demonstrated theft. Treat spent-retained scalars accordingly; custody repair cannot undo prior copied scalar exposure. Owner incident-response choice remains pending.
+
+## E4 — Protected export exception
+
+Raw mnemonic/root/identity/output scalars never enter ordinary renderer, generic store, log, diagnostic, clipboard, unencrypted temp file or plaintext export. The **sole portable recovery exception** is the trusted complete-profile export: main reads authenticated records under snapshot, streams plaintext directly into selected F encrypted container in isolated trusted memory, writes ciphertext only, requires independent credential and exact-byte verification. Encrypted payload includes bound scalars, roots and incomplete raw evidence necessary for recovery. Controlled trusted mnemonic display is separate A4 policy; it is explicitly **not** complete output backup. No ordinary IPC returns plaintext or a raw key handle. Cancellation/worker termination best-effort clears buffers without promising managed-language forensic erasure.
+
+## E5 — Planned acceptance fixtures (all UNEXECUTED)
+
+| ID | Fixture/injection | Required result | Layer |
+|---|---|---|---|
+| W6-01 | Every ordinary/change/stamp/stealth/frozen/pending/spent/orphan/scalar-only class; wrong scalar/output/profile/amount/alias binding | Original script recovers or record preserved quarantined; no fallback substitution/omission | actual pinned library plus independent reference |
+| W6-02 | Scalar1/valid zero-padding/0/n/n+1/31/33bytes; BN/buffer constructor defaults; explicit compressed/uncompressed | Proper32-byte1 accepted, exact original script/signature; malformed reject | pinned and independent encoding/signature vectors |
+| W6-03 | Forced IL0/n/n+1/zero-child/infinity/upper-index retry; invalid digests/points; BIP39 published vectors | Explicit preserved agreement/divergence, requested/effective trace, no silent standardization | fault-injected pinned library plus independent mathematics |
+| W6-04 | Sort/filter/reorder/nonsequential vouts/aliases/missing earlier record/stealth sender context | Original semantic ordinals and source class preserved; script-valid fallback remains recoverable | migration and offline restore integration |
+| W6-05 | Backup with scalar-only known output, leaked synthetic marker scan | Bound scalar only inside protected/encrypted export; fresh profile verifies script and synthetic signature offline | packaged export/restore plus secret-sink scan |
+
+R7-02 successor requirement is W6-02: the negative case is malformed width or invalid range, **not leading zero bytes in a valid32-byte value**. No fixtures in this document have been executed against a v5 implementation.

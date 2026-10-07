@@ -8,12 +8,12 @@ $ast = [Management.Automation.Language.Parser]::ParseFile($inspector, [ref]$toke
 if ($parseErrors.Count -ne 0) { throw 'INVALID_INSPECTOR_SYNTAX' }
 $functions = @($ast.FindAll({ param($node)
   $node -is [Management.Automation.Language.FunctionDefinitionAst] -and
-    $node.Name -eq 'Test-A1NetworkServiceAccess'
+    $node.Name -in @('Convert-A1FileRights', 'Test-A1NetworkServiceAccess')
 }, $true))
-if ($functions.Count -ne 1) { throw 'ACL_POLICY_FUNCTION_NOT_UNIQUE' }
+if ($functions.Count -ne 2) { throw 'ACL_POLICY_FUNCTION_NOT_UNIQUE' }
 # Load the actual policy function without running the inspector's firewall or
 # profile traversal. The packaged smoke separately exercises the complete path.
-. ([scriptblock]::Create($functions[0].Extent.Text))
+foreach ($definition in $functions) { . ([scriptblock]::Create($definition.Extent.Text)) }
 
 $sid = [Security.Principal.SecurityIdentifier]::new('S-1-15-3-1024-395641907-2340533657-1796656376-1949871151-3167452726-3934347287-2361051074-3061173417')
 $root = 'C:\FinneyA1Lab\runtime\a1-userdata-xec-regtest-client-a'
@@ -32,8 +32,9 @@ function New-FixtureRule {
 
 function Assert-Policy {
   param([string]$Name, [string]$Target, [bool]$Directory,
-    [Security.AccessControl.FileSystemAccessRule]$Rule, [bool]$Expected)
-  $actual = Test-A1NetworkServiceAccess -Target $Target -ProtectionRoot $root -IsDirectory $Directory -Rule $Rule
+    [Security.AccessControl.FileSystemAccessRule]$Rule, [bool]$Expected,
+    [Security.AccessControl.FileSystemAccessRule[]]$Parents = @())
+  $actual = Test-A1NetworkServiceAccess -Target $Target -ProtectionRoot $root -IsDirectory $Directory -Rule $Rule -ParentRules $Parents
   if ($actual -isnot [bool] -or $actual -ne $Expected) { throw "ACL_POLICY_FAILURE: $Name" }
   $results.Add($Name)
 }
@@ -108,4 +109,37 @@ foreach ($mask in @('0x80000000', '0x40000000', '0x20000000')) {
 }
 Assert-Policy 'deny-raw-foreign-capability' (Join-Path $root 'Cache') $true (New-RawFixtureRule -Identity 'S-1-15-3-1') $false
 Assert-Policy 'deny-raw-inherited-capability' (Join-Path $root 'Cache') $true (New-RawFixtureRule -Flags 'OICIIOID') $false
-@{ result = 'synthetic-acl-policy-pass'; cases = $results.Count } | ConvertTo-Json -Compress
+
+$inheritedFile = New-RawFixtureRule -Mask '0x1301bf' -Flags 'ID'
+$inheritedChildren = New-RawFixtureRule -Flags 'OICIIOID'
+$objectOnly = New-RawFixtureRule -Flags 'OIIO'
+$noPropagate = New-RawFixtureRule -Flags 'OICINPIO'
+foreach ($name in @('Cache', 'Network', 'Shared Dictionary')) {
+  $nested = Join-Path $root "$name\nested"
+  Assert-Policy "allow-inherited-directory-$name" $nested $true $inheritedFile $true @($genericChildren)
+  Assert-Policy "allow-inherited-children-$name" $nested $true $inheritedChildren $true @($genericChildren)
+  Assert-Policy "allow-inherited-file-$name" (Join-Path $nested 'data') $false $inheritedFile $true @($inheritedChildren)
+  Assert-Policy "allow-deep-inherited-file-$name" (Join-Path $nested 'deeper\data') $false $inheritedFile $true @($inheritedChildren)
+  Assert-Policy "allow-object-only-carrier-$name" $nested $true (New-RawFixtureRule -Flags 'OIIOID') $true @($objectOnly)
+  Assert-Policy "allow-no-propagate-effective-$name" $nested $true $inheritedFile $true @($noPropagate)
+  Assert-Policy "deny-no-propagate-carrier-$name" $nested $true $inheritedChildren $false @($noPropagate)
+  Assert-Policy "deny-object-only-effective-directory-$name" $nested $true $inheritedFile $false @($objectOnly)
+  Assert-Policy "deny-no-parent-$name" $nested $true $inheritedFile $false
+  Assert-Policy "deny-parent-without-inheritance-$name" $nested $true $inheritedFile $false @($modify)
+  Assert-Policy "deny-explicit-descendant-$name" $nested $true $modify $false @($genericChildren)
+  Assert-Policy "deny-expanded-parent-rights-$name" $nested $true $inheritedFile $false @((New-RawFixtureRule -Mask '0x80000000'))
+  Assert-Policy "deny-excess-inherited-rights-$name" $nested $true (New-RawFixtureRule -Mask '0x1701bf' -Flags 'ID') $false @($genericChildren)
+  Assert-Policy "deny-inherited-file-propagation-$name" (Join-Path $nested 'data') $false $inheritedChildren $false @($genericChildren)
+  Assert-Policy "deny-container-only-file-$name" (Join-Path $nested 'data') $false $inheritedFile $false @((New-RawFixtureRule -Flags 'CIIO'))
+}
+foreach ($relative in @('Local State', 'Code Cache\nested', 'Cache-other\nested', 'other\Cache\nested',
+    'Cache\..\Network\nested')) {
+  Assert-Policy "deny-inherited-location-$relative" (Join-Path $root $relative) $true $inheritedFile $false @($genericChildren)
+}
+foreach ($target in @($root, 'C:\FinneyA1Lab\profiles\xec-regtest\client-a\profile.json',
+    'C:\FinneyA1Lab\runtime\a1-userdata-xec-regtest-client-b\Cache\nested',
+    'C:\FinneyA1Lab\runtime\a1-userdata-xec-testnet-client-a\Cache\nested')) {
+  Assert-Policy "deny-inherited-outside-$target" $target $true $inheritedFile $false @($genericChildren)
+}
+Assert-Policy 'deny-inherited-foreign-sid' (Join-Path $root 'Cache\nested') $true (New-RawFixtureRule -Flags 'ID' -Identity 'S-1-15-3-1') $false @($genericChildren)
+@{ result = 'synthetic-acl-policy-pass'; cases = $results.Count; names = $results.ToArray() } | ConvertTo-Json -Compress

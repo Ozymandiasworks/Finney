@@ -241,12 +241,14 @@ test('Node/native refusal harness runs in a disposable subprocess', () => {
 })
 
 test('Windows capability ACL policy restricts identity, location and rights (synthetic ACLs)', () => {
-  const script = fs.readFileSync(path.join(__dirname, 'boundary-acl-fixtures.ps1'), 'utf8')
   const result = spawnSync('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
-    ['-NoLogo', '-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
+    ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, 'boundary-acl-fixtures.ps1')],
     { encoding: 'utf8', timeout: 15000, windowsHide: true, cwd: 'C:\\FinneyA1Lab\\source' })
   assert.equal(result.status, 0, result.error?.message || result.stderr)
-  assert.deepEqual(JSON.parse(result.stdout.trim()), { result: 'synthetic-acl-policy-pass', cases: 57 })
+  const report = JSON.parse(result.stdout.trim())
+  assert.equal(report.result, 'synthetic-acl-policy-pass')
+  assert.equal(report.cases, 112)
+  assert.equal(new Set(report.names).size, 112)
 })
 
 test('Windows firewall admission distinguishes empty matches from failed reads', () => {

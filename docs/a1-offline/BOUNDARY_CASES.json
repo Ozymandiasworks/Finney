@@ -1,0 +1,383 @@
+{
+  "version": 1,
+  "sourceParent": "c199d43afb4e1b421d1f3e4f8b860b86232fa421",
+  "sourceCandidate": "containing frozen Git commit; bound by delivery manifest",
+  "status": "UNEXECUTED",
+  "common": {
+    "packageIdentity": "Record exact frozen source SHA, network, executable SHA256, app.asar SHA256, extracted-file hashes and actual runtime/tool versions per applicable case. Instrumented/unpackaged artifacts get separate hashes.",
+    "rawRoot": "C:\\FinneyA1Lab\\evidence\\<case-id>-<unique-id>\\",
+    "preservation": "No existing output overwrite, profile reset, lock deletion, automatic ACL repair or fixture cleanup. Keep old and new artifacts; hashes only for protected marker/key material."
+  },
+  "cases": [
+    {
+      "id": "ID-01",
+      "requirements": [
+        "A1-06"
+      ],
+      "layer": "package identity",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Owner supplies fresh guest source/build paths; locked archive tooling already present.",
+      "fixture": "Two newly built configuration packages, not draft 4 binaries.",
+      "attempt": "Read hashes and list/extract app.asar to new evidence storage; compare every packaged app/config byte with the frozen source. Inspect actual executable fuse wire.",
+      "oracle": "Both source and per-network executable/archive identities recorded; package contains only intended app and fixed config, no preload/legacy wallet/LevelDB/test utilities.",
+      "positiveControl": "A known extracted shell.html hash matches its committed source; a deliberately different expected hash is detected without modifying the package.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\ID-01-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain archive listing, per-entry hashes, build manifest, fuse observation and source/lock hashes."
+    },
+    {
+      "id": "ISO-01",
+      "requirements": [
+        "A1-01"
+      ],
+      "layer": "OS/data interval",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Owner-controlled clean guest; no NIC/public route/share/integration change; nonsecret synthetic host canary prepared by owner.",
+      "fixture": "A unique synthetic host canary not mounted in guest; a different guest canary exists.",
+      "attempt": "Record token/OS/filesystem/mounts/interfaces/routes/integration before/during/after; try only synthetic excluded paths from guest and applicable package inputs.",
+      "oracle": "Host canary is inaccessible; guest control is observable; no real data/credentials/mounts exposed in the measured interval.",
+      "positiveControl": "Read guest canary under identical observer; owner separately verifies host canary exists without sharing it.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\ISO-01-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain configuration receipts with times and observer access events; do not copy personal directories."
+    },
+    {
+      "id": "EG-01",
+      "requirements": [
+        "A1-03"
+      ],
+      "layer": "observer control",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Existing WFP/ETW or packet/process observer capable of distinguishing attempts, drops and no-route outcomes; offline controls unchanged.",
+      "fixture": "One finite non-package local control and, if already authorized, a denied documentation-address attempt to 192.0.2.1.",
+      "attempt": "Record attempt dispatch, PID, tuple and observer event; no internet destination or networking enablement.",
+      "oracle": "Observer sees known attempts/outcomes and distinguishes no interface/no route from a firewall drop. No silence-only pass.",
+      "positiveControl": "Loopback observation or provider self-test without changing outbound policy, then the denied/no-route control.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\EG-01-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Preserve trace/log/provider configuration, packet/drop counters, time synchronization and exact control binary hash."
+    },
+    {
+      "id": "EG-02",
+      "requirements": [
+        "A1-03"
+      ],
+      "layer": "exact package route observations",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "ID-01, ISO-01, EG-01; approved package source/hash and observers ready.",
+      "fixture": "Synthetic HTTP/WS/DNS labels and subprocess/native canaries; no public endpoint.",
+      "attempt": "Exercise reachable OS-open/drag/drop/pre-main stimuli while tracing exact app/inspector/children. Classify UI-inaccessible fetch/WS/DNS/native routes from actual archive/config; any extracted/instrumented guard attempt is separately labeled.",
+      "oracle": "No unintended connection, resolution, process or host access. Each route has an observed dispatch/refusal or evidenced NOT EXPOSED classification; package status strings alone are insufficient.",
+      "positiveControl": "Independent observers detect non-package control events; visible offline shell confirms intended package was exercised.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\EG-02-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain input video/dispatch evidence, PID tree, raw connection/drop/capture output and per-route limitations."
+    },
+    {
+      "id": "PATH-POSITIVE",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real package compatibility",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "ID-01/ISO-01; new nonsecret client-b state; prior fixtures preserved; do once per network.",
+      "fixture": "Exact Cache, Network and Shared Dictionary anchors and real inherited nested files; include raw generic carrier/mapped effective ACEs.",
+      "attempt": "Create/normal-close the new candidate; inventory actual nested descriptors; reopen/normal-close once to exercise the changed traversal.",
+      "oracle": "Readiness and normal exit; unchanged profile/protection-key fingerprints; correct paths and no leftover lock; nested files inspected under compatible inheritance.",
+      "positiveControl": "Valid nested trees in all three anchors; ordinary strict Local State/profile descriptors.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-POSITIVE-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain metadata fingerprints (no key bytes), full nested descriptor inventory, package outputs and file trace; never repeat historical smoke."
+    },
+    {
+      "id": "PATH-OWNER",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real depth-two owner",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Owner separately prepares privileged fixture, returns to standard account; valid positive baseline before mutation.",
+      "fixture": "Depth-two or deeper nested file owned by SYSTEM while parent tree remains valid and readable by lab account.",
+      "attempt": "Launch exact package through observe-boundary-case.ps1; record actual Get-Acl owner from operator.",
+      "oracle": "Exit 1 / BOUNDARY_UNVERIFIED before readiness, no target access beyond metadata or profile reset.",
+      "positiveControl": "Same candidate admitted the corresponding owner-correct fixture before alteration.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-OWNER-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain changed owner/ACL, pre/post hashes, stdout/stderr/process and file trace; no automatic owner repair."
+    },
+    {
+      "id": "PATH-FOREIGN",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real nested ACL",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Positive control and actual capability identity pinned.",
+      "fixture": "Depth-two file with Everyone Read Allow; independent directory variant.",
+      "attempt": "Add only that exact new fixture grant, capture descriptor, then launch package.",
+      "oracle": "Exit 1 / BOUNDARY_UNVERIFIED before readiness, no cleanup/reset.",
+      "positiveControl": "Unmodified same-tree positive before addition.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-FOREIGN-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Keep ACL and all canaries."
+    },
+    {
+      "id": "PATH-EXCESS",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real inherited/explicit excess",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Positive control; fixture-only ACL authority.",
+      "fixture": "Nested pinned-capability FullControl or ChangePermissions grant, separately explicit and inherited from an excessive parent.",
+      "attempt": "Launch each separately recorded fixture; preserve parent/child descriptor evidence.",
+      "oracle": "Exit 1 / BOUNDARY_UNVERIFIED; a valid parent grant never waives child bounds.",
+      "positiveControl": "Modify-plus-Synchronize inherited counterpart admitted.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-EXCESS-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Keep grant location/type and rights in trace; no broad principal relaxation."
+    },
+    {
+      "id": "PATH-EXPLICIT",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real nested explicit grant",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Positive control with valid inherited capabilities.",
+      "fixture": "Explicit pinned-capability Modify on a depth-three child, even alongside valid inherited entries.",
+      "attempt": "Launch and capture descriptor distinction.",
+      "oracle": "Exit 1 / BOUNDARY_UNVERIFIED; explicit descendant grants rejected.",
+      "positiveControl": "Only legitimately inherited counterpart admitted.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-EXPLICIT-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain all descriptor flags/rights."
+    },
+    {
+      "id": "PATH-REPARSE",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real nested junction/reparse",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Fresh lab-only escape target; independent file-access observer; any privileged link creation separately owner-operated.",
+      "fixture": "Depth-two junction to synthetic canary tree, broken-target junction, and file reparse point where supported.",
+      "attempt": "Launch package; observe app and fixed inspector process separately from operator pre/post canary reads.",
+      "oracle": "Exit 1 / BOUNDARY_UNVERIFIED; no app/inspector access through target; no reset or deletion. Unchanged canary alone does not prove no read.",
+      "positiveControl": "Observer sees an operator read labeled as control and ordinary positive tree enumeration.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-REPARSE-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain links/targets untouched, canary hashes and raw access trace; no recursive cleanup through link."
+    },
+    {
+      "id": "PATH-ENUMERATION",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real enumeration failure",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Standard account; owner Modify Allow retained; exact new depth-two directory.",
+      "fixture": "Current-owner ListDirectory Deny under otherwise valid tree.",
+      "attempt": "Confirm operator enumeration fails, launch package, trace failure.",
+      "oracle": "Exit 1 / BOUNDARY_UNVERIFIED, no partial success/readiness.",
+      "positiveControl": "Valid pre-mutation directory enumerates and admits.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-ENUMERATION-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Keep denial descriptor and operator error; no ACL repair."
+    },
+    {
+      "id": "PATH-METADATA",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real metadata failure",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Separately controlled ACL setup and independently demonstrated unreadable metadata as standard account.",
+      "fixture": "Exact depth-two fixture whose metadata/ACL read actually fails, e.g. narrowly prepared OWNER RIGHTS/READ_CONTROL restriction.",
+      "attempt": "Show actual Get-Item/Get-Acl failure, then exact package refusal.",
+      "oracle": "Exit 1 / BOUNDARY_UNVERIFIED. If ownership still grants ReadControl and reads succeed, mark fixture invalid, not passed.",
+      "positiveControl": "Same object's successful pre-mutation metadata read.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-METADATA-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Preserve actual error and descriptor setup; do not rely on mocked failure or widen policy."
+    },
+    {
+      "id": "PATH-LIMITS",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "actual budget enforcement",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Finite new fixtures, one limit per case, observed standard account and valid ACLs.",
+      "fixture": "Depth 33; more than 4096 enumerated entries; controlled slow I/O if available without broad changes.",
+      "attempt": "Launch each exact package; observe total duration/exit; distinguish scan limit from 10-second process timeout.",
+      "oracle": "No readiness/partial success; BOUNDARY_UNVERIFIED. Slow-I/O case remains unexecuted if no approved mechanism exists.",
+      "positiveControl": "Smaller valid depth/entry fixtures admitted; synthetic monotonic elapsed cases supplement only.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-LIMITS-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Keep fixtures, counts and monotonic/wall-clock observations. No disk fill or global quota change."
+    },
+    {
+      "id": "PATH-STRICT",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real strict-location controls",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Independent reserved case state per variant.",
+      "fixture": "Capability Allow at protection root, Local State, profile.json, Cache-lookalike, Code Cache, file named Cache; foreign-network/profile proof; alias/junction to other namespace.",
+      "attempt": "Capture exact location and descriptor then launch selected fixed network/profile.",
+      "oracle": "Boundary or typed profile refusal before readiness; no new capability exception outside exact approved tree. Record actual code per variant.",
+      "positiveControl": "Exact allowed anchor/inherited counterpart; valid fixed marker.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PATH-STRICT-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain both selected and foreign synthetic namespace state; do not inspect actual wallets."
+    },
+    {
+      "id": "RECORD-01",
+      "requirements": [
+        "A1-02"
+      ],
+      "layer": "real packaged record rejection",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "New nonsecret profile, valid boundary and no stale lock masking parser.",
+      "fixture": "Malformed canonical JSON, unsupported version, wrong network/profile/owner/purpose, absent marker or Local State, unexpected sibling, stale lock; separate variants.",
+      "attempt": "Launch without creation and capture exact current error, output, hashes and lock state.",
+      "oracle": "Typed refusal before readiness; no empty-state overwrite, replacement, source/key removal or stale-lock repair.",
+      "positiveControl": "Valid marker/protection positive before each alteration.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\RECORD-01-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Preserve all marker bytes locally as synthetic evidence; reports contain hashes/errors only."
+    },
+    {
+      "id": "PROVIDER-DECRYPT",
+      "requirements": [
+        "A1-05"
+      ],
+      "layer": "actual packaged provider failure",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Valid boundary/header, same owner, no stale lock; nonsecret proof fixture.",
+      "fixture": "Replace proof with canonical valid-base64 invalid ciphertext; separate synthetic foreign-account protected data with deliberately valid outer header.",
+      "attempt": "Launch exact package and determine refusal reaches decrypt path, not earlier foreign-header rejection.",
+      "oracle": "PROFILE_LOCKED, exit 1, no readiness/plaintext fallback; record/protection fingerprints retained.",
+      "positiveControl": "Valid proof decrypts using the real provider in the package.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PROVIDER-DECRYPT-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain local synthetic inputs, hashes and errors; no real protected stores copied."
+    },
+    {
+      "id": "PROVIDER-UNAVAILABLE",
+      "requirements": [
+        "A1-05"
+      ],
+      "layer": "actual availability failure",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Owner must supply controlled real provider-unavailable guest condition without host/account damage; not established by current packet.",
+      "fixture": "No mocked boolean/config error; actual unavailable Windows provider.",
+      "attempt": "Observe exact package refusal and raw provider/environment explanation.",
+      "oracle": "PROTECTION_UNAVAILABLE/no readiness when actual availability fails; otherwise BLOCKED/UNEXECUTED, not passed by inference.",
+      "positiveControl": "Same pinned package works with available provider on separate disposable control.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PROVIDER-UNAVAILABLE-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Preserve environment evidence; no real OS-key deletion, protection reconfiguration or host changes."
+    },
+    {
+      "id": "FILESYSTEM-WRITE",
+      "requirements": [
+        "A1-02",
+        "A1-05"
+      ],
+      "layer": "actual packaged file failure",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Scoped new directory with real ACL-induced create/write denial, owner Modify Allow retained; no unrelated invalid state.",
+      "fixture": "Deny new lock file creation in an existing valid profile; separate parent CreateDirectories denial on explicit new profile.",
+      "attempt": "Launch one case, record exact failing operation and stderr; no synthetic backend substitution.",
+      "oracle": "No readiness, no reset/overwrites; lock failure may report PROFILE_IN_USE_OR_UNCLEAN, other I/O STARTUP_UNAVAILABLE. Do not label either as DPAPI failure.",
+      "positiveControl": "Corresponding positive write/open before restriction.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\FILESYSTEM-WRITE-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Preserve partial fixtures and pre/post inventory; no disk-filling experiment."
+    },
+    {
+      "id": "NATIVE-RECORD",
+      "requirements": [
+        "A1-05"
+      ],
+      "layer": "separate environment probe evidence",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Request existing raw probe/binary identity record first; none located in supplied A1 packet.",
+      "fixture": "Previously nonsecret unpackaged Electron/Level probe outputs, if owner supplies them.",
+      "attempt": "Attach unchanged raw record and loaded .node/executable/version hashes; if unavailable, schedule only missing probe under subsequent owner execution.",
+      "oracle": "Qualifies separate environment only; not packaged backend, custody, unavailable provider or power-loss durability.",
+      "positiveControl": "Raw success/error/reopen assertions and native identity present; receipt alone insufficient.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\NATIVE-RECORD-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "No LevelDB added to app.asar; preserve native fixture and label unpackaged."
+    },
+    {
+      "id": "HOSTILE-NAV",
+      "requirements": [
+        "A1-04"
+      ],
+      "layer": "exact package reachable input",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Valid new offline shell and process/file/connection observers; no testing bridge.",
+      "fixture": "Synthetic external/file/custom-protocol URI or file drag/drop through available OS/UI surfaces.",
+      "attempt": "Record exact physical input, dispatch stage, navigation/window/file/process outcome; no DevTools/sandbox bypass.",
+      "oracle": "No external browser/window/download/navigation or unintended access. If stimulus has no exposed dispatcher, record NOT EXPOSED, not executed callback refusal.",
+      "positiveControl": "Observer sees selected input on an independent benign control; package shows expected offline shell.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\HOSTILE-NAV-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Keep input recording and logs; instrumented fixture evidence separate."
+    },
+    {
+      "id": "HOSTILE-API",
+      "requirements": [
+        "A1-04"
+      ],
+      "layer": "actual archive/exposure classification",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "ID-01 and no preload/JS/Node/DevTools changes.",
+      "fixture": "Permission/download/forged wallet/IPC/native/subprocess requests, each examined for real accessible entry point.",
+      "attempt": "Inspect package routes/settings and try only existing surfaces; source guard fixture may demonstrate callback behavior separately.",
+      "oracle": "No capability activation. Absent interfaces recorded NOT EXPOSED with evidence; not executable API refusals. Any unresolved dynamic requirement stays review limitation.",
+      "positiveControl": "Read-only archive extraction proves scanner sees known main.js/shell; isolated guard fixture controls labeled non-package.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\HOSTILE-API-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Retain complete archive/preferences/route table and exact attempted vs inaccessible classification."
+    },
+    {
+      "id": "PREMAIN-EXTRA",
+      "requirements": [
+        "A1-03",
+        "A1-04"
+      ],
+      "layer": "exact package additional launch cases",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Pinned package, offline observer, distinct synthetic canary and fresh evidence dir; no old smoke rerun.",
+      "fixture": "Inspector/debug ports/pipes, js-flags, load-extension, user-data-dir and NODE_PATH variants, one per process.",
+      "attempt": "Run fixed executable directly with literal captured argv/env and redirected output; inspect listeners/child processes/canaries.",
+      "oracle": "Nonzero refusal/no readiness, no debug listener/execution or foreign state. A pre-main effect before later refusal is a failure.",
+      "positiveControl": "Unmodified valid launch plus independent observer listener/process controls.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\PREMAIN-EXTRA-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Preserve canaries and logs, remove test environment variables only from disposable launcher process; never change host/system env."
+    },
+    {
+      "id": "BASELINE-LOGS",
+      "requirements": [
+        "A1-06"
+      ],
+      "layer": "existing safe regression evidence",
+      "status": "UNEXECUTED",
+      "candidate": "Frozen containing source commit plus each new configuration's actual package hashes; never historical draft 4 hashes",
+      "prerequisites": "Locate owner's existing raw logs before proposing executions; inspected suite effects and pinned source needed.",
+      "fixture": "Runtime/static/core/unit baseline logs, if available.",
+      "attempt": "Attach exact source/version/commands/results; distinguish untouched-source failures from repair regressions. Missing runs remain owner-planned.",
+      "oracle": "No invented pass, failure or skipped count; no unrelated fixes.",
+      "positiveControl": "Historical 29-source-test screenshot is retained with its own scope.",
+      "rawOutput": "C:\\FinneyA1Lab\\evidence\\BASELINE-LOGS-<unique-id>\\ (command, times, exit, stdout, stderr, identities, pre/post inventories, observer traces)",
+      "preservation": "Do not run aggregate relay/key-generating suites automatically under this focused plan."
+    }
+  ]
+}

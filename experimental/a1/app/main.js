@@ -3,7 +3,7 @@ const path = require('path')
 const electron = require('electron')
 const { app, BrowserWindow, protocol, session, safeStorage, Menu } = electron
 const { LAB_ROOT, GuardError, refuse, parseRecord, validateConfig, validateLaunch, SHELL_URL, STYLE_URL } = require('./policy')
-const { inspectBoundary, acquireProfile } = require('./profile')
+const { inspectBoundary, acquireProfile, regularPath } = require('./profile')
 const { closeNativeRoutes, guardSession, guardContents, windowOptions } = require('./guards')
 
 let profile
@@ -30,9 +30,20 @@ try {
   }
   const boundary = inspectBoundary(config.network, launch.profile)
   profile = acquireProfile(boundary, launch.create)
-  const runtimeDirectory = fs.mkdtempSync(path.join(LAB_ROOT, 'runtime', 'a1-'))
-  app.setPath('userData', runtimeDirectory)
-  app.setPath('sessionData', runtimeDirectory)
+  const protectionDirectory = path.join(LAB_ROOT, 'runtime',
+    `a1-userdata-${config.network}-${launch.profile}`)
+  if (launch.create) fs.mkdirSync(protectionDirectory)
+  else if (!fs.existsSync(protectionDirectory)) refuse('PROTECTION_STATE_MISSING')
+  regularPath(protectionDirectory, true)
+  if (!launch.create) {
+    const localState = path.join(protectionDirectory, 'Local State')
+    if (!fs.existsSync(localState)) refuse('PROTECTION_STATE_MISSING')
+    regularPath(localState, false)
+  }
+  // Electron 44 stores Windows OSCrypt's Local State under sessionData.
+  // Both paths must survive process exit; the renderer partition is in-memory.
+  app.setPath('userData', protectionDirectory)
+  app.setPath('sessionData', protectionDirectory)
   app.enableSandbox()
   app.commandLine.appendSwitch('disable-background-networking')
   app.commandLine.appendSwitch('disable-component-update')
@@ -58,6 +69,7 @@ try {
   app.whenReady().then(async () => {
     profile.finish(safeStorage)
     const offlineSession = session.fromPartition('finney-a1-offline', { cache: false })
+    if (offlineSession.isPersistent()) refuse('PERSISTENT_RENDERER_SESSION_DENIED')
     guardSession(session.defaultSession)
     guardSession(offlineSession)
     const assets = new Map([
@@ -74,11 +86,18 @@ try {
     })
     Menu.setApplicationMenu(null)
     window = new BrowserWindow(windowOptions(offlineSession))
-    window.once('ready-to-show', () => window.show())
+    const visible = new Promise(resolve => window.once('ready-to-show', () => {
+      window.show()
+      resolve()
+    }))
     window.webContents.on('render-process-gone', () => app.exit(1))
     await window.loadURL(SHELL_URL)
+    await visible
     process.stdout.write(JSON.stringify({ event: 'offline-shell-ready', stage: 'A1',
       network: config.network, profile: launch.profile, versions: process.versions,
+      processId: process.pid, windowVisible: window.isVisible(),
+      storage: { userData: app.getPath('userData'), sessionData: app.getPath('sessionData'),
+        rendererPersistent: offlineSession.isPersistent() },
       preferences: { sandbox: window.webContents.getLastWebPreferences().sandbox,
         contextIsolation: window.webContents.getLastWebPreferences().contextIsolation,
         nodeIntegration: window.webContents.getLastWebPreferences().nodeIntegration,

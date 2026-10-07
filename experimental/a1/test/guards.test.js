@@ -240,6 +240,24 @@ test('Node/native refusal harness runs in a disposable subprocess', () => {
   assert.match(result.stdout, /NATIVE_REFUSALS_OK/)
 })
 
+test('Windows capability ACL policy restricts identity, location and rights (synthetic ACLs)', () => {
+  const script = fs.readFileSync(path.join(__dirname, 'boundary-acl-fixtures.ps1'), 'utf8')
+  const result = spawnSync('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+    ['-NoLogo', '-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
+    { encoding: 'utf8', timeout: 15000, windowsHide: true, cwd: 'C:\\FinneyA1Lab\\source' })
+  assert.equal(result.status, 0, result.error?.message || result.stderr)
+  assert.deepEqual(JSON.parse(result.stdout.trim()), { result: 'synthetic-acl-policy-pass', cases: 57 })
+})
+
+test('Windows firewall admission distinguishes empty matches from failed reads', () => {
+  const script = fs.readFileSync(path.join(__dirname, 'boundary-firewall-fixtures.ps1'), 'utf8')
+  const result = spawnSync('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+    ['-NoLogo', '-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
+    { encoding: 'utf8', timeout: 15000, windowsHide: true, cwd: 'C:\\FinneyA1Lab\\source' })
+  assert.equal(result.status, 0, result.error?.message || result.stderr)
+  assert.deepEqual(JSON.parse(result.stdout.trim()), { result: 'synthetic-firewall-policy-pass', cases: 13 })
+})
+
 test('packaging disables pre-main environment and alternate-app routes', () => {
   const wire = Buffer.concat([Buffer.from('MZ-fixture'), Buffer.from('dL7pKGdnNz796PbbjQWNKmHXBZaB9tsX'),
     Buffer.from([1, 9]), Buffer.from('111101111')])

@@ -13,7 +13,9 @@ const executable = path.resolve(__dirname, '../../../dist/a1', network, 'package
 verifyFuses(fs.readFileSync(executable))
 
 function start(args, environment = {}) {
-  return spawn(executable, args, { env: { ...process.env, ...environment }, windowsHide: true,
+  // This is a visible GUI test. Hidden startup can prevent Windows from finding
+  // a main window even after Electron has emitted its readiness event.
+  return spawn(executable, args, { env: { ...process.env, ...environment }, windowsHide: false,
     stdio: ['ignore', 'pipe', 'pipe'], cwd: LAB_ROOT })
 }
 
@@ -23,8 +25,9 @@ function collect(child, ready = false) {
     let errors = ''
     const timeout = setTimeout(() => {
       child.kill()
-      reject(new Error('Packaged smoke timeout; retain fixture and inspect its lock'))
-    }, 20000)
+      reject(new Error(`Packaged smoke timeout while ${ready ? 'waiting for visible shell' : 'waiting for exit'}; ` +
+        `retain fixture and inspect its lock; stdout=${output.slice(-2000)} stderr=${errors.slice(-2000)}`))
+    }, 60000)
     child.on('error', error => { clearTimeout(timeout); reject(error) })
     child.stdout.on('data', bytes => {
       output += bytes.toString()
@@ -44,13 +47,72 @@ function collect(child, ready = false) {
   })
 }
 
+async function closeWindow(child) {
+  const exited = collect(child)
+  // Attach a rejection handler immediately while the synchronous helper runs.
+  exited.catch(() => {})
+  try {
+    assert.ok(Number.isSafeInteger(child.pid) && child.pid > 0)
+    const script = `
+$ErrorActionPreference = 'Stop'
+$targetProcess = Get-Process -Id ${child.pid}
+if ($targetProcess.ProcessName -ne 'FinneyA1') { throw 'UNEXPECTED_CLOSE_TARGET' }
+$deadline = [DateTime]::UtcNow.AddSeconds(10)
+$requested = $false
+do {
+  $targetProcess.Refresh()
+  if ($targetProcess.HasExited) { throw 'PROCESS_EXITED_BEFORE_CLOSE' }
+  $handle = $targetProcess.MainWindowHandle.ToInt64()
+  $title = $targetProcess.MainWindowTitle
+  if ($handle -ne 0) { $requested = $targetProcess.CloseMainWindow() }
+  if ($requested) { break }
+  Start-Sleep -Milliseconds 100
+} while ([DateTime]::UtcNow -lt $deadline)
+@{ processId = ${child.pid}; handle = $handle; title = $title; requested = $requested } | ConvertTo-Json -Compress
+`
+    const close = spawnSync('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+      ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
+      { windowsHide: true, encoding: 'utf8', timeout: 15000 })
+    assert.equal(close.status, 0, close.error?.message || close.stderr)
+    const result = JSON.parse(close.stdout.trim())
+    assert.equal(result.processId, child.pid)
+    assert.equal(result.requested, true, `Windows could not request a normal close: ${close.stdout.trim()}`)
+    assert.equal((await exited).code, 0, 'packaged process did not exit cleanly')
+    return result
+  } catch (error) {
+    if (child.exitCode === null) child.kill()
+    await exited.catch(() => {})
+    throw error
+  }
+}
+
+function assertState(state, child, protectionDirectory) {
+  assert.equal(state.wallet, 'not-created')
+  assert.equal(state.network, network)
+  assert.equal(state.profile, 'client-a')
+  assert.equal(state.processId, child.pid)
+  assert.equal(state.windowVisible, true)
+  assert.deepEqual(state.preferences, { sandbox: true, contextIsolation: true, nodeIntegration: false, preload: null })
+  assert.deepEqual(state.storage, { userData: protectionDirectory,
+    sessionData: protectionDirectory, rendererPersistent: false })
+}
+
+function encryptedKey(localStatePath) {
+  const key = JSON.parse(fs.readFileSync(localStatePath, 'utf8')).os_crypt?.encrypted_key
+  assert.ok(typeof key === 'string' && key.length > 0, 'Windows encryption key state was not persisted')
+  return key
+}
+
 async function main() {
   const directory = path.win32.join(LAB_ROOT, 'profiles', network, 'client-a')
-  if (fs.existsSync(directory)) refuse('FRESH_SMOKE_FIXTURE_REQUIRED')
+  const protectionDirectory = path.win32.join(LAB_ROOT, 'runtime', `a1-userdata-${network}-client-a`)
+  const localStatePath = path.join(protectionDirectory, 'Local State')
+  if (fs.existsSync(directory) || fs.existsSync(protectionDirectory)) refuse('FRESH_SMOKE_FIXTURE_REQUIRED')
   const absent = await collect(start(['--profile=client-a']))
   assert.notEqual(absent.code, 0)
   assert.match(absent.errors, /PROFILE_MISSING/)
   assert.equal(fs.existsSync(directory), false)
+  assert.equal(fs.existsSync(protectionDirectory), false)
   for (const args of [[], ['--profile=client-a', '--no-sandbox'],
     ['--profile=client-a', '--enable-live'], ['--profile=client-a', '--network=mainnet']]) {
     assert.notEqual((await collect(start(args))).code, 0)
@@ -70,20 +132,30 @@ async function main() {
   const active = start(['--profile=client-a', '--create-profile'])
   try {
     const state = await collect(active, true)
-    assert.equal(state.wallet, 'not-created')
-    assert.equal(state.network, network)
-    assert.deepEqual(state.preferences, { sandbox: true, contextIsolation: true, nodeIntegration: false, preload: null })
+    assertState(state, active, protectionDirectory)
+    const markerBefore = fs.readFileSync(path.join(directory, 'profile.json'), 'utf8')
     const duplicate = await collect(start(['--profile=client-a']))
     assert.notEqual(duplicate.code, 0)
     assert.match(duplicate.errors, /PROFILE_IN_USE_OR_UNCLEAN/)
-    const exited = collect(active)
-    const close = spawnSync('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
-      ['-NoProfile', '-NonInteractive', '-Command', `(Get-Process -Id ${active.pid}).CloseMainWindow()`],
-      { windowsHide: true, encoding: 'utf8', timeout: 5000 })
-    assert.equal(close.status, 0)
-    assert.equal((await exited).code, 0)
+    const firstClose = await closeWindow(active)
     assert.equal(fs.existsSync(path.join(directory, '.guard.lock')), false)
-    process.stdout.write(JSON.stringify({ result: 'packaged-smoke-pass', state,
+    const keyBefore = encryptedKey(localStatePath)
+    const reopened = start(['--profile=client-a'])
+    let reopenedState
+    let secondClose
+    try {
+      reopenedState = await collect(reopened, true)
+      assertState(reopenedState, reopened, protectionDirectory)
+      secondClose = await closeWindow(reopened)
+    } finally {
+      if (reopened.exitCode === null) reopened.kill()
+    }
+    assert.equal(fs.existsSync(path.join(directory, '.guard.lock')), false)
+    assert.ok(fs.readFileSync(path.join(directory, 'profile.json'), 'utf8') === markerBefore,
+      'reopen changed the existing profile proof')
+    assert.ok(encryptedKey(localStatePath) === keyBefore, 'reopen replaced the Windows encryption key state')
+    process.stdout.write(JSON.stringify({ result: 'packaged-smoke-pass', state, reopenedState,
+      normalCloseRequests: [firstClose, secondClose], unchangedProfileProof: true, unchangedProtectionKey: true,
       limitation: 'Not an OS packet capture, forged-renderer campaign, or backend qualification' }) + '\n')
   } finally {
     if (active.exitCode === null) active.kill()

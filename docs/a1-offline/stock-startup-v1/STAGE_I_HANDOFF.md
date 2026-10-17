@@ -1,5 +1,7 @@
 # STOCK-A1 Stage I authored-source handoff
 
+Historical Stage I scope at f21755a is retained below. Its proposed permission boundary is superseded by DEC-027/028/029 and the [version-2 staged-tooling correction](STAGING.md). The revised source delivery stops for OM identity binding; no automatic guest continuation or D2 permission follows. New validation is unexecuted; the 23 reported passes and parser/compile results belong to f21755a only.
+
 This increment supplies new versioned launch/coverage/case documentation; bounded Windows dispatcher and native launch helper; pure contract/classifier modules; launch, raw-result/classification and dispatch-input schemas; and regression definitions. Existing application, requirements, tests, package scripts, dependencies, builds, fuses, profiles and evidence are unchanged.
 
 Package-source baseline: a0e5890e612c81fda4d2698f78dbe4b81fba3e0d.

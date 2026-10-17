@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:finney:a1:stock-startup:v1:result",
+  "$id": "urn:finney:a1:stock-startup:v2:result",
   "oneOf": [
     {
       "$ref": "#/$defs/rawResult"
@@ -14,7 +14,7 @@
       "type": "object",
       "properties": {
         "version": {
-          "const": 1
+          "const": 2
         },
         "runId": {
           "type": "string",
@@ -57,10 +57,6 @@
                 "packageSource": {
                   "const": "a0e5890e612c81fda4d2698f78dbe4b81fba3e0d"
                 },
-                "harnessCommit": {
-                  "type": "string",
-                  "pattern": "^[a-f0-9]{40}$"
-                },
                 "requirementHash": {
                   "const": "ec6524ebdc4be39279ba356e23020a8d7e45d0d06dcad878c48bb8cbf40a3fb6"
                 },
@@ -79,16 +75,20 @@
                 "inventorySha256": {
                   "type": "string",
                   "pattern": "^[a-f0-9]{64}$"
+                },
+                "toolingCommit": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{40}$"
                 }
               },
               "required": [
                 "packageSource",
-                "harnessCommit",
                 "requirementHash",
                 "executableSha256",
                 "archiveSha256",
                 "configurationSha256",
-                "inventorySha256"
+                "inventorySha256",
+                "toolingCommit"
               ],
               "additionalProperties": false
             },
@@ -431,6 +431,84 @@
         "dispatcherError": {
           "type": "string",
           "maxLength": 4096
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": 2
+            },
+            "packageSourceRoot": {
+              "const": "C:\\FinneyA1Lab\\source"
+            },
+            "packageSourceHead": {
+              "const": "a0e5890e612c81fda4d2698f78dbe4b81fba3e0d"
+            },
+            "toolingRoot": {
+              "type": "string",
+              "pattern": "^C:\\\\FinneyA1Lab\\\\evidence\\\\stock-tooling-v2-[a-f0-9]{32}\\\\tooling$"
+            },
+            "toolingCommit": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            },
+            "commitEvidence": {
+              "const": "HOST_EXPORT_APPROVAL_NOT_GUEST_GIT"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "deliverySha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "caseMatrixSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "authorizationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "runId": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{32}$"
+            },
+            "caseId": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "network": {
+              "enum": [
+                "xec-testnet",
+                "xec-regtest"
+              ]
+            },
+            "profile": {
+              "enum": [
+                "client-a",
+                "client-b"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "version",
+            "packageSourceRoot",
+            "packageSourceHead",
+            "toolingRoot",
+            "toolingCommit",
+            "commitEvidence",
+            "manifestSha256",
+            "deliverySha256",
+            "caseMatrixSha256",
+            "authorizationSha256",
+            "runId",
+            "caseId",
+            "network",
+            "profile"
+          ]
         }
       },
       "required": [
@@ -450,7 +528,8 @@
         "observation",
         "limitation",
         "authorizationSha256",
-        "startedUtc"
+        "startedUtc",
+        "provenance"
       ],
       "additionalProperties": false
     },
@@ -458,7 +537,7 @@
       "type": "object",
       "properties": {
         "version": {
-          "const": 1
+          "const": 2
         },
         "outcome": {
           "enum": [

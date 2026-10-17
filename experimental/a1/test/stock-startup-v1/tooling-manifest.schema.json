@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:finney:a1:stock-startup:v2:tooling-manifest",
+  "description": "Post-commit Git export manifest; external approval pins this record. Neither this record nor the archive contains its own digest.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 2
+    },
+    "format": {
+      "const": "git-archive-zip-raw-v1"
+    },
+    "toolingCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "packageSource": {
+      "const": "a0e5890e612c81fda4d2698f78dbe4b81fba3e0d"
+    },
+    "requirementHash": {
+      "const": "ec6524ebdc4be39279ba356e23020a8d7e45d0d06dcad878c48bb8cbf40a3fb6"
+    },
+    "caseMatrixPath": {
+      "const": "docs/a1-offline/stock-startup-v1/CASE_MATRIX.json"
+    },
+    "caseMatrixSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "deliverySha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "deliveryBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1048576
+    },
+    "files": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "properties": {
+          "relative": {
+            "type": "string",
+            "maxLength": 200,
+            "pattern": "^(docs/a1-offline|experimental/a1/test)/stock-startup-v1/[A-Za-z0-9_.-]+$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1048576
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "relative",
+          "bytes",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "format",
+    "toolingCommit",
+    "packageSource",
+    "requirementHash",
+    "caseMatrixPath",
+    "caseMatrixSha256",
+    "deliverySha256",
+    "deliveryBytes",
+    "files"
+  ]
+}

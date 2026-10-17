@@ -2,7 +2,7 @@ const { test } = require('node:test')
 const assert = require('node:assert/strict')
 const crypto = require('crypto')
 const { classify, REQUIRED } = require('./classify')
-const { PACKAGE_SOURCE, REQUIREMENT_HASH, publicArguments, validatePublicArguments,
+const { PACKAGE_SOURCE, REQUIREMENT_HASH, CASE_MATRIX_SHA256, publicArguments, validatePublicArguments,
   validateEnvironment, encodeEnvironment, commandLine, bytesRecord, checkBytes, caseFor, paths } = require('./contract')
 
 const digest = value => crypto.createHash('sha256').update(value).digest('hex')
@@ -23,7 +23,7 @@ function fixture(caseId = 'S03-UPPER') {
     value: Object.hasOwn(values, selected.environment.value) ? values[selected.environment.value] : selected.environment.value } : null
   if (exception) environment.push(exception)
   const identity = { packageSource: PACKAGE_SOURCE, requirementHash: REQUIREMENT_HASH,
-    harnessCommit: '1'.repeat(40), executableSha256: digest('synthetic executable'),
+    toolingCommit: '1'.repeat(40), executableSha256: digest('synthetic executable'),
     archiveSha256: digest('synthetic archive'), configurationSha256: digest('synthetic config'),
     inventorySha256: digest('synthetic inventory') }
   const launch = {
@@ -32,7 +32,8 @@ function fixture(caseId = 'S03-UPPER') {
     environment: bytesRecord(encodeEnvironment(environment, exception)),
   }
   const record = {
-    version: 1, caseId, runId: '2'.repeat(32), network: 'xec-regtest', profile: 'client-b',
+    version: 2, caseId, runId: '2'.repeat(32), network: 'xec-regtest', profile: 'client-b',
+    authorizationSha256: digest('synthetic authorization'),
     execution: 'LAUNCHED', identity, launch, fixture: { status: 'VALID', id: fixtureId },
     wrapper: { pid: 1234, creationTime: '134000000000000000', exitCode: 1, ready: false,
       readyBindingValid: false, stderr: 'ENVIRONMENT_OVERRIDE_DENIED\n', timeout: false,
@@ -42,6 +43,13 @@ function fixture(caseId = 'S03-UPPER') {
       drained: true, loss: 0, unattributedRelevantEvents: 0, clockChangeResolved: true,
       suppressionEstablished: false, attestations: [] },
   }
+  record.provenance = { version: 2, packageSourceHead: PACKAGE_SOURCE,
+    packageSourceRoot: 'C:\\FinneyA1Lab\\source',
+    toolingRoot: 'C:\\FinneyA1Lab\\evidence\\stock-tooling-v2-' + '4'.repeat(32) + '\\tooling',
+    toolingCommit: identity.toolingCommit, commitEvidence: 'HOST_EXPORT_APPROVAL_NOT_GUEST_GIT',
+    manifestSha256: digest('synthetic manifest'), deliverySha256: digest('synthetic delivery'),
+    caseMatrixSha256: CASE_MATRIX_SHA256, authorizationSha256: record.authorizationSha256,
+    runId: record.runId, caseId, network: record.network, profile: record.profile }
   record.observation.attestations = [...REQUIRED, 'no-injection-or-trust-change',
     'no-candidate-created', 'unsupported-route'].map(category => ({
     category, state: 'SUPPORTED', runId: record.runId, caseId, network: record.network,
@@ -238,7 +246,7 @@ test('package, requirement and harness identities cannot be conflated or absent'
     assert.equal(classify(record).outcome, 'INCONCLUSIVE', key)
   }
   const record = fixture()
-  record.identity.packageSource = record.identity.harnessCommit
+  record.identity.packageSource = record.identity.toolingCommit
   assert.equal(classify(record).outcome, 'INCONCLUSIVE')
 })
 
@@ -284,4 +292,25 @@ test('malformed observation collections and unknown record versions fail explici
   assert.equal(classify(record).outcome, 'INCONCLUSIVE')
   record.version = 9
   assert.equal(classify(record).outcome, 'INCONCLUSIVE')
+})
+
+test('old results remain historical and missing or substituted staged provenance cannot qualify', () => {
+  const old = fixture()
+  old.version = 1
+  assert.equal(classify(old).outcome, 'INCONCLUSIVE')
+  for (const key of Object.keys(fixture().provenance)) {
+    const record = fixture()
+    delete record.provenance[key]
+    assert.equal(classify(record).outcome, 'INCONCLUSIVE', key)
+  }
+  for (const change of [
+    record => { record.provenance.caseMatrixSha256 = digest('wrong matrix') },
+    record => { record.provenance.toolingCommit = PACKAGE_SOURCE },
+    record => { record.provenance.runId = '9'.repeat(32) },
+    record => { record.provenance.authorizationSha256 = digest('different approval') },
+  ]) {
+    const record = fixture()
+    change(record)
+    assert.equal(classify(record).outcome, 'INCONCLUSIVE')
+  }
 })

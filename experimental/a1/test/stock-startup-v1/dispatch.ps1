@@ -2,7 +2,8 @@ param(
   [Parameter(Mandatory = $true)][ValidatePattern('^(S[0-9]{2}|X)-[A-Z-]+$')][string]$CaseId,
   [Parameter(Mandatory = $true)][ValidateSet('xec-testnet','xec-regtest')][string]$Network,
   [Parameter(Mandatory = $true)][ValidateSet('client-a','client-b')][string]$Profile,
-  [Parameter(Mandatory = $true)][string]$AuthorizationPath
+  [Parameter(Mandatory = $true)][string]$AuthorizationPath,
+  [Parameter(Mandatory = $true)][ValidatePattern('^[a-f0-9]{64}$')][string]$AuthorizationSha256
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -107,39 +108,35 @@ $run = $null
 $native = $null
 $record = $null
 try {
-  Require ([Environment]::Is64BitProcess -and $env:OS -eq 'Windows_NT' -and
-    $PSScriptRoot -eq "$source\experimental\a1\test\stock-startup-v1") 'ISOLATED_WINDOWS_X64_CHECKOUT_REQUIRED'
+  Require ([Environment]::Is64BitProcess -and $env:OS -eq 'Windows_NT') 'ISOLATED_WINDOWS_X64_REQUIRED'
   $null = Check-Path $PSScriptRoot $true
   $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
   $principal = [Security.Principal.WindowsPrincipal]::new($identity)
   Require (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 'STANDARD_ACCOUNT_REQUIRED'
-  $approval = Read-Record $AuthorizationPath 65536
-  Require ($approval.version -eq 1 -and $approval.stage -ceq 'II' -and
-    $approval.authorized -eq $true -and $approval.ownerApproval -is [string] -and
-    $approval.ownerApproval.Trim().Length -gt 0) 'STAGE_II_AUTHORIZATION_REQUIRED'
-  Require ($approval.runId -cmatch '^[a-f0-9]{32}$' -and $approval.caseId -ceq $CaseId -and
-    $approval.network -ceq $Network -and $approval.profile -ceq $Profile) 'AUTHORIZATION_BINDING_MISMATCH'
-  $now = [DateTimeOffset]::UtcNow
-  Require ([DateTimeOffset]::Parse($approval.validFrom) -le $now -and
-    [DateTimeOffset]::Parse($approval.expires) -gt $now) 'AUTHORIZATION_EXPIRED'
-  $actualHead = & git -C $source rev-parse HEAD
-  Require ($LASTEXITCODE -eq 0 -and $actualHead -ceq $approval.harnessCommit -and
-    $approval.harnessCommit -cmatch '^[a-f0-9]{40}$') 'HARNESS_IDENTITY_MISMATCH'
-  $status = @(& git -C $source status --porcelain=v1 --untracked-files=all)
-  Require ($LASTEXITCODE -eq 0 -and $status.Count -eq 0) 'SOURCE_NOT_CLEAN'
-  $matrixPath = "$source\docs\a1-offline\stock-startup-v1\CASE_MATRIX.json"
-  $matrix = Read-Record $matrixPath
-  Require ((Get-FileHash -LiteralPath $matrixPath -Algorithm SHA256).Hash.ToLowerInvariant() -ceq $approval.caseMatrixSha256) 'CASE_MATRIX_CHANGED'
-  $selected = @($matrix.cases | Where-Object { $_.id -ceq $CaseId })
-  Require ($selected.Count -eq 1) 'UNKNOWN_CASE'
-  $selected = $selected[0]
+  $approval = Bound-Reference @{path=$AuthorizationPath;sha256=$AuthorizationSha256}
+  Require ($approval.version -eq 2 -and $approval.deliveryId -cmatch '^[a-f0-9]{32}$') 'STAGE_II_VERSION_REQUIRED'
+  $delivery = "$lab\evidence\stock-tooling-v2-$($approval.deliveryId)"
+  Require ($PSScriptRoot -ceq "$delivery\tooling\experimental\a1\test\stock-startup-v1" -and
+    $approval.toolingManifest.path -ceq "$delivery\manifest.json") 'STAGED_TOOLING_ROOT_REQUIRED'
+  $bootstrap = Bound-Reference $approval.toolingManifest
+  foreach ($name in @('dispatch.ps1','provenance.ps1')) {
+    $bound = @($bootstrap.files | Where-Object { $_.relative -ceq "experimental/a1/test/stock-startup-v1/$name" })
+    Require ($bound.Count -eq 1 -and $bound[0].sha256 -cmatch '^[a-f0-9]{64}$') 'BOOTSTRAP_IDENTITY_MISSING'
+    $file = Check-Path "$PSScriptRoot\$name" $false
+    Require ((Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant() -ceq $bound[0].sha256) 'BOOTSTRAP_CHANGED'
+  }
+  . "$PSScriptRoot\provenance.ps1"
+  $verified = Confirm-StockProvenance -AuthorizationPath $AuthorizationPath -AuthorizationSha256 $AuthorizationSha256 `
+    -ScriptDirectory $PSScriptRoot -CaseId $CaseId -Network $Network -Profile $Profile
+  $approval = $verified.approval
+  $selected = $verified.selected
   $evidence = Check-Path "$lab\evidence" $true
-  $run = Join-Path $evidence ('stock-startup-v1-' + $approval.runId)
+  $run = Join-Path $evidence ('stock-startup-v2-' + $approval.runId)
   Require (-not (Test-Path -LiteralPath $run)) 'RUN_ALREADY_EXISTS'
   $null = New-Item -ItemType Directory -Path $run
-  $record = [ordered]@{ version=1; runId=$approval.runId; caseId=$CaseId; network=$Network; profile=$Profile
+  $record = [ordered]@{ version=2; runId=$approval.runId; caseId=$CaseId; network=$Network; profile=$Profile
     execution='NOT LAUNCHED'; preparationRejected=$false; unsupported=$false
-    identity=$null; launch=$null; fixture=@{status='UNVERIFIED'}
+    identity=$null; provenance=$verified.provenance; launch=$null; fixture=@{status='UNVERIFIED'}
     wrapper=@{pid=$null; creationTime=$null; exitCode=$null; ready=$false; readyBindingValid=$false
       stderr=''; timeout=$false; outputOverflow=$false; drainComplete=$false; forcedTermination=$false}
     kernel=$null; observation=@{attestations=@()}; limitation='Independent evidence not imported; unqualified'
@@ -251,7 +248,7 @@ try {
   foreach ($token in $tokens) { Require (-not ($token -match '["\r\n\x00]') -and -not $token.EndsWith('\')) 'INVALID_COMMAND_TOKEN' }
   $command = (@($tokens | ForEach-Object { '"' + $_ + '"' }) -join ' ')
   $commandBytes = [Text.Encoding]::Unicode.GetBytes($command + [char]0)
-  $record.identity = @{packageSource=$expectedSource; harnessCommit=$actualHead; requirementHash=$requirementHash
+  $record.identity = @{packageSource=$expectedSource; toolingCommit=$approval.toolingCommit; requirementHash=$requirementHash
     executableSha256=$exeHash; archiveSha256=$asarHash; configurationSha256=$package.configurationSha256
     inventorySha256=$approval.packageManifest.sha256}
   $record.fixture = @{status='VALID'; id=$fixture.id; reference=$approval.fixtureManifest; statedState=$fixture.state}
@@ -271,6 +268,8 @@ try {
     Write-Output $run
     exit 0
   }
+  $null = Confirm-StockProvenance -AuthorizationPath $AuthorizationPath -AuthorizationSha256 $AuthorizationSha256 `
+    -ScriptDirectory $PSScriptRoot -CaseId $CaseId -Network $Network -Profile $Profile
   Add-Type -Path "$PSScriptRoot\NativeLaunch.cs"
   $native = [FinneyA1Qualification.NativeLaunch]::new($executable,$command,$envBytes,$lab,"$run\stdout.bin","$run\stderr.bin")
   $record.launch.captureState = 'PREPARED_FOR_CREATEPROCESS'

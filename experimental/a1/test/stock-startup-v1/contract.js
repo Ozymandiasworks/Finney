@@ -1,6 +1,9 @@
 const path = require('path')
 const crypto = require('crypto')
-const matrix = require('../../../../docs/a1-offline/stock-startup-v1/CASE_MATRIX.json')
+const fs = require('fs')
+const matrixBytes = fs.readFileSync(path.join(__dirname, '../../../../docs/a1-offline/stock-startup-v1/CASE_MATRIX.json'))
+const matrix = JSON.parse(matrixBytes.toString('utf8'))
+const CASE_MATRIX_SHA256 = crypto.createHash('sha256').update(matrixBytes).digest('hex')
 
 const PACKAGE_SOURCE = 'a0e5890e612c81fda4d2698f78dbe4b81fba3e0d'
 const REQUIREMENT_HASH = 'ec6524ebdc4be39279ba356e23020a8d7e45d0d06dcad878c48bb8cbf40a3fb6'
@@ -15,6 +18,8 @@ function demand(condition, code) {
 }
 
 function caseFor(id) {
+  demand(matrix.version === 1 && matrix.packageSource === PACKAGE_SOURCE &&
+    matrix.requirementSha256 === REQUIREMENT_HASH, 'INVALID_MATRIX_IDENTITY')
   const selected = matrix.cases.find(item => item.id === id)
   demand(selected, 'UNKNOWN_CASE')
   return selected
@@ -123,6 +128,6 @@ function matchesLaunch(record, selected) {
   } catch { return false }
 }
 
-module.exports = { PACKAGE_SOURCE, REQUIREMENT_HASH, OUTCOMES, SHA1, SHA256, demand,
+module.exports = { PACKAGE_SOURCE, REQUIREMENT_HASH, CASE_MATRIX_SHA256, OUTCOMES, SHA1, SHA256, demand,
   caseFor, publicArguments, validatePublicArguments, validateEnvironment,
   encodeEnvironment, quoteArgument, commandLine, paths, bytesRecord, checkBytes, matchesLaunch }

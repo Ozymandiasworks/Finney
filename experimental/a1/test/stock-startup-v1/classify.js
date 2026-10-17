@@ -1,4 +1,4 @@
-const { PACKAGE_SOURCE, REQUIREMENT_HASH, SHA1, SHA256, caseFor, checkBytes, matchesLaunch } = require('./contract')
+const { PACKAGE_SOURCE, REQUIREMENT_HASH, CASE_MATRIX_SHA256, SHA1, SHA256, caseFor, checkBytes, matchesLaunch } = require('./contract')
 
 const REQUIRED = Object.freeze(['actual-input', 'token-handles', 'package-inventory', 'fuses-config',
   'profile-validity', 'file-effects', 'process-tree', 'debug-listeners-pipes', 'outbound-attempts',
@@ -6,11 +6,11 @@ const REQUIRED = Object.freeze(['actual-input', 'token-handles', 'package-invent
 
 function classify(record) {
   const result = (outcome, reasons, candidateOutcome = null, evidenceComplete = false) => ({
-    version: 1, outcome, candidateOutcome, reasons, evidenceComplete,
+    version: 2, outcome, candidateOutcome, reasons, evidenceComplete,
     acceptance: 'UNQUALIFIED', independentVerification: 'NOT PERFORMED',
     raw: record && record.wrapper || null, corroboration: record && record.kernel || null,
   })
-  if (!record || record.version !== 1) return result('INCONCLUSIVE', ['INVALID_RECORD_VERSION'])
+  if (!record || record.version !== 2) return result('INCONCLUSIVE', ['INVALID_RECORD_VERSION'])
   let selected
   try { selected = caseFor(record.caseId) } catch { return result('INCONCLUSIVE', ['UNKNOWN_CASE']) }
   if (record.execution === 'UNEXECUTED') return result('UNEXECUTED', ['NO_EXECUTION'])
@@ -20,10 +20,24 @@ function classify(record) {
   const reasons = []
   const identity = record.identity || {}
   if (identity.packageSource !== PACKAGE_SOURCE || identity.requirementHash !== REQUIREMENT_HASH ||
-    !SHA1.test(identity.harnessCommit || '') || !SHA256.test(identity.executableSha256 || '') ||
+    !SHA1.test(identity.toolingCommit || '') || identity.toolingCommit === PACKAGE_SOURCE ||
+    !SHA256.test(identity.executableSha256 || '') ||
     !SHA256.test(identity.archiveSha256 || '') ||
     !SHA256.test(identity.configurationSha256 || '') ||
     !SHA256.test(identity.inventorySha256 || '')) reasons.push('INCOMPLETE_IDENTITY')
+  const provenance = record.provenance || {}
+  if (provenance.version !== 2 || provenance.packageSourceHead !== PACKAGE_SOURCE ||
+    provenance.packageSourceRoot !== 'C:\\FinneyA1Lab\\source' ||
+    !/^C:\\FinneyA1Lab\\evidence\\stock-tooling-v2-[a-f0-9]{32}\\tooling$/.test(provenance.toolingRoot || '') ||
+    provenance.toolingCommit !== identity.toolingCommit ||
+    provenance.commitEvidence !== 'HOST_EXPORT_APPROVAL_NOT_GUEST_GIT' ||
+    !SHA256.test(provenance.manifestSha256 || '') || !SHA256.test(provenance.deliverySha256 || '') ||
+    provenance.caseMatrixSha256 !== CASE_MATRIX_SHA256 ||
+    !SHA256.test(provenance.authorizationSha256 || '') ||
+    provenance.authorizationSha256 !== record.authorizationSha256 ||
+    !['runId', 'caseId', 'network', 'profile'].every(key => provenance[key] === record[key])) {
+    reasons.push('INCOMPLETE_STAGED_PROVENANCE')
+  }
   if (typeof record.runId !== 'string' || !/^[a-f0-9]{32}$/.test(record.runId) ||
     !['xec-testnet', 'xec-regtest'].includes(record.network) ||
     !['client-a', 'client-b'].includes(record.profile)) reasons.push('INVALID_BINDING')

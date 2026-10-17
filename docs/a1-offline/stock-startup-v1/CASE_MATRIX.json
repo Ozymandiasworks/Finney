@@ -1,0 +1,1318 @@
+{
+  "version": 1,
+  "requirement": "A1-STOCK-STARTUP-1",
+  "requirementSha256": "ec6524ebdc4be39279ba356e23020a8d7e45d0d06dcad878c48bb8cbf40a3fb6",
+  "packageSource": "a0e5890e612c81fda4d2698f78dbe4b81fba3e0d",
+  "ownerDecisions": [
+    "DEC-025",
+    "DEC-026"
+  ],
+  "executionAuthorized": false,
+  "limits": {
+    "outputBytesPerStream": 1048576,
+    "startupMilliseconds": 60000,
+    "closeMilliseconds": 10000,
+    "drainMilliseconds": 10000
+  },
+  "cases": [
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S00-FILE",
+      "group": "S00",
+      "kind": "control",
+      "stimulus": "FILE observer sensitivity only",
+      "expected": [
+        "UNEXECUTED"
+      ],
+      "fixture": "Independent synthetic control, no Finney dispatch",
+      "control": "Independent provider must detect the exact short-lived event",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S00-READ",
+      "group": "S00",
+      "kind": "control",
+      "stimulus": "READ observer sensitivity only",
+      "expected": [
+        "UNEXECUTED"
+      ],
+      "fixture": "Independent synthetic control, no Finney dispatch",
+      "control": "Independent provider must detect the exact short-lived event",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S00-LISTENER",
+      "group": "S00",
+      "kind": "control",
+      "stimulus": "LISTENER observer sensitivity only",
+      "expected": [
+        "UNEXECUTED"
+      ],
+      "fixture": "Independent synthetic control, no Finney dispatch",
+      "control": "Independent provider must detect the exact short-lived event",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S00-PIPE",
+      "group": "S00",
+      "kind": "control",
+      "stimulus": "PIPE observer sensitivity only",
+      "expected": [
+        "UNEXECUTED"
+      ],
+      "fixture": "Independent synthetic control, no Finney dispatch",
+      "control": "Independent provider must detect the exact short-lived event",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S00-CHILD",
+      "group": "S00",
+      "kind": "control",
+      "stimulus": "CHILD observer sensitivity only",
+      "expected": [
+        "UNEXECUTED"
+      ],
+      "fixture": "Independent synthetic control, no Finney dispatch",
+      "control": "Independent provider must detect the exact short-lived event",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-NODE-INSPECTOR",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "--inspect=9229",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-CHROMIUM-PORT",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "--remote-debugging-port=9222",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-CHROMIUM-PIPE",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "--remote-debugging-pipe",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-JS-FLAGS",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "--js-flags=--help",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-EXTENSION",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "--load-extension=<synthetic>",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-USER-DATA",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "--user-data-dir=<synthetic>",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-NODE-PATH",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "NODE_PATH=<synthetic>",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-MISSING-PROFILE",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "no profile",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-DUPLICATE-PROFILE",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "two profiles",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S01-UNKNOWN-ENV",
+      "group": "S01",
+      "kind": "preparation",
+      "stimulus": "CHROME_LOG_FILE=<synthetic>",
+      "expected": [
+        "NOT LAUNCHED"
+      ],
+      "fixture": "Preparation-only record; no candidate creation",
+      "control": "Allowed canonical input and independent no-process observation",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S02-REOPEN",
+      "group": "S02",
+      "kind": "ordinary",
+      "stimulus": "clean controlled reopen",
+      "expected": [
+        "ORDINARY SUCCESS"
+      ],
+      "fixture": "Verified valid regtest/client-b copy initially",
+      "control": "S00 and clean identity/isolation interval",
+      "dispatch": true,
+      "create": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S03-UPPER",
+      "group": "S03",
+      "kind": "refusal",
+      "stimulus": "one NODE_PATH upper variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NODE_PATH",
+        "value": "$moduleDirectory"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S03-MIXED",
+      "group": "S03",
+      "kind": "refusal",
+      "stimulus": "one NODE_PATH mixed variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NoDe_PaTh",
+        "value": "$moduleDirectory"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S03-EMPTY",
+      "group": "S03",
+      "kind": "refusal",
+      "stimulus": "one NODE_PATH empty variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NODE_PATH",
+        "value": ""
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S04-UPPER",
+      "group": "S04",
+      "kind": "refusal",
+      "stimulus": "one FINNEY_LIVE upper variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "FINNEY_LIVE",
+        "value": "1"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S04-MIXED",
+      "group": "S04",
+      "kind": "refusal",
+      "stimulus": "one FINNEY_LIVE mixed variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "FiNnEy_LiVe",
+        "value": "1"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S04-EMPTY",
+      "group": "S04",
+      "kind": "refusal",
+      "stimulus": "one FINNEY_LIVE empty variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "FINNEY_LIVE",
+        "value": ""
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S05-UPPER",
+      "group": "S05",
+      "kind": "refusal",
+      "stimulus": "one ELECTRON_RUN_AS_NODE upper variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "ELECTRON_RUN_AS_NODE",
+        "value": "1"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S05-MIXED",
+      "group": "S05",
+      "kind": "refusal",
+      "stimulus": "one ELECTRON_RUN_AS_NODE mixed variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "ElEcTrOn_RuN_As_NoDe",
+        "value": "1"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S05-EMPTY",
+      "group": "S05",
+      "kind": "refusal",
+      "stimulus": "one ELECTRON_RUN_AS_NODE empty variant",
+      "expected": [
+        "REFUSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "ELECTRON_RUN_AS_NODE",
+        "value": ""
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S06-UPPER",
+      "group": "S06",
+      "kind": "suppression",
+      "stimulus": "one NODE_OPTIONS upper variant",
+      "expected": [
+        "REFUSED",
+        "SUPPRESSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NODE_OPTIONS",
+        "value": "$requireOption"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S06-MIXED",
+      "group": "S06",
+      "kind": "suppression",
+      "stimulus": "one NODE_OPTIONS mixed variant",
+      "expected": [
+        "REFUSED",
+        "SUPPRESSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NoDe_OpTiOnS",
+        "value": "$requireOption"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S06-EMPTY",
+      "group": "S06",
+      "kind": "suppression",
+      "stimulus": "one NODE_OPTIONS empty variant",
+      "expected": [
+        "REFUSED",
+        "SUPPRESSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NODE_OPTIONS",
+        "value": ""
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S07-UPPER",
+      "group": "S07",
+      "kind": "suppression",
+      "stimulus": "one NODE_EXTRA_CA_CERTS upper variant",
+      "expected": [
+        "REFUSED",
+        "SUPPRESSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NODE_EXTRA_CA_CERTS",
+        "value": "$certificate"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S07-MIXED",
+      "group": "S07",
+      "kind": "suppression",
+      "stimulus": "one NODE_EXTRA_CA_CERTS mixed variant",
+      "expected": [
+        "REFUSED",
+        "SUPPRESSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NoDe_ExTrA_Ca_CeRtS",
+        "value": "$certificate"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S07-EMPTY",
+      "group": "S07",
+      "kind": "suppression",
+      "stimulus": "one NODE_EXTRA_CA_CERTS empty variant",
+      "expected": [
+        "REFUSED",
+        "SUPPRESSED"
+      ],
+      "fixture": "Otherwise valid verified copy; nonempty readable synthetic targets where used",
+      "control": "Paired clean launch; module/certificate read controls and full interval observation",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NODE_EXTRA_CA_CERTS",
+        "value": ""
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S06-INSPECTOR",
+      "group": "S06",
+      "kind": "suppression",
+      "stimulus": "NODE_OPTIONS=--inspect=127.0.0.1:9229",
+      "expected": [
+        "REFUSED",
+        "SUPPRESSED"
+      ],
+      "fixture": "Otherwise valid copy; otherwise clean environment",
+      "control": "Paired clean launch and transient listener control",
+      "dispatch": true,
+      "create": false,
+      "environment": {
+        "name": "NODE_OPTIONS",
+        "value": "--inspect=127.0.0.1:9229"
+      }
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S08-CREATE",
+      "group": "S08",
+      "kind": "ordinary",
+      "stimulus": "explicit creation only",
+      "expected": [
+        "ORDINARY SUCCESS"
+      ],
+      "fixture": "Verified absent selected profile/protection; no precreation",
+      "control": "S00; complete file/child/egress observations",
+      "dispatch": true,
+      "create": true
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S08-REOPEN",
+      "group": "S08",
+      "kind": "ordinary",
+      "stimulus": "reopen a separately qualified created profile",
+      "expected": [
+        "ORDINARY SUCCESS"
+      ],
+      "fixture": "Verified complete protected profile; no repair",
+      "control": "Bound creation record and normal-close evidence",
+      "dispatch": true,
+      "create": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S09-COPY",
+      "group": "S09",
+      "kind": "ordinary",
+      "stimulus": "copy intact candidate",
+      "expected": [
+        "ORDINARY SUCCESS"
+      ],
+      "fixture": "Bound candidate inventory and valid profile copy",
+      "control": "Matched original location and exact bytes/assets",
+      "dispatch": true,
+      "create": false,
+      "location": "copy"
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S09-RENAME",
+      "group": "S09",
+      "kind": "ordinary",
+      "stimulus": "rename intact candidate",
+      "expected": [
+        "ORDINARY SUCCESS"
+      ],
+      "fixture": "Bound candidate inventory and valid profile copy",
+      "control": "Matched original location and exact bytes/assets",
+      "dispatch": true,
+      "create": false,
+      "location": "rename"
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "S10-BINDING",
+      "group": "S10",
+      "kind": "ordinary",
+      "stimulus": "remaining fixed network/profile binding",
+      "expected": [
+        "ORDINARY SUCCESS"
+      ],
+      "fixture": "Valid copy in the qualified two-network/two-profile coverage matrix",
+      "control": "Shared-coverage rationale must bind exact bytes and differing paths",
+      "dispatch": true,
+      "create": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "X-INSPECTOR",
+      "group": "EXCLUDED",
+      "kind": "excluded",
+      "stimulus": "arbitrary direct hostile inspector",
+      "expected": [
+        "EXCLUDED"
+      ],
+      "fixture": "No execution required to identify owner-approved exclusion",
+      "control": "Owner decision only; not an effect or refusal result",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "X-CHROMIUM-DEBUG",
+      "group": "EXCLUDED",
+      "kind": "excluded",
+      "stimulus": "arbitrary direct hostile chromium-debug",
+      "expected": [
+        "EXCLUDED"
+      ],
+      "fixture": "No execution required to identify owner-approved exclusion",
+      "control": "Owner decision only; not an effect or refusal result",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "X-V8",
+      "group": "EXCLUDED",
+      "kind": "excluded",
+      "stimulus": "arbitrary direct hostile v8",
+      "expected": [
+        "EXCLUDED"
+      ],
+      "fixture": "No execution required to identify owner-approved exclusion",
+      "control": "Owner decision only; not an effect or refusal result",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "X-EXTENSION",
+      "group": "EXCLUDED",
+      "kind": "excluded",
+      "stimulus": "arbitrary direct hostile extension",
+      "expected": [
+        "EXCLUDED"
+      ],
+      "fixture": "No execution required to identify owner-approved exclusion",
+      "control": "Owner decision only; not an effect or refusal result",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "X-USER-DATA",
+      "group": "EXCLUDED",
+      "kind": "excluded",
+      "stimulus": "arbitrary direct hostile user-data",
+      "expected": [
+        "EXCLUDED"
+      ],
+      "fixture": "No execution required to identify owner-approved exclusion",
+      "control": "Owner decision only; not an effect or refusal result",
+      "dispatch": false
+    },
+    {
+      "status": "UNEXECUTED",
+      "requirement": "A1-STOCK-STARTUP-1",
+      "findings": [
+        "Architecture-V1/a0e5890/ARCH-002"
+      ],
+      "evidence": [
+        "literal-launch",
+        "fixture-manifest",
+        "identity-manifest",
+        "wrapper-raw",
+        "kernel-corroboration",
+        "independent-observers",
+        "controls",
+        "isolation-interval"
+      ],
+      "failure": "Forbidden effect or contradicted mandatory behavior: FAIL. Missing prerequisite/coverage/control/attribution: INCONCLUSIVE. Never infer a pass from a nonzero exit or final snapshot.",
+      "id": "X-RAW-ENV-ROLE",
+      "group": "EXCLUDED",
+      "kind": "excluded",
+      "stimulus": "arbitrary direct hostile raw-env-role",
+      "expected": [
+        "EXCLUDED"
+      ],
+      "fixture": "No execution required to identify owner-approved exclusion",
+      "control": "Owner decision only; not an effect or refusal result",
+      "dispatch": false
+    }
+  ]
+}

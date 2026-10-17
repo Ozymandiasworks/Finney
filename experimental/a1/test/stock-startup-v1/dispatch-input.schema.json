@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:finney:a1:stock-startup:v1:dispatch-input",
+  "description": "Structure only; never an authorization grant or evidence of effective isolation. No populated approval fixture is supplied.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "stage": {
+      "const": "II"
+    },
+    "authorized": {
+      "const": true
+    },
+    "ownerApproval": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "caseId": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "network": {
+      "enum": [
+        "xec-testnet",
+        "xec-regtest"
+      ]
+    },
+    "profile": {
+      "enum": [
+        "client-a",
+        "client-b"
+      ]
+    },
+    "validFrom": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "expires": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "harnessCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "caseMatrixSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "packageManifest": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "fixtureManifest": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "observerReadiness": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "version",
+    "stage",
+    "authorized",
+    "ownerApproval",
+    "runId",
+    "caseId",
+    "network",
+    "profile",
+    "validFrom",
+    "expires",
+    "harnessCommit",
+    "caseMatrixSha256",
+    "packageManifest",
+    "fixtureManifest",
+    "observerReadiness"
+  ],
+  "additionalProperties": false
+}

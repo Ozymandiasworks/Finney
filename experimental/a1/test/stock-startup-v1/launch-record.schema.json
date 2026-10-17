@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:finney:a1:stock-startup:v1:launch",
+  "type": "object",
+  "properties": {
+    "executable": {
+      "type": "string",
+      "maxLength": 4096
+    },
+    "arguments": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 4096
+      },
+      "maxItems": 4
+    },
+    "cwd": {
+      "const": "C:\\FinneyA1Lab"
+    },
+    "fuses": {
+      "type": "array",
+      "items": {
+        "enum": [
+          48,
+          49,
+          114
+        ]
+      },
+      "maxItems": 9
+    },
+    "commandLine": {
+      "type": "object",
+      "properties": {
+        "encoding": {
+          "const": "UTF-16LE"
+        },
+        "base64": {
+          "type": "string",
+          "maxLength": 131072
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "encoding",
+        "base64",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "encoding": {
+          "const": "UTF-16LE"
+        },
+        "base64": {
+          "type": "string",
+          "maxLength": 131072
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "encoding",
+        "base64",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "transport": {
+      "const": "CreateProcessW/STARTUPINFOEX/PROC_THREAD_ATTRIBUTE_HANDLE_LIST"
+    },
+    "captureState": {
+      "enum": [
+        "PREPARED_NOT_SUBMITTED",
+        "PREPARED_FOR_CREATEPROCESS",
+        "SUBMITTED_NOT_INDEPENDENTLY_CORROBORATED"
+      ]
+    },
+    "creationFlags": {
+      "const": 525312
+    },
+    "token": {
+      "type": "object",
+      "properties": {
+        "ownerSid": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "maxItems": 256
+        },
+        "administratorRoleEnabled": {
+          "const": false
+        },
+        "elevation": {
+          "const": "UNVERIFIED"
+        },
+        "integrity": {
+          "const": "UNVERIFIED"
+        },
+        "privileges": {
+          "const": "UNVERIFIED"
+        },
+        "session": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "ownerSid",
+        "groups",
+        "administratorRoleEnabled",
+        "elevation",
+        "integrity",
+        "privileges",
+        "session"
+      ],
+      "additionalProperties": false
+    },
+    "handles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "handle": {
+            "type": "string",
+            "pattern": "^[A-Fa-f0-9]+$"
+          },
+          "role": {
+            "enum": [
+              "stdin",
+              "stdout",
+              "stderr"
+            ]
+          },
+          "object": {
+            "enum": [
+              "NUL",
+              "anonymous-pipe"
+            ]
+          },
+          "access": {
+            "enum": [
+              "GENERIC_READ",
+              "write"
+            ]
+          }
+        },
+        "required": [
+          "handle",
+          "role",
+          "object",
+          "access"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 3
+    }
+  },
+  "required": [
+    "executable",
+    "arguments",
+    "cwd",
+    "fuses",
+    "commandLine",
+    "environment",
+    "transport",
+    "captureState",
+    "creationFlags",
+    "token",
+    "handles"
+  ],
+  "additionalProperties": false
+}

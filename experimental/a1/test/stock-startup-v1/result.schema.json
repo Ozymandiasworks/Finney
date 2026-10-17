@@ -1,0 +1,653 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:finney:a1:stock-startup:v1:result",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/rawResult"
+    },
+    {
+      "$ref": "#/$defs/classification"
+    }
+  ],
+  "$defs": {
+    "rawResult": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "runId": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{32}$"
+        },
+        "caseId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "network": {
+          "enum": [
+            "xec-testnet",
+            "xec-regtest"
+          ]
+        },
+        "profile": {
+          "enum": [
+            "client-a",
+            "client-b"
+          ]
+        },
+        "execution": {
+          "enum": [
+            "UNEXECUTED",
+            "NOT LAUNCHED",
+            "LAUNCHED"
+          ]
+        },
+        "preparationRejected": {
+          "type": "boolean"
+        },
+        "unsupported": {
+          "type": "boolean"
+        },
+        "identity": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "packageSource": {
+                  "const": "a0e5890e612c81fda4d2698f78dbe4b81fba3e0d"
+                },
+                "harnessCommit": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{40}$"
+                },
+                "requirementHash": {
+                  "const": "ec6524ebdc4be39279ba356e23020a8d7e45d0d06dcad878c48bb8cbf40a3fb6"
+                },
+                "executableSha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "archiveSha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "configurationSha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "inventorySha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "packageSource",
+                "harnessCommit",
+                "requirementHash",
+                "executableSha256",
+                "archiveSha256",
+                "configurationSha256",
+                "inventorySha256"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "launch": {
+          "anyOf": [
+            {
+              "$ref": "launch-record.schema.json"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fixture": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{32}$"
+            },
+            "status": {
+              "enum": [
+                "UNVERIFIED",
+                "INVALID",
+                "VALID"
+              ]
+            },
+            "reference": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "additionalProperties": false
+            },
+            "statedState": {
+              "enum": [
+                "VALID",
+                "ABSENT"
+              ]
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        },
+        "wrapper": {
+          "type": "object",
+          "properties": {
+            "pid": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "creationTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "exitCode": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "ready": {
+              "type": "boolean"
+            },
+            "readyBindingValid": {
+              "type": "boolean"
+            },
+            "stderr": {
+              "type": "string",
+              "maxLength": 1048576
+            },
+            "timeout": {
+              "type": "boolean"
+            },
+            "outputOverflow": {
+              "type": "boolean"
+            },
+            "drainComplete": {
+              "type": "boolean"
+            },
+            "forcedTermination": {
+              "type": "boolean"
+            },
+            "outputBytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "errorBytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "normalCloseRequested": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "pid",
+            "creationTime",
+            "exitCode",
+            "ready",
+            "readyBindingValid",
+            "stderr",
+            "timeout",
+            "outputOverflow",
+            "drainComplete",
+            "forcedTermination"
+          ],
+          "additionalProperties": false
+        },
+        "kernel": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "pid": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "creationTime": {
+                  "type": "string",
+                  "pattern": "^[0-9]+$"
+                },
+                "exitCode": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "pid",
+                "creationTime",
+                "exitCode"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observation": {
+          "type": "object",
+          "properties": {
+            "attestations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "enum": [
+                      "actual-input",
+                      "token-handles",
+                      "package-inventory",
+                      "fuses-config",
+                      "profile-validity",
+                      "file-effects",
+                      "process-tree",
+                      "debug-listeners-pipes",
+                      "outbound-attempts",
+                      "effective-isolation-egress",
+                      "clock-correlation",
+                      "observer-controls",
+                      "exit-drain",
+                      "no-injection-or-trust-change",
+                      "no-candidate-created",
+                      "unsupported-route"
+                    ]
+                  },
+                  "state": {
+                    "enum": [
+                      "SUPPORTED",
+                      "UNAVAILABLE",
+                      "CONTRADICTED"
+                    ]
+                  },
+                  "runId": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{32}$"
+                  },
+                  "caseId": {
+                    "type": "string",
+                    "maxLength": 64
+                  },
+                  "network": {
+                    "enum": [
+                      "xec-testnet",
+                      "xec-regtest"
+                    ]
+                  },
+                  "profile": {
+                    "enum": [
+                      "client-a",
+                      "client-b"
+                    ]
+                  },
+                  "executableSha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "commandLineSha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "environmentSha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "artifact": {
+                    "type": "string",
+                    "maxLength": 4096
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "hashChecked": {
+                    "type": "boolean"
+                  },
+                  "assessor": {
+                    "const": "independent-observer"
+                  }
+                },
+                "required": [
+                  "category",
+                  "state",
+                  "runId",
+                  "caseId",
+                  "network",
+                  "profile",
+                  "executableSha256",
+                  "commandLineSha256",
+                  "environmentSha256",
+                  "artifact",
+                  "sha256",
+                  "hashChecked",
+                  "assessor"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 32
+            },
+            "forbiddenEffects": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 4096
+              },
+              "maxItems": 256
+            },
+            "startedBeforeCreation": {
+              "type": "boolean"
+            },
+            "descendantsExited": {
+              "type": "boolean"
+            },
+            "drained": {
+              "type": "boolean"
+            },
+            "loss": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unattributedRelevantEvents": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "clockChangeResolved": {
+              "type": "boolean"
+            },
+            "suppressionEstablished": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "attestations"
+          ],
+          "additionalProperties": false
+        },
+        "limitation": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "authorizationSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "startedUtc": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "finishedUtc": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "dispatcherError": {
+          "type": "string",
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "version",
+        "runId",
+        "caseId",
+        "network",
+        "profile",
+        "execution",
+        "preparationRejected",
+        "unsupported",
+        "identity",
+        "launch",
+        "fixture",
+        "wrapper",
+        "kernel",
+        "observation",
+        "limitation",
+        "authorizationSha256",
+        "startedUtc"
+      ],
+      "additionalProperties": false
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "outcome": {
+          "enum": [
+            "NOT LAUNCHED",
+            "REFUSED",
+            "SUPPRESSED",
+            "ORDINARY SUCCESS",
+            "EXCLUDED",
+            "UNSUPPORTED",
+            "INVALID FIXTURE",
+            "FAIL",
+            "INCONCLUSIVE",
+            "UNEXECUTED"
+          ]
+        },
+        "candidateOutcome": {
+          "anyOf": [
+            {
+              "enum": [
+                "REFUSED",
+                "SUPPRESSED",
+                "ORDINARY SUCCESS"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "maxItems": 64
+        },
+        "evidenceComplete": {
+          "type": "boolean"
+        },
+        "acceptance": {
+          "const": "UNQUALIFIED"
+        },
+        "independentVerification": {
+          "const": "NOT PERFORMED"
+        },
+        "raw": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "pid": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "creationTime": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9]+$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "exitCode": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "ready": {
+                  "type": "boolean"
+                },
+                "readyBindingValid": {
+                  "type": "boolean"
+                },
+                "stderr": {
+                  "type": "string",
+                  "maxLength": 1048576
+                },
+                "timeout": {
+                  "type": "boolean"
+                },
+                "outputOverflow": {
+                  "type": "boolean"
+                },
+                "drainComplete": {
+                  "type": "boolean"
+                },
+                "forcedTermination": {
+                  "type": "boolean"
+                },
+                "outputBytes": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "errorBytes": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "normalCloseRequested": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "pid",
+                "creationTime",
+                "exitCode",
+                "ready",
+                "readyBindingValid",
+                "stderr",
+                "timeout",
+                "outputOverflow",
+                "drainComplete",
+                "forcedTermination"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "corroboration": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "pid": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "creationTime": {
+                  "type": "string",
+                  "pattern": "^[0-9]+$"
+                },
+                "exitCode": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4294967295
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "pid",
+                "creationTime",
+                "exitCode"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "outcome",
+        "candidateOutcome",
+        "reasons",
+        "evidenceComplete",
+        "acceptance",
+        "independentVerification",
+        "raw",
+        "corroboration"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

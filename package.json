@@ -99,7 +99,7 @@
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^10.0.0",
     "devtron": "^1.4.0",
-    "electron": "44.3.0",
+    "electron": "44.9.1",
     "electron-builder": "^23.3.3",
     "electron-debug": "^3.2.0",
     "electron-devtools-installer": "^3.2.0",
